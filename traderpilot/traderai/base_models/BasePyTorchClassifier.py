@@ -198,9 +198,7 @@ class BasePyTorchClassifier(BasePyTorchModel):
                 )
             )
 
-        logger.info(
-            f"Training model on {len(dk.data_dictionary['train_features'].columns)} features"
-        )
+        logger.info(f"Training model on {len(dk.data_dictionary['train_features'].columns)} features")
         logger.info(f"Training model on {len(dd['train_features'])} data points")
 
         model = self.fit(dd, dk)

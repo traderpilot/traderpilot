@@ -308,9 +308,7 @@ class IStrategy(ABC, HyperStrategyMixin):
         :param **kwargs: Ensure to keep this here so updates to this won't break your strategy.
         :return bool: When True is returned, then the entry order is cancelled.
         """
-        return self.check_buy_timeout(
-            pair=pair, trade=trade, order=order, current_time=current_time
-        )
+        return self.check_buy_timeout(pair=pair, trade=trade, order=order, current_time=current_time)
 
     def check_sell_timeout(
         self, pair: str, trade: Trade, order: Order, current_time: datetime, **kwargs
@@ -339,9 +337,7 @@ class IStrategy(ABC, HyperStrategyMixin):
         :param **kwargs: Ensure to keep this here so updates to this won't break your strategy.
         :return bool: When True is returned, then the exit-order is cancelled.
         """
-        return self.check_sell_timeout(
-            pair=pair, trade=trade, order=order, current_time=current_time
-        )
+        return self.check_sell_timeout(pair=pair, trade=trade, order=order, current_time=current_time)
 
     def confirm_trade_entry(
         self,

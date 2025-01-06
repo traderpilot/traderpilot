@@ -61,9 +61,7 @@ class _CustomData(ModelBase):
         )
 
     @classmethod
-    def query_cd(
-        cls, key: str | None = None, trade_id: int | None = None
-    ) -> Sequence["_CustomData"]:
+    def query_cd(cls, key: str | None = None, trade_id: int | None = None) -> Sequence["_CustomData"]:
         """
         Get all CustomData, if trade_id is not specified
         return will be for generic values not tied to a trade

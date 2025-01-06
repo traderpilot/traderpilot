@@ -124,9 +124,7 @@ class Order(ModelBase):
     @property
     def order_filled_utc(self) -> datetime | None:
         """last order-date with UTC timezoneinfo"""
-        return (
-            self.order_filled_date.replace(tzinfo=timezone.utc) if self.order_filled_date else None
-        )
+        return self.order_filled_date.replace(tzinfo=timezone.utc) if self.order_filled_date else None
 
     @property
     def safe_amount(self) -> float:
@@ -152,9 +150,7 @@ class Order(ModelBase):
     @property
     def safe_remaining(self) -> float:
         return (
-            self.remaining
-            if self.remaining is not None
-            else self.safe_amount - (self.filled or 0.0)
+            self.remaining if self.remaining is not None else self.safe_amount - (self.filled or 0.0)
         )
 
     @property
@@ -173,18 +169,14 @@ class Order(ModelBase):
     def stake_amount(self) -> float:
         """Amount in stake currency used for this order"""
         return float(
-            FtPrecise(self.safe_amount)
-            * FtPrecise(self.safe_price)
-            / FtPrecise(self.trade.leverage)
+            FtPrecise(self.safe_amount) * FtPrecise(self.safe_price) / FtPrecise(self.trade.leverage)
         )
 
     @property
     def stake_amount_filled(self) -> float:
         """Filled Amount in stake currency used for this order"""
         return float(
-            FtPrecise(self.safe_filled)
-            * FtPrecise(self.safe_price)
-            / FtPrecise(self.trade.leverage)
+            FtPrecise(self.safe_filled) * FtPrecise(self.safe_price) / FtPrecise(self.trade.leverage)
         )
 
     def __repr__(self):
@@ -521,9 +513,7 @@ class LocalTrade:
     def date_entry_fill_utc(self) -> datetime | None:
         """Date of the first filled order"""
         orders = self.select_filled_orders(self.entry_side)
-        if orders and len(
-            filled_date := [o.order_filled_utc for o in orders if o.order_filled_utc]
-        ):
+        if orders and len(filled_date := [o.order_filled_utc for o in orders if o.order_filled_utc]):
             return min(filled_date)
         return None
 
@@ -611,9 +601,7 @@ class LocalTrade:
         """
         True if there are open stoploss orders for this trade
         """
-        open_sl_orders = [
-            o for o in self.orders if o.tp_order_side in ["stoploss"] and o.tp_is_open
-        ]
+        open_sl_orders = [o for o in self.orders if o.tp_order_side in ["stoploss"] and o.tp_is_open]
         return len(open_sl_orders) > 0
 
     @property
@@ -641,9 +629,7 @@ class LocalTrade:
             )
 
     def __repr__(self):
-        open_since = (
-            self.open_date_utc.strftime(DATETIME_PRINT_FORMAT) if self.is_open else "closed"
-        )
+        open_since = self.open_date_utc.strftime(DATETIME_PRINT_FORMAT) if self.is_open else "closed"
 
         return (
             f"Trade(id={self.id}, pair={self.pair}, amount={self.amount:.8f}, "
@@ -851,11 +837,7 @@ class LocalTrade:
             # stop losses only walk up, never down!,
             #   ? But adding more to a leveraged trade would create a lower liquidation price,
             #   ? decreasing the minimum stoploss
-            if (
-                allow_refresh
-                or (higher_stop and not self.is_short)
-                or (lower_stop and self.is_short)
-            ):
+            if allow_refresh or (higher_stop and not self.is_short) or (lower_stop and self.is_short):
                 logger.debug(f"{self.pair} - Adjusting stoploss...")
                 if not allow_refresh:
                     self.is_stop_loss_trailing = True
@@ -1327,9 +1309,7 @@ class LocalTrade:
             o
             for o in self.orders
             if (
-                o.tp_is_open is False
-                and (o.filled or 0) > 0
-                and o.status in NON_OPEN_EXCHANGE_STATES
+                o.tp_is_open is False and (o.filled or 0) > 0 and o.status in NON_OPEN_EXCHANGE_STATES
             )
             or (o.tp_is_open is True and o.status is not None)
         ]
@@ -1653,20 +1633,14 @@ class Trade(ModelBase, LocalTrade):
     is_open: Mapped[bool] = mapped_column(nullable=False, default=True, index=True)  # type: ignore
     fee_open: Mapped[float] = mapped_column(Float(), nullable=False, default=0.0)  # type: ignore
     fee_open_cost: Mapped[float | None] = mapped_column(Float(), nullable=True)  # type: ignore
-    fee_open_currency: Mapped[str | None] = mapped_column(  # type: ignore
-        String(25), nullable=True
-    )
+    fee_open_currency: Mapped[str | None] = mapped_column(String(25), nullable=True)  # type: ignore
     fee_close: Mapped[float | None] = mapped_column(  # type: ignore
         Float(), nullable=False, default=0.0
     )
     fee_close_cost: Mapped[float | None] = mapped_column(Float(), nullable=True)  # type: ignore
-    fee_close_currency: Mapped[str | None] = mapped_column(  # type: ignore
-        String(25), nullable=True
-    )
+    fee_close_currency: Mapped[str | None] = mapped_column(String(25), nullable=True)  # type: ignore
     open_rate: Mapped[float] = mapped_column(Float())  # type: ignore
-    open_rate_requested: Mapped[float | None] = mapped_column(  # type: ignore
-        Float(), nullable=True
-    )
+    open_rate_requested: Mapped[float | None] = mapped_column(Float(), nullable=True)  # type: ignore
     # open_trade_value - calculated via _calc_open_trade_value
     open_trade_value: Mapped[float] = mapped_column(Float(), nullable=True)  # type: ignore
     close_rate: Mapped[float | None] = mapped_column(Float())  # type: ignore
@@ -1680,9 +1654,7 @@ class Trade(ModelBase, LocalTrade):
     max_stake_amount: Mapped[float | None] = mapped_column(Float())  # type: ignore
     amount: Mapped[float] = mapped_column(Float())  # type: ignore
     amount_requested: Mapped[float | None] = mapped_column(Float())  # type: ignore
-    open_date: Mapped[datetime] = mapped_column(  # type: ignore
-        nullable=False, default=datetime.now
-    )
+    open_date: Mapped[datetime] = mapped_column(nullable=False, default=datetime.now)  # type: ignore
     close_date: Mapped[datetime | None] = mapped_column()  # type: ignore
     # absolute value of the stop loss
     stop_loss: Mapped[float] = mapped_column(Float(), nullable=True, default=0.0)  # type: ignore
@@ -1696,9 +1668,7 @@ class Trade(ModelBase, LocalTrade):
     initial_stop_loss_pct: Mapped[float | None] = mapped_column(  # type: ignore
         Float(), nullable=True
     )
-    is_stop_loss_trailing: Mapped[bool] = mapped_column(  # type: ignore
-        nullable=False, default=False
-    )
+    is_stop_loss_trailing: Mapped[bool] = mapped_column(nullable=False, default=False)  # type: ignore
     # absolute value of the highest reached price
     max_rate: Mapped[float | None] = mapped_column(  # type: ignore
         Float(), nullable=True, default=0.0
@@ -1708,9 +1678,7 @@ class Trade(ModelBase, LocalTrade):
     exit_reason: Mapped[str | None] = mapped_column(  # type: ignore
         String(CUSTOM_TAG_MAX_LENGTH), nullable=True
     )
-    exit_order_status: Mapped[str | None] = mapped_column(  # type: ignore
-        String(100), nullable=True
-    )
+    exit_order_status: Mapped[str | None] = mapped_column(String(100), nullable=True)  # type: ignore
     strategy: Mapped[str | None] = mapped_column(String(100), nullable=True)  # type: ignore
     enter_tag: Mapped[str | None] = mapped_column(  # type: ignore
         String(CUSTOM_TAG_MAX_LENGTH), nullable=True
@@ -1720,27 +1688,19 @@ class Trade(ModelBase, LocalTrade):
     trading_mode: Mapped[TradingMode] = mapped_column(  # type: ignore
         Enum(TradingMode), nullable=True
     )
-    amount_precision: Mapped[float | None] = mapped_column(  # type: ignore
-        Float(), nullable=True
-    )
+    amount_precision: Mapped[float | None] = mapped_column(Float(), nullable=True)  # type: ignore
     price_precision: Mapped[float | None] = mapped_column(Float(), nullable=True)  # type: ignore
     precision_mode: Mapped[int | None] = mapped_column(Integer, nullable=True)  # type: ignore
-    precision_mode_price: Mapped[int | None] = mapped_column(  # type: ignore
-        Integer, nullable=True
-    )
+    precision_mode_price: Mapped[int | None] = mapped_column(Integer, nullable=True)  # type: ignore
     contract_size: Mapped[float | None] = mapped_column(Float(), nullable=True)  # type: ignore
 
     # Leverage trading properties
     leverage: Mapped[float] = mapped_column(Float(), nullable=True, default=1.0)  # type: ignore
     is_short: Mapped[bool] = mapped_column(nullable=False, default=False)  # type: ignore
-    liquidation_price: Mapped[float | None] = mapped_column(  # type: ignore
-        Float(), nullable=True
-    )
+    liquidation_price: Mapped[float | None] = mapped_column(Float(), nullable=True)  # type: ignore
 
     # Margin Trading Properties
-    interest_rate: Mapped[float] = mapped_column(  # type: ignore
-        Float(), nullable=False, default=0.0
-    )
+    interest_rate: Mapped[float] = mapped_column(Float(), nullable=False, default=0.0)  # type: ignore
 
     # Futures properties
     funding_fees: Mapped[float | None] = mapped_column(  # type: ignore

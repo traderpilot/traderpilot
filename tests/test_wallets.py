@@ -244,9 +244,7 @@ def test_get_starting_balance(
 
     traderpilot = get_patched_traderpilotbot(mocker, default_conf)
 
-    assert traderpilot.wallets.get_starting_balance() == expected * (
-        1 if available_capital else 0.99
-    )
+    assert traderpilot.wallets.get_starting_balance() == expected * (1 if available_capital else 0.99)
 
 
 def test_sync_wallet_futures_live(mocker, default_conf):

@@ -97,9 +97,10 @@ class traderai_test_classifier(IStrategy):
         enter_long_conditions = [df["&s-up_or_down"] == "up"]
 
         if enter_long_conditions:
-            df.loc[
-                reduce(lambda x, y: x & y, enter_long_conditions), ["enter_long", "enter_tag"]
-            ] = (1, "long")
+            df.loc[reduce(lambda x, y: x & y, enter_long_conditions), ["enter_long", "enter_tag"]] = (
+                1,
+                "long",
+            )
 
         enter_short_conditions = [df["&s-up_or_down"] == "down"]
 

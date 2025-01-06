@@ -93,9 +93,7 @@ def merge_informative_pair(
             how="left",
         )
     else:
-        dataframe = pd.merge(
-            dataframe, informative, left_on="date", right_on=date_merge, how="left"
-        )
+        dataframe = pd.merge(dataframe, informative, left_on="date", right_on=date_merge, how="left")
     dataframe = dataframe.drop(date_merge, axis=1)
 
     return dataframe

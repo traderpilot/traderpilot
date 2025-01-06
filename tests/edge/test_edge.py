@@ -11,12 +11,7 @@ import pytest
 from pandas import DataFrame
 
 from tests.conftest import EXMS, get_patched_traderpilotbot, log_has
-from tests.optimize import (
-    BTContainer,
-    BTrade,
-    _build_backtest_dataframe,
-    _get_frame_time_from_offset,
-)
+from tests.optimize import BTContainer, BTrade, _build_backtest_dataframe, _get_frame_time_from_offset
 from traderpilot.data.converter import ohlcv_to_dataframe
 from traderpilot.edge import Edge, PairInfo
 from traderpilot.enums import ExitType
@@ -203,9 +198,7 @@ def test_edge_stake_amount(mocker, edge_conf):
         ),
     )
     assert edge._capital_ratio == 0.5
-    assert (
-        edge.stake_amount("E/F", free_capital=100, total_capital=100, capital_in_trade=25) == 31.25
-    )
+    assert edge.stake_amount("E/F", free_capital=100, total_capital=100, capital_in_trade=25) == 31.25
 
     assert edge.stake_amount("E/F", free_capital=20, total_capital=100, capital_in_trade=25) == 20
 
@@ -215,9 +208,7 @@ def test_edge_stake_amount(mocker, edge_conf):
     # Result should be no more than allowed capital
     edge._allowed_risk = 0.4
     edge._capital_ratio = 0.5
-    assert (
-        edge.stake_amount("E/F", free_capital=100, total_capital=100, capital_in_trade=25) == 62.5
-    )
+    assert edge.stake_amount("E/F", free_capital=100, total_capital=100, capital_in_trade=25) == 62.5
 
     assert edge.stake_amount("E/F", free_capital=100, total_capital=100, capital_in_trade=0) == 50
 

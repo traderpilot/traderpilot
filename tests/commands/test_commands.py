@@ -175,9 +175,7 @@ def test_list_timeframes(mocker, capsys):
     ]
     pargs = get_args(args)
     pargs["config"] = None
-    with pytest.raises(
-        OperationalException, match=r"This command requires a configured exchange.*"
-    ):
+    with pytest.raises(OperationalException, match=r"This command requires a configured exchange.*"):
         start_list_timeframes(pargs)
 
     # Test with --config tests/testdata/testconfigs/main_test_config.json
@@ -268,9 +266,7 @@ def test_list_markets(mocker, markets_static, capsys):
     ]
     pargs = get_args(args)
     pargs["config"] = None
-    with pytest.raises(
-        OperationalException, match=r"This command requires a configured exchange.*"
-    ):
+    with pytest.raises(OperationalException, match=r"This command requires a configured exchange.*"):
         start_list_markets(pargs, False)
 
     # Test with --config tests/testdata/testconfigs/main_test_config.json
@@ -311,8 +307,7 @@ def test_list_markets(mocker, markets_static, capsys):
     assert (
         "Exchange Binance has 14 markets: "
         "ADA/USDT:USDT, BLK/BTC, BTT/BTC, ETH/BTC, ETH/USDT, ETH/USDT:USDT, "
-        "LTC/BTC, LTC/ETH, LTC/USD, LTC/USDT, NEO/BTC, TKN/BTC, XLTCUSDT, XRP/BTC.\n"
-        in captured.out
+        "LTC/BTC, LTC/ETH, LTC/USD, LTC/USDT, NEO/BTC, TKN/BTC, XLTCUSDT, XRP/BTC.\n" in captured.out
     )
 
     # Test list-pairs subcommand: active pairs
@@ -859,9 +854,7 @@ def test_download_data_no_exchange(mocker):
     ]
     pargs = get_args(args)
     pargs["config"] = None
-    with pytest.raises(
-        OperationalException, match=r"This command requires a configured exchange.*"
-    ):
+    with pytest.raises(OperationalException, match=r"This command requires a configured exchange.*"):
         start_download_data(pargs)
 
 
@@ -879,9 +872,7 @@ def test_download_data_no_pairs(mocker):
     ]
     pargs = get_args(args)
     pargs["config"] = None
-    with pytest.raises(
-        OperationalException, match=r"Downloading data requires a list of pairs\..*"
-    ):
+    with pytest.raises(OperationalException, match=r"Downloading data requires a list of pairs\..*"):
         start_download_data(pargs)
 
 
@@ -1532,8 +1523,7 @@ def test_hyperopt_list(mocker, capsys, caplog, tmp_path):
     assert csv_file.is_file()
     line = csv_file.read_text()
     assert (
-        'Best,1,2,-1.25%,-1.2222,-0.00125625,BTC,-2.51,"3,930.0 m",-0.00125625,23.00%,0.43662'
-        in line
+        'Best,1,2,-1.25%,-1.2222,-0.00125625,BTC,-2.51,"3,930.0 m",-0.00125625,23.00%,0.43662' in line
         or "Best,1,2,-1.25%,-1.2222,-0.00125625,BTC,-2.51,2 days 17:30:00,2,0,-0.00125625,23.00%,"
         "0.43662"
         in line

@@ -39,9 +39,7 @@ class LowProfitPairs(IProtection):
             f"locking {self.unlock_reason_time_element}."
         )
 
-    def _low_profit(
-        self, date_now: datetime, pair: str, side: LongShort
-    ) -> ProtectionReturn | None:
+    def _low_profit(self, date_now: datetime, pair: str, side: LongShort) -> ProtectionReturn | None:
         """
         Evaluate recent trades for pair
         """

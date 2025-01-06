@@ -57,9 +57,11 @@ class LookaheadAnalysisSubFunctions:
                     [
                         inst.strategy_obj["location"].parts[-1],
                         inst.strategy_obj["name"],
-                        Text("Yes", style="bold red")
-                        if inst.current_analysis.has_bias
-                        else Text("No", style="bold green"),
+                        (
+                            Text("Yes", style="bold red")
+                            if inst.current_analysis.has_bias
+                            else Text("No", style="bold green")
+                        ),
                         inst.current_analysis.total_signals,
                         inst.current_analysis.false_entry_signals,
                         inst.current_analysis.false_exit_signals,

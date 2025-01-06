@@ -205,9 +205,7 @@ def calculate_max_drawdown(
         raise ValueError("No losing trade, therefore no drawdown.")
     high_date = profit_results.loc[max_drawdown_df.iloc[:idxmin]["high_value"].idxmax(), date_col]
     low_date = profit_results.loc[idxmin, date_col]
-    high_val = max_drawdown_df.loc[
-        max_drawdown_df.iloc[:idxmin]["high_value"].idxmax(), "cumulative"
-    ]
+    high_val = max_drawdown_df.loc[max_drawdown_df.iloc[:idxmin]["high_value"].idxmax(), "cumulative"]
     low_val = max_drawdown_df.loc[idxmin, "cumulative"]
     max_drawdown_rel = max_drawdown_df.loc[idxmin, "drawdown_relative"]
 

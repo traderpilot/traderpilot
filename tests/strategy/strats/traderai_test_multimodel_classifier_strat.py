@@ -89,9 +89,10 @@ class traderai_test_multimodel_classifier_strat(IStrategy):
         enter_long_conditions = [df["do_predict"] == 1, df["&-s_close"] > df["target_roi"]]
 
         if enter_long_conditions:
-            df.loc[
-                reduce(lambda x, y: x & y, enter_long_conditions), ["enter_long", "enter_tag"]
-            ] = (1, "long")
+            df.loc[reduce(lambda x, y: x & y, enter_long_conditions), ["enter_long", "enter_tag"]] = (
+                1,
+                "long",
+            )
 
         enter_short_conditions = [df["do_predict"] == 1, df["&-s_close"] < df["sell_roi"]]
 

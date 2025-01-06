@@ -79,9 +79,7 @@ class TraderaiDataDrawer:
         self.historic_predictions: dict[str, DataFrame] = {}
         self.full_path = full_path
         self.historic_predictions_path = Path(self.full_path / "historic_predictions.pkl")
-        self.historic_predictions_bkp_path = Path(
-            self.full_path / "historic_predictions.backup.pkl"
-        )
+        self.historic_predictions_bkp_path = Path(self.full_path / "historic_predictions.backup.pkl")
         self.pair_dictionary_path = Path(self.full_path / "pair_dictionary.json")
         self.global_metadata_path = Path(self.full_path / "global_metadata.json")
         self.metric_tracker_path = Path(self.full_path / "metric_tracker.json")
@@ -188,9 +186,7 @@ class TraderaiDataDrawer:
                 )
                 with self.historic_predictions_bkp_path.open("rb") as fp:
                     self.historic_predictions = cloudpickle.load(fp)
-                logger.warning(
-                    "TraderAI successfully loaded the backup historical predictions file."
-                )
+                logger.warning("TraderAI successfully loaded the backup historical predictions file.")
 
         else:
             logger.info("Could not find existing historic_predictions, starting from scratch")
@@ -236,9 +232,7 @@ class TraderaiDataDrawer:
         """
         with self.save_lock:
             with self.global_metadata_path.open("w") as fp:
-                rapidjson.dump(
-                    metadata, fp, default=self.np_encoder, number_mode=rapidjson.NM_NATIVE
-                )
+                rapidjson.dump(metadata, fp, default=self.np_encoder, number_mode=rapidjson.NM_NATIVE)
 
     def np_encoder(self, obj):
         if isinstance(obj, np.generic):
@@ -275,9 +269,7 @@ class TraderaiDataDrawer:
             self.pair_dict[metadata["pair"]] = self.empty_pair_dict.copy()
             return
 
-    def set_initial_return_values(
-        self, pair: str, pred_df: DataFrame, dataframe: DataFrame
-    ) -> None:
+    def set_initial_return_values(self, pair: str, pred_df: DataFrame, dataframe: DataFrame) -> None:
         """
         Set the initial return values to the historical predictions dataframe. This avoids needing
         to repredict on historical candles, and also stores historical predictions despite
@@ -397,9 +389,7 @@ class TraderaiDataDrawer:
 
         self.model_return_values[pair] = df.tail(len_df).reset_index(drop=True)
 
-    def attach_return_values_to_return_dataframe(
-        self, pair: str, dataframe: DataFrame
-    ) -> DataFrame:
+    def attach_return_values_to_return_dataframe(self, pair: str, dataframe: DataFrame) -> DataFrame:
         """
         Attach the return values to the strat dataframe
         :param dataframe: DataFrame = strategy dataframe
@@ -467,9 +457,7 @@ class TraderaiDataDrawer:
 
         for coin in delete_dict:
             if delete_dict[coin]["num_folders"] > num_keep:
-                sorted_dict = collections.OrderedDict(
-                    sorted(delete_dict[coin]["timestamps"].items())
-                )
+                sorted_dict = collections.OrderedDict(sorted(delete_dict[coin]["timestamps"].items()))
                 num_delete = len(sorted_dict) - num_keep
                 deleted = 0
                 for k, v in sorted_dict.items():

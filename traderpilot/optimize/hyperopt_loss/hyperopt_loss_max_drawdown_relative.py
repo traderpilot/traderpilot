@@ -20,9 +20,7 @@ class MaxDrawDownRelativeHyperOptLoss(IHyperOptLoss):
     """
 
     @staticmethod
-    def hyperopt_loss_function(
-        results: DataFrame, starting_balance: float, *args, **kwargs
-    ) -> float:
+    def hyperopt_loss_function(results: DataFrame, starting_balance: float, *args, **kwargs) -> float:
         """
         Objective function.
 

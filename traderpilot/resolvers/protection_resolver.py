@@ -24,9 +24,7 @@ class ProtectionResolver(IResolver):
     initial_search_path = Path(__file__).parent.parent.joinpath("plugins/protections").resolve()
 
     @staticmethod
-    def load_protection(
-        protection_name: str, config: Config, protection_config: dict
-    ) -> IProtection:
+    def load_protection(protection_name: str, config: Config, protection_config: dict) -> IProtection:
         """
         Load the protection with protection_name
         :param protection_name: Classname of the pairlist

@@ -53,9 +53,7 @@ def test_cancel_stoploss_order_gate(default_conf, mocker):
     assert cancel_order_mock.call_args_list[0][1]["params"] == {"stop": True}
 
 
-@pytest.mark.parametrize(
-    "sl1,sl2,sl3,side", [(1501, 1499, 1501, "sell"), (1499, 1501, 1499, "buy")]
-)
+@pytest.mark.parametrize("sl1,sl2,sl3,side", [(1501, 1499, 1501, "sell"), (1499, 1501, 1499, "buy")])
 def test_stoploss_adjust_gate(mocker, default_conf, sl1, sl2, sl3, side):
     exchange = get_patched_exchange(mocker, default_conf, exchange="gate")
     order = {

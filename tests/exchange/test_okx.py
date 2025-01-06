@@ -29,8 +29,7 @@ def test_okx_ohlcv_candle_limit(default_conf, mocker):
         assert exchange.ohlcv_candle_limit(timeframe, CandleType.FUNDING_RATE, start_time) == 100
         one_call = int(
             (
-                datetime.now(timezone.utc)
-                - timedelta(minutes=290 * timeframe_to_minutes(timeframe))
+                datetime.now(timezone.utc) - timedelta(minutes=290 * timeframe_to_minutes(timeframe))
             ).timestamp()
             * 1000
         )
@@ -40,8 +39,7 @@ def test_okx_ohlcv_candle_limit(default_conf, mocker):
 
         one_call = int(
             (
-                datetime.now(timezone.utc)
-                - timedelta(minutes=320 * timeframe_to_minutes(timeframe))
+                datetime.now(timezone.utc) - timedelta(minutes=320 * timeframe_to_minutes(timeframe))
             ).timestamp()
             * 1000
         )
@@ -645,9 +643,7 @@ def test_fetch_stoploss_order_okx_exceptions(default_conf_usdt, mocker):
     )
 
 
-@pytest.mark.parametrize(
-    "sl1,sl2,sl3,side", [(1501, 1499, 1501, "sell"), (1499, 1501, 1499, "buy")]
-)
+@pytest.mark.parametrize("sl1,sl2,sl3,side", [(1501, 1499, 1501, "sell"), (1499, 1501, 1499, "buy")])
 def test_stoploss_adjust_okx(mocker, default_conf, sl1, sl2, sl3, side):
     exchange = get_patched_exchange(mocker, default_conf, exchange="okx")
     order = {

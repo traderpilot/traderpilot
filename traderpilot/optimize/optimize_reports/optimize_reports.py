@@ -412,16 +412,12 @@ def generate_strategy_stats(
         periodic_breakdown = {"periodic_breakdown": generate_all_periodic_breakdown_stats(results)}
 
     best_pair = (
-        max(
-            [pair for pair in pair_results if pair["key"] != "TOTAL"], key=lambda x: x["profit_sum"]
-        )
+        max([pair for pair in pair_results if pair["key"] != "TOTAL"], key=lambda x: x["profit_sum"])
         if len(pair_results) > 1
         else None
     )
     worst_pair = (
-        min(
-            [pair for pair in pair_results if pair["key"] != "TOTAL"], key=lambda x: x["profit_sum"]
-        )
+        min([pair for pair in pair_results if pair["key"] != "TOTAL"], key=lambda x: x["profit_sum"])
         if len(pair_results) > 1
         else None
     )

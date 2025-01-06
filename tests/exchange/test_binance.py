@@ -159,9 +159,7 @@ def test_create_stoploss_order_dry_run_binance(default_conf, mocker):
     assert order["amount"] == 1
 
 
-@pytest.mark.parametrize(
-    "sl1,sl2,sl3,side", [(1501, 1499, 1501, "sell"), (1499, 1501, 1499, "buy")]
-)
+@pytest.mark.parametrize("sl1,sl2,sl3,side", [(1501, 1499, 1501, "sell"), (1499, 1501, 1499, "buy")])
 def test_stoploss_adjust_binance(mocker, default_conf, sl1, sl2, sl3, side):
     exchange = get_patched_exchange(mocker, default_conf, exchange="binance")
     order = {

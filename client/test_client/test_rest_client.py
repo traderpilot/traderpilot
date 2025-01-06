@@ -162,9 +162,7 @@ def test_client(mocker, capsys, caplog):
 
     assert log_has_re(r"Could not load config file .*nonexisting\.json\.", caplog)
 
-    args = add_arguments(
-        ["--config", "tests/testdata/testconfigs/main_test_config.json", "whatever"]
-    )
+    args = add_arguments(["--config", "tests/testdata/testconfigs/main_test_config.json", "whatever"])
     main_exec(args)
     assert log_has_re("Command whatever not defined", caplog)
 

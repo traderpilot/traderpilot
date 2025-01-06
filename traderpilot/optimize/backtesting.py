@@ -452,9 +452,7 @@ class Backtesting:
                 tag_col = col in ("enter_tag", "exit_tag")
                 if col in df_analyzed.columns:
                     df_analyzed[col] = (
-                        df_analyzed.loc[:, col]
-                        .replace([nan], [0 if not tag_col else None])
-                        .shift(1)
+                        df_analyzed.loc[:, col].replace([nan], [0 if not tag_col else None]).shift(1)
                     )
                 elif not df_analyzed.empty:
                     df_analyzed[col] = 0 if not tag_col else None
@@ -1067,9 +1065,7 @@ class Backtesting:
 
             if not pos_adjust:
                 # Confirm trade entry:
-                if not strategy_safe_wrapper(
-                    self.strategy.confirm_trade_entry, default_retval=True
-                )(
+                if not strategy_safe_wrapper(self.strategy.confirm_trade_entry, default_retval=True)(
                     pair=pair,
                     order_type=order_type,
                     amount=amount,
@@ -1246,9 +1242,7 @@ class Backtesting:
                 return False
         return None
 
-    def check_order_replace(
-        self, trade: LocalTrade, order: Order, current_time, row: tuple
-    ) -> bool:
+    def check_order_replace(self, trade: LocalTrade, order: Order, current_time, row: tuple) -> bool:
         """
         Check if current analyzed entry order has to be replaced and do so.
         If user requested cancellation and there are no filled orders in the trade will

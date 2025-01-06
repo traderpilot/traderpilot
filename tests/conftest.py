@@ -545,9 +545,7 @@ def patch_torch_initlogs(mocker) -> None:
 @pytest.fixture(autouse=True)
 def user_dir(mocker, tmp_path) -> Path:
     user_dir = tmp_path / "user_data"
-    mocker.patch(
-        "traderpilot.configuration.configuration.create_userdata_dir", return_value=user_dir
-    )
+    mocker.patch("traderpilot.configuration.configuration.create_userdata_dir", return_value=user_dir)
     return user_dir
 
 
@@ -2385,9 +2383,7 @@ def tickers():
 @pytest.fixture
 def dataframe_1m(testdatadir):
     with (testdatadir / "UNITTEST_BTC-1m.json").open("r") as data_file:
-        return ohlcv_to_dataframe(
-            json.load(data_file), "1m", pair="UNITTEST/BTC", fill_missing=True
-        )
+        return ohlcv_to_dataframe(json.load(data_file), "1m", pair="UNITTEST/BTC", fill_missing=True)
 
 
 @pytest.fixture(scope="function")

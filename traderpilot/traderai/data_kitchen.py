@@ -98,9 +98,7 @@ class TraderaiDataKitchen:
                     config["traderai"]["backtest_period_days"],
                 )
 
-        self.data["extra_returns_per_train"] = self.traderai_config.get(
-            "extra_returns_per_train", {}
-        )
+        self.data["extra_returns_per_train"] = self.traderai_config.get("extra_returns_per_train", {})
         if not self.traderai_config.get("data_kitchen_thread_count", 0):
             self.thread_count = max(int(psutil.cpu_count() * 2 - 2), 1)
         else:
@@ -121,9 +119,7 @@ class TraderaiDataKitchen:
         :param trained_timestamp: int = timestamp of most recent training
         """
         self.full_path = self.get_full_models_path(self.config)
-        self.data_path = Path(
-            self.full_path / f"sub-train-{pair.split('/')[0]}_{trained_timestamp}"
-        )
+        self.data_path = Path(self.full_path / f"sub-train-{pair.split('/')[0]}_{trained_timestamp}")
 
         return
 
@@ -173,9 +169,7 @@ class TraderaiDataKitchen:
         if feat_dict["shuffle_after_split"]:
             rint1 = random.randint(0, 100)
             rint2 = random.randint(0, 100)
-            train_features = train_features.sample(frac=1, random_state=rint1).reset_index(
-                drop=True
-            )
+            train_features = train_features.sample(frac=1, random_state=rint1).reset_index(drop=True)
             train_labels = train_labels.sample(frac=1, random_state=rint1).reset_index(drop=True)
             train_weights = (
                 pd.DataFrame(train_weights)
@@ -252,9 +246,7 @@ class TraderaiDataKitchen:
                 drop_index_labels.replace(True, 1).replace(False, 0).infer_objects(copy=False)
             )
             dates = unfiltered_df["date"]
-            filtered_df = filtered_df[
-                (drop_index == 0) & (drop_index_labels == 0)
-            ]  # dropping values
+            filtered_df = filtered_df[(drop_index == 0) & (drop_index_labels == 0)]  # dropping values
             labels = labels[
                 (drop_index == 0) & (drop_index_labels == 0)
             ]  # assuming the labels depend entirely on the dataframe here.
@@ -708,9 +700,7 @@ class TraderaiDataKitchen:
             suffix=suffix,
             ffill=True,
         )
-        skip_columns = [
-            (f"{s}_{suffix}") for s in ["date", "open", "high", "low", "close", "volume"]
-        ]
+        skip_columns = [(f"{s}_{suffix}") for s in ["date", "open", "high", "low", "close", "volume"]]
         dataframe = dataframe.drop(columns=skip_columns)
         return dataframe
 
@@ -759,9 +749,7 @@ class TraderaiDataKitchen:
             informative_df = self.merge_features(informative_df, generic_df, tf, tf, suffix)
 
             indicators = [col for col in informative_df if col.startswith("%")]
-            for n in range(
-                self.traderai_config["feature_parameters"]["include_shifted_candles"] + 1
-            ):
+            for n in range(self.traderai_config["feature_parameters"]["include_shifted_candles"] + 1):
                 if n == 0:
                     continue
                 df_shift = informative_df[indicators].shift(n)
@@ -815,9 +803,7 @@ class TraderaiDataKitchen:
             )
 
         tfs: list[str] = self.traderai_config["feature_parameters"].get("include_timeframes")
-        pairs: list[str] = self.traderai_config["feature_parameters"].get(
-            "include_corr_pairlist", []
-        )
+        pairs: list[str] = self.traderai_config["feature_parameters"].get("include_corr_pairlist", [])
 
         for tf in tfs:
             if tf not in base_dataframes:

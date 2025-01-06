@@ -89,9 +89,7 @@ def _do_group_table_output(
             )
 
             wins.columns = ["profit_abs_wins"]
-            loss = (
-                bigdf.loc[bigdf["profit_abs"] < 0].groupby(group_mask).agg({"profit_abs": ["sum"]})
-            )
+            loss = bigdf.loc[bigdf["profit_abs"] < 0].groupby(group_mask).agg({"profit_abs": ["sum"]})
             loss.columns = ["profit_abs_loss"]
 
             new = bigdf.groupby(group_mask).agg(

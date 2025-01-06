@@ -202,9 +202,7 @@ class TestCCXTExchange:
                     assert len(l2["asks"]) == val
                     assert len(l2["bids"]) == val
             else:
-                next_limit = exch.get_next_limit_in_list(
-                    val, l2_limit_range, l2_limit_range_required
-                )
+                next_limit = exch.get_next_limit_in_list(val, l2_limit_range, l2_limit_range_required)
                 if next_limit is None:
                     assert len(l2["asks"]) > 100
                     assert len(l2["asks"]) > 100
@@ -228,9 +226,7 @@ class TestCCXTExchange:
         assert len(ohlcv[pair_tf]) == len(exch.klines(pair_tf))
         # assert len(exch.klines(pair_tf)) > 200
         # Assume 90% uptime ...
-        assert (
-            len(exch.klines(pair_tf)) > exch.ohlcv_candle_limit(timeframe, CandleType.SPOT) * 0.90
-        )
+        assert len(exch.klines(pair_tf)) > exch.ohlcv_candle_limit(timeframe, CandleType.SPOT) * 0.90
         # Check if last-timeframe is within the last 2 intervals
         now = datetime.now(timezone.utc) - timedelta(minutes=(timeframe_to_minutes(timeframe) * 2))
         assert exch.klines(pair_tf).iloc[-1]["date"] >= timeframe_to_prev_date(timeframe, now)

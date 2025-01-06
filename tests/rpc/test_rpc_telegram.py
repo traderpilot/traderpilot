@@ -1853,8 +1853,7 @@ async def test_blacklist_static(default_conf, update, mocker) -> None:
     await telegram._blacklist(update=update, context=context)
     assert msg_mock.call_count == 1
     assert (
-        "Blacklist contains 3 pairs\n`DOGE/BTC, HOT/BTC, ETH/BTC`"
-        in msg_mock.call_args_list[0][0][0]
+        "Blacklist contains 3 pairs\n`DOGE/BTC, HOT/BTC, ETH/BTC`" in msg_mock.call_args_list[0][0][0]
     )
     assert traderpilotbot.pairlists.blacklist == ["DOGE/BTC", "HOT/BTC", "ETH/BTC"]
 
@@ -2182,9 +2181,7 @@ def test_send_msg_enter_notification(
         (RPCMessageType.ENTRY_CANCEL, "short_signal_01"),
     ],
 )
-def test_send_msg_enter_cancel_notification(
-    default_conf, mocker, message_type, enter_signal
-) -> None:
+def test_send_msg_enter_cancel_notification(default_conf, mocker, message_type, enter_signal) -> None:
     telegram, _, msg_mock = get_telegram_testobject(mocker, default_conf)
 
     telegram.send_msg(
@@ -2861,9 +2858,7 @@ async def test_telegram_list_custom_data(default_conf_usdt, update, ticker, fee,
     context.args = ["1"]
     await telegram._list_custom_data(update=update, context=context)
     assert msg_mock.call_count == 1
-    assert (
-        "Didn't find any custom-data entries for Trade ID: `1`" in msg_mock.call_args_list[0][0][0]
-    )
+    assert "Didn't find any custom-data entries for Trade ID: `1`" in msg_mock.call_args_list[0][0][0]
     msg_mock.reset_mock()
 
     # Add some custom data

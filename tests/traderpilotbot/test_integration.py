@@ -651,9 +651,7 @@ def test_dca_exiting(default_conf_usdt, ticker_usdt, fee, mocker, caplog, levera
     assert len(trade.orders) == 2
 
     # Amount too low...
-    traderpilot.strategy.adjust_trade_position = MagicMock(
-        return_value=-(trade.stake_amount * 0.99)
-    )
+    traderpilot.strategy.adjust_trade_position = MagicMock(return_value=-(trade.stake_amount * 0.99))
     traderpilot.process()
 
     trade = Trade.get_trades().first()

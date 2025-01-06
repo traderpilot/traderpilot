@@ -132,9 +132,7 @@ def test_analyze_pair_empty(mocker, caplog, ohlcv_history):
 
 
 def test_get_signal_empty(default_conf, caplog):
-    assert (None, None) == _STRATEGY.get_latest_candle(
-        "foo", default_conf["timeframe"], DataFrame()
-    )
+    assert (None, None) == _STRATEGY.get_latest_candle("foo", default_conf["timeframe"], DataFrame())
     assert log_has("Empty candle (OHLCV) data for pair foo", caplog)
     caplog.clear()
 
@@ -156,9 +154,7 @@ def test_get_signal_exception_valueerror(mocker, caplog, ohlcv_history):
     assert log_has_re(r"Strategy caused the following exception: xyz.*", caplog)
     caplog.clear()
 
-    mocker.patch.object(
-        _STRATEGY, "analyze_ticker", side_effect=Exception("invalid ticker history ")
-    )
+    mocker.patch.object(_STRATEGY, "analyze_ticker", side_effect=Exception("invalid ticker history "))
     _STRATEGY.analyze_pair("foo")
     assert log_has_re(r"Strategy caused the following exception: xyz.*", caplog)
 
@@ -264,9 +260,7 @@ def test_assert_df(ohlcv_history, caplog):
             ohlcv_history.loc[df_len, "date"],
         )
 
-    with pytest.raises(
-        StrategyError, match=r"Dataframe returned from strategy.*last close price\."
-    ):
+    with pytest.raises(StrategyError, match=r"Dataframe returned from strategy.*last close price\."):
         _STRATEGY.assert_df(
             ohlcv_history,
             len(ohlcv_history),
@@ -280,9 +274,7 @@ def test_assert_df(ohlcv_history, caplog):
             ohlcv_history.loc[df_len, "close"],
             ohlcv_history.loc[0, "date"],
         )
-    with pytest.raises(
-        StrategyError, match=r"No dataframe returned \(return statement missing\?\)."
-    ):
+    with pytest.raises(StrategyError, match=r"No dataframe returned \(return statement missing\?\)."):
         _STRATEGY.assert_df(
             None,
             len(ohlcv_history),
@@ -1030,9 +1022,7 @@ def test_auto_hyperopt_interface_loadparams(default_conf, mocker, caplog):
             "roi": {"0": 0.2, "1200": 0.01},
         },
     }
-    mocker.patch(
-        "traderpilot.strategy.hyper.HyperoptTools.load_params", return_value=expected_result
-    )
+    mocker.patch("traderpilot.strategy.hyper.HyperoptTools.load_params", return_value=expected_result)
     PairLocks.timeframe = default_conf["timeframe"]
     strategy = StrategyResolver.load_strategy(default_conf)
     assert strategy.stoploss == -0.05
@@ -1048,9 +1038,7 @@ def test_auto_hyperopt_interface_loadparams(default_conf, mocker, caplog):
         },
     }
 
-    mocker.patch(
-        "traderpilot.strategy.hyper.HyperoptTools.load_params", return_value=expected_result
-    )
+    mocker.patch("traderpilot.strategy.hyper.HyperoptTools.load_params", return_value=expected_result)
     with pytest.raises(OperationalException, match="Invalid parameter file provided."):
         StrategyResolver.load_strategy(default_conf)
 

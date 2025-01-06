@@ -122,9 +122,7 @@ class Base3ActionRLEnv(BaseEnvironment):
                 and self._position == Positions.Neutral
                 and self.can_short
             )
-            or (
-                action == Actions.Buy.value and self._position == Positions.Short and self.can_short
-            )
+            or (action == Actions.Buy.value and self._position == Positions.Short and self.can_short)
         )
 
     def _is_valid(self, action: int) -> bool:

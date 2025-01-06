@@ -94,9 +94,11 @@ def _print_objs_tabular(objs: list, print_colorized: bool) -> None:
             "status": (
                 Text("LOAD FAILED", style="bold red")
                 if s["class"] is None
-                else Text("OK", style="bold green")
-                if names.count(s["name"]) == 1
-                else Text("DUPLICATE NAME", style="bold yellow")
+                else (
+                    Text("OK", style="bold green")
+                    if names.count(s["name"]) == 1
+                    else Text("DUPLICATE NAME", style="bold yellow")
+                )
             ),
         }
         for s in objs

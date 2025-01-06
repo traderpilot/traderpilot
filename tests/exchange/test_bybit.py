@@ -189,9 +189,7 @@ def test_bybit_fetch_order_canceled_empty(default_conf_usdt, mocker):
         ("buy", "market", True, "futures", False),
     ],
 )
-def test_bybit__order_needs_price(
-    default_conf, mocker, side, order_type, uta, tradingmode, expected
-):
+def test_bybit__order_needs_price(default_conf, mocker, side, order_type, uta, tradingmode, expected):
     exchange = get_patched_exchange(mocker, default_conf, exchange="bybit")
     exchange.trading_mode = tradingmode
     exchange.unified_account = uta

@@ -431,9 +431,7 @@ class TraderpilotBot(LoggingMixin):
             except InvalidOrderException as e:
                 logger.warning(f"Error updating Order {order.order_id} due to {e}.")
                 if order.order_date_utc - timedelta(days=5) < datetime.now(timezone.utc):
-                    logger.warning(
-                        "Order is older than 5 days. Assuming order was fully cancelled."
-                    )
+                    logger.warning("Order is older than 5 days. Assuming order was fully cancelled.")
                     fo = order.to_ccxt_object()
                     fo["status"] = "canceled"
                     self.handle_cancel_order(
@@ -753,9 +751,7 @@ class TraderpilotBot(LoggingMixin):
         current_entry_profit = trade.calc_profit_ratio(current_entry_rate)
         current_exit_profit = trade.calc_profit_ratio(current_exit_rate)
 
-        min_entry_stake = self.exchange.get_min_pair_stake_amount(
-            trade.pair, current_entry_rate, 0.0
-        )
+        min_entry_stake = self.exchange.get_min_pair_stake_amount(trade.pair, current_entry_rate, 0.0)
         min_exit_stake = self.exchange.get_min_pair_stake_amount(
             trade.pair, current_exit_rate, self.strategy.stoploss
         )
@@ -1055,9 +1051,7 @@ class TraderpilotBot(LoggingMixin):
             if fully_canceled and mode != "replace":
                 # Fully canceled orders, may happen with some time in force setups (IOC).
                 # Should be handled immediately.
-                self.handle_cancel_enter(
-                    trade, order, order_obj, constants.CANCEL_REASON["TIMEOUT"]
-                )
+                self.handle_cancel_enter(trade, order, order_obj, constants.CANCEL_REASON["TIMEOUT"])
 
         return True
 
@@ -1501,16 +1495,12 @@ class TraderpilotBot(LoggingMixin):
 
                 self.cancel_stoploss_on_exchange(trade)
                 if not trade.is_open:
-                    logger.warning(
-                        f"Trade {trade} is closed, not creating trailing stoploss order."
-                    )
+                    logger.warning(f"Trade {trade} is closed, not creating trailing stoploss order.")
                     return
 
                 # Create new stoploss order
                 if not self.create_stoploss_order(trade=trade, stop_price=stoploss_norm):
-                    logger.warning(
-                        f"Could not create trailing stoploss order for pair {trade.pair}."
-                    )
+                    logger.warning(f"Could not create trailing stoploss order for pair {trade.pair}.")
 
     def manage_trade_stoploss_orders(self, trade: Trade, stoploss_orders: list[CcxtOrder]):
         """
@@ -1520,9 +1510,7 @@ class TraderpilotBot(LoggingMixin):
         :return: None
         """
         # If all stoploss ordered are canceled for some reason we add it again
-        canceled_sl_orders = [
-            o for o in stoploss_orders if o["status"] in ("canceled", "cancelled")
-        ]
+        canceled_sl_orders = [o for o in stoploss_orders if o["status"] in ("canceled", "cancelled")]
         if (
             trade.is_open
             and len(stoploss_orders) > 0
@@ -1567,9 +1555,7 @@ class TraderpilotBot(LoggingMixin):
                     order = self.exchange.fetch_order(open_order.order_id, trade.pair)
 
                 except ExchangeError:
-                    logger.info(
-                        "Cannot query order for %s due to %s", trade, traceback.format_exc()
-                    )
+                    logger.info("Cannot query order for %s due to %s", trade, traceback.format_exc())
                     continue
 
                 fully_cancelled = self.update_trade_state(trade, open_order.order_id, order)
@@ -1611,9 +1597,7 @@ class TraderpilotBot(LoggingMixin):
                 )
                 self.emergency_exit(trade, order["price"], order["amount"])
 
-    def emergency_exit(
-        self, trade: Trade, price: float, sub_trade_amt: float | None = None
-    ) -> None:
+    def emergency_exit(self, trade: Trade, price: float, sub_trade_amt: float | None = None) -> None:
         try:
             self.execute_trade_exit(
                 trade,
@@ -1653,9 +1637,7 @@ class TraderpilotBot(LoggingMixin):
         :param trade: Trade object.
         :return: None
         """
-        analyzed_df, _ = self.dataprovider.get_analyzed_dataframe(
-            trade.pair, self.strategy.timeframe
-        )
+        analyzed_df, _ = self.dataprovider.get_analyzed_dataframe(trade.pair, self.strategy.timeframe)
         latest_candle_open_date = analyzed_df.iloc[-1]["date"] if len(analyzed_df) > 0 else None
         latest_candle_close_date = timeframe_to_next_date(
             self.strategy.timeframe, latest_candle_open_date
@@ -1711,9 +1693,7 @@ class TraderpilotBot(LoggingMixin):
                             is_short=trade.is_short,
                             mode="replace",
                         ):
-                            self.replace_order_failed(
-                                trade, f"Could not replace order for {trade}."
-                            )
+                            self.replace_order_failed(trade, f"Could not replace order for {trade}.")
                     except DependencyException as exception:
                         logger.warning(f"Unable to replace order for {trade.pair}: {exception}")
                         self.replace_order_failed(trade, f"Could not replace order for {trade}.")
@@ -1780,8 +1760,7 @@ class TraderpilotBot(LoggingMixin):
             if replacing:
                 retry_count = 0
                 while (
-                    corder.get("status") not in constants.NON_OPEN_EXCHANGE_STATES
-                    and retry_count < 3
+                    corder.get("status") not in constants.NON_OPEN_EXCHANGE_STATES and retry_count < 3
                 ):
                     sleep(0.5)
                     corder = self.exchange.fetch_order(order_id, trade.pair)
@@ -1867,9 +1846,7 @@ class TraderpilotBot(LoggingMixin):
                     return False
             order_obj.tp_cancel_reason = reason
             try:
-                order = self.exchange.cancel_order_with_result(
-                    order["id"], trade.pair, trade.amount
-                )
+                order = self.exchange.cancel_order_with_result(order["id"], trade.pair, trade.amount)
             except InvalidOrderException:
                 logger.exception(f"Could not cancel {trade.exit_side} order {order_id}")
                 return False
@@ -1890,9 +1867,7 @@ class TraderpilotBot(LoggingMixin):
 
         self.update_trade_state(trade, order["id"], order)
 
-        logger.info(
-            f"{trade.exit_side.capitalize()} order {order_obj.tp_cancel_reason} for {trade}."
-        )
+        logger.info(f"{trade.exit_side.capitalize()} order {order_obj.tp_cancel_reason} for {trade}.")
         trade.close_rate = None
         trade.close_rate_requested = None
 

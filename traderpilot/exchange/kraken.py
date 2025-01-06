@@ -182,9 +182,7 @@ class Kraken(Exchange):
         :param time_in_ratio: Not used by most exchange classes
         """
         if not time_in_ratio:
-            raise OperationalException(
-                f"time_in_ratio is required for {self.name}._get_funding_fee"
-            )
+            raise OperationalException(f"time_in_ratio is required for {self.name}._get_funding_fee")
         fees: float = 0
 
         if not df.empty:

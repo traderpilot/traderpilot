@@ -74,9 +74,7 @@ class BaseParameter(ABC):
 
     def can_optimize(self):
         return (
-            self.in_space
-            and self.optimize
-            and HyperoptStateContainer.state != HyperoptState.OPTIMIZE
+            self.in_space and self.optimize and HyperoptStateContainer.state != HyperoptState.OPTIMIZE
         )
 
 

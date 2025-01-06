@@ -371,9 +371,7 @@ def check_migrate(engine, decl_base, previous_tables) -> None:
         migrating = True
         logger.info(f"Running database migration for pairlocks - backup: {pairlock_table_bak_name}")
 
-        migrate_pairlocks_table(
-            decl_base, inspector, engine, pairlock_table_bak_name, cols_pairlocks
-        )
+        migrate_pairlocks_table(decl_base, inspector, engine, pairlock_table_bak_name, cols_pairlocks)
     if "orders" not in previous_tables and "trades" in previous_tables:
         raise OperationalException(
             "Your database seems to be very old. "

@@ -186,9 +186,7 @@ class NameUpdater(ast_comments.NodeTransformer):
 
     def visit_ClassDef(self, node):
         # check if the class is derived from IStrategy
-        if any(
-            isinstance(base, ast_comments.Name) and base.id == "IStrategy" for base in node.bases
-        ):
+        if any(isinstance(base, ast_comments.Name) and base.id == "IStrategy" for base in node.bases):
             # check if the INTERFACE_VERSION variable exists
             has_interface_version = any(
                 isinstance(child, ast_comments.Assign)

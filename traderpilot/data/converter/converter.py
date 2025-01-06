@@ -173,9 +173,7 @@ def trim_dataframes(
         if not trimed_df.empty:
             processed[pair] = trimed_df
         else:
-            logger.warning(
-                f"{pair} has no data left after adjusting for startup candles, skipping."
-            )
+            logger.warning(f"{pair} has no data left after adjusting for startup candles, skipping.")
     return processed
 
 
@@ -234,8 +232,7 @@ def convert_ohlcv_format(
     logger.info(f"Converting candle (OHLCV) for timeframe {timeframes}")
 
     candle_types = [
-        CandleType.from_string(ct)
-        for ct in config.get("candle_types", [c.value for c in CandleType])
+        CandleType.from_string(ct) for ct in config.get("candle_types", [c.value for c in CandleType])
     ]
     logger.info(candle_types)
     paircombs = src.ohlcv_get_available_data(config["datadir"], TradingMode.SPOT)

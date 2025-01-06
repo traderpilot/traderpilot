@@ -199,9 +199,7 @@ class IResolver:
         if extra_dir:
             extra_dirs.append(extra_dir)
 
-        abs_paths = cls.build_search_paths(
-            config, user_subdir=cls.user_subdir, extra_dirs=extra_dirs
-        )
+        abs_paths = cls.build_search_paths(config, user_subdir=cls.user_subdir, extra_dirs=extra_dirs)
 
         found_object = cls._load_object(paths=abs_paths, object_name=object_name, kwargs=kwargs)
         if found_object:
@@ -276,9 +274,7 @@ class IResolver:
                 continue
             module_path = entry.resolve()
             logger.debug(f"Path {module_path}")
-            for obj in cls._get_valid_object(
-                module_path, object_name=None, enum_failed=enum_failed
-            ):
+            for obj in cls._get_valid_object(module_path, object_name=None, enum_failed=enum_failed):
                 objects.append(
                     {
                         "name": obj[0].__name__ if obj is not None else "",

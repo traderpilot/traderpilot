@@ -32,10 +32,7 @@ from traderpilot.data.history import get_timerange
 from traderpilot.enums import CandleType, ExitType, RunMode
 from traderpilot.exceptions import DependencyException, OperationalException
 from traderpilot.exchange import timeframe_to_next_date, timeframe_to_prev_date
-from traderpilot.optimize.backtest_caching import (
-    get_backtest_metadata_filename,
-    get_strategy_run_id,
-)
+from traderpilot.optimize.backtest_caching import get_backtest_metadata_filename, get_strategy_run_id
 from traderpilot.optimize.backtesting import Backtesting
 from traderpilot.persistence import LocalTrade, Trade
 from traderpilot.resolvers import StrategyResolver
@@ -916,9 +913,7 @@ def test_backtest_one_detail(default_conf_usdt, mocker, testdatadir, use_detail)
         assert not ln.empty
 
         # assert round(ln.iloc[0]["open"], 6) == round(t["open_rate"], 6)
-        assert (
-            round(ln.iloc[0]["low"], 6) <= round(t["open_rate"], 6) <= round(ln.iloc[0]["high"], 6)
-        )
+        assert round(ln.iloc[0]["low"], 6) <= round(t["open_rate"], 6) <= round(ln.iloc[0]["high"], 6)
         # check close trade rate aligns to close rate or is between high and low
         ln1 = data_pair.loc[data_pair["date"] == t["close_date"]]
         if use_detail:
@@ -929,9 +924,7 @@ def test_backtest_one_detail(default_conf_usdt, mocker, testdatadir, use_detail)
         ln2 = ln1_1m if ln1.empty else ln1
 
         assert (
-            round(ln2.iloc[0]["low"], 6)
-            <= round(t["close_rate"], 6)
-            <= round(ln2.iloc[0]["high"], 6)
+            round(ln2.iloc[0]["low"], 6) <= round(t["close_rate"], 6) <= round(ln2.iloc[0]["high"], 6)
         )
 
     assert late_entry > 0
@@ -1026,9 +1019,7 @@ def test_backtest_one_detail_futures(
         # Check open trade rate aligns to open rate
         assert not ln.empty
 
-        assert (
-            round(ln.iloc[0]["low"], 6) <= round(t["open_rate"], 6) <= round(ln.iloc[0]["high"], 6)
-        )
+        assert round(ln.iloc[0]["low"], 6) <= round(t["open_rate"], 6) <= round(ln.iloc[0]["high"], 6)
         # check close trade rate aligns to close rate or is between high and low
         ln1 = data_pair.loc[data_pair["date"] == t["close_date"]]
         if use_detail:
@@ -1039,9 +1030,7 @@ def test_backtest_one_detail_futures(
         ln2 = ln1_1m if ln1.empty else ln1
 
         assert (
-            round(ln2.iloc[0]["low"], 6)
-            <= round(t["close_rate"], 6)
-            <= round(ln2.iloc[0]["high"], 6)
+            round(ln2.iloc[0]["low"], 6) <= round(t["close_rate"], 6) <= round(ln2.iloc[0]["high"], 6)
         )
     assert pytest.approx(Trade.bt_trades[1].funding_fees) == exp_funding_fee
     assert ff_spy.call_count == exp_ff_updates
@@ -1525,15 +1514,11 @@ def test_backtest_multi_pair(default_conf, fee, mocker, tres, pair, testdatadir)
         x == ["ADA/BTC", "DASH/BTC", "ETH/BTC", "LTC/BTC", "NXT/BTC"] for x in distinct_calls
     )
     # But some calls should've kept the original ordering
-    assert any(
-        x == ["ADA/BTC", "DASH/BTC", "ETH/BTC", "LTC/BTC", "NXT/BTC"] for x in distinct_calls
-    )
+    assert any(x == ["ADA/BTC", "DASH/BTC", "ETH/BTC", "LTC/BTC", "NXT/BTC"] for x in distinct_calls)
     assert (
         # Ordering can be different, but should be one of the following
         any(x == ["ETH/BTC", "ADA/BTC", "DASH/BTC", "LTC/BTC", "NXT/BTC"] for x in distinct_calls)
-        or any(
-            x == ["ETH/BTC", "LTC/BTC", "ADA/BTC", "DASH/BTC", "NXT/BTC"] for x in distinct_calls
-        )
+        or any(x == ["ETH/BTC", "LTC/BTC", "ADA/BTC", "DASH/BTC", "NXT/BTC"] for x in distinct_calls)
     )
 
     # Make sure we have parallel trades
@@ -2359,9 +2344,7 @@ def test_backtest_start_nomock_futures(default_conf_usdt, mocker, caplog, testda
 
 
 @pytest.mark.filterwarnings("ignore:deprecated")
-def test_backtest_start_multi_strat_nomock_detail(
-    default_conf, mocker, caplog, testdatadir, capsys
-):
+def test_backtest_start_multi_strat_nomock_detail(default_conf, mocker, caplog, testdatadir, capsys):
     # Tests detail-data loading
     default_conf.update(
         {
@@ -2571,9 +2554,7 @@ def test_backtest_start_multi_strat_caching(
         load_backtest_metadata=load_backtest_metadata,
         load_backtest_stats=load_backtest_stats,
     )
-    mocker.patch(
-        "traderpilot.optimize.backtesting.get_strategy_run_id", side_effect=["1", "2", "2"]
-    )
+    mocker.patch("traderpilot.optimize.backtesting.get_strategy_run_id", side_effect=["1", "2", "2"])
 
     patched_configuration_load_config_file(mocker, default_conf)
 

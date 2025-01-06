@@ -205,9 +205,7 @@ def test_json_pair_trades_filename(pair, trading_mode, expected_result):
     assert isinstance(fn, Path)
     assert fn == Path(expected_result)
 
-    fn = JsonGzDataHandler._pair_trades_filename(
-        Path("traderpilot/hello/world"), pair, trading_mode
-    )
+    fn = JsonGzDataHandler._pair_trades_filename(Path("traderpilot/hello/world"), pair, trading_mode)
     assert isinstance(fn, Path)
     assert fn == Path(expected_result + ".gz")
 
@@ -498,9 +496,7 @@ def test_validate_backtest_data_warn(default_conf, mocker, caplog, testdatadir) 
     strategy = StrategyResolver.load_strategy(default_conf)
 
     data = strategy.advise_all_indicators(
-        load_data(
-            datadir=testdatadir, timeframe="1m", pairs=["UNITTEST/BTC"], fill_up_missing=False
-        )
+        load_data(datadir=testdatadir, timeframe="1m", pairs=["UNITTEST/BTC"], fill_up_missing=False)
     )
     min_date, max_date = get_timerange(data)
     caplog.clear()

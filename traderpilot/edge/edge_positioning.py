@@ -99,9 +99,7 @@ class Edge:
 
         heartbeat = self.edge_config.get("process_throttle_secs")
 
-        if (self._last_updated > 0) and (
-            self._last_updated + heartbeat > int(dt_now().timestamp())
-        ):
+        if (self._last_updated > 0) and (self._last_updated + heartbeat > int(dt_now().timestamp())):
             return False
 
         data: dict[str, Any] = {}
@@ -298,9 +296,7 @@ class Edge:
 
         result["trade_duration"] = result["close_date"] - result["open_date"]
 
-        result["trade_duration"] = result["trade_duration"].map(
-            lambda x: int(x.total_seconds() / 60)
-        )
+        result["trade_duration"] = result["trade_duration"].map(lambda x: int(x.total_seconds() / 60))
 
         # Spends, Takes, Profit, Absolute Profit
 
@@ -339,8 +335,7 @@ class Edge:
         # Removing Pumps
         if self.edge_config.get("remove_pumps", False):
             results = results[
-                results["profit_abs"]
-                < 2 * results["profit_abs"].std() + results["profit_abs"].mean()
+                results["profit_abs"] < 2 * results["profit_abs"].std() + results["profit_abs"].mean()
             ]
         ##########################################################################
 

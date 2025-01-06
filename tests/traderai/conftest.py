@@ -63,9 +63,7 @@ def traderai_conf(default_conf, tmp_path):
             "config_files": [Path("config_examples", "config_traderai.example.json")],
         }
     )
-    traderaiconf["exchange"].update(
-        {"pair_whitelist": ["ADA/BTC", "DASH/BTC", "ETH/BTC", "LTC/BTC"]}
-    )
+    traderaiconf["exchange"].update({"pair_whitelist": ["ADA/BTC", "DASH/BTC", "ETH/BTC", "LTC/BTC"]})
     return traderaiconf
 
 

@@ -149,9 +149,7 @@ class ClientProtocol:
         message_type = deserialized.get("type")
         message_data = deserialized.get("data")
 
-        self.logger.info(
-            f"Received message of type {message_type} [{message_size} bytes] @ [{name}]"
-        )
+        self.logger.info(f"Received message of type {message_type} [{message_size} bytes] @ [{name}]")
 
         time_difference = self._calculate_time_difference()
 

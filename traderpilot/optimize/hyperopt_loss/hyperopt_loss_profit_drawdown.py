@@ -20,9 +20,7 @@ DRAWDOWN_MULT = 0.075
 
 class ProfitDrawDownHyperOptLoss(IHyperOptLoss):
     @staticmethod
-    def hyperopt_loss_function(
-        results: DataFrame, starting_balance: float, *args, **kwargs
-    ) -> float:
+    def hyperopt_loss_function(results: DataFrame, starting_balance: float, *args, **kwargs) -> float:
         total_profit = results["profit_abs"].sum()
 
         try:
@@ -33,6 +31,4 @@ class ProfitDrawDownHyperOptLoss(IHyperOptLoss):
         except ValueError:
             relative_account_drawdown = 0
 
-        return -1 * (
-            total_profit - (relative_account_drawdown * total_profit) * (1 - DRAWDOWN_MULT)
-        )
+        return -1 * (total_profit - (relative_account_drawdown * total_profit) * (1 - DRAWDOWN_MULT))

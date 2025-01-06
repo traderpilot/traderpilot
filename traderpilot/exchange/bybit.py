@@ -8,12 +8,7 @@ import ccxt
 
 from traderpilot.constants import BuySell
 from traderpilot.enums import MarginMode, PriceType, TradingMode
-from traderpilot.exceptions import (
-    DDosProtection,
-    ExchangeError,
-    OperationalException,
-    TemporaryError,
-)
+from traderpilot.exceptions import DDosProtection, ExchangeError, OperationalException, TemporaryError
 from traderpilot.exchange import Exchange
 from traderpilot.exchange.common import retrier
 from traderpilot.exchange.exchange_types import CcxtOrder, FtHas
@@ -105,9 +100,7 @@ class Bybit(Exchange):
                 # Returns a tuple of bools, first for margin, second for Account
                 if is_unified and len(is_unified) > 1 and is_unified[1]:
                     self.unified_account = True
-                    logger.info(
-                        "Bybit: Unified account. Assuming dedicated subaccount for this bot."
-                    )
+                    logger.info("Bybit: Unified account. Assuming dedicated subaccount for this bot.")
                 else:
                     self.unified_account = False
                     logger.info("Bybit: Standard account.")
@@ -150,9 +143,7 @@ class Bybit(Exchange):
         # and only in spot mode
         return (
             ordertype != "market"
-            or (
-                side == "buy" and not self.unified_account and self.trading_mode == TradingMode.SPOT
-            )
+            or (side == "buy" and not self.unified_account and self.trading_mode == TradingMode.SPOT)
             or self._tp_has.get("marketOrderRequiresPrice", False)
         )
 
@@ -238,9 +229,7 @@ class Bybit(Exchange):
                 logger.warning(f"Could not update funding fees for {pair}.")
         return 0.0
 
-    def fetch_orders(
-        self, pair: str, since: datetime, params: dict | None = None
-    ) -> list[CcxtOrder]:
+    def fetch_orders(self, pair: str, since: datetime, params: dict | None = None) -> list[CcxtOrder]:
         """
         Fetch all orders for a pair "since"
         :param pair: Pair for the query

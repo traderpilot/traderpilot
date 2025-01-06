@@ -153,9 +153,7 @@ def test_get_balances_prod_kraken(default_conf, mocker):
     assert balances["BTC"]["free"] == 10.0
     assert balances["BTC"]["total"] == 10.0
     assert balances["BTC"]["used"] == 0.0
-    ccxt_exceptionhandlers(
-        mocker, default_conf, api_mock, "kraken", "get_balances", "fetch_balance"
-    )
+    ccxt_exceptionhandlers(mocker, default_conf, api_mock, "kraken", "get_balances", "fetch_balance")
 
 
 @pytest.mark.parametrize("ordertype", ["market", "limit"])
@@ -261,9 +259,7 @@ def test_create_stoploss_order_dry_run_kraken(default_conf, mocker, side):
     assert order["amount"] == 1
 
 
-@pytest.mark.parametrize(
-    "sl1,sl2,sl3,side", [(1501, 1499, 1501, "sell"), (1499, 1501, 1499, "buy")]
-)
+@pytest.mark.parametrize("sl1,sl2,sl3,side", [(1501, 1499, 1501, "sell"), (1499, 1501, 1499, "buy")])
 def test_stoploss_adjust_kraken(mocker, default_conf, sl1, sl2, sl3, side):
     exchange = get_patched_exchange(mocker, default_conf, exchange="kraken")
     order = {

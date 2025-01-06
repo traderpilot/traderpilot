@@ -219,9 +219,7 @@ class HyperoptTools:
             print(rapidjson.dumps(result_dict, default=str, number_mode=HYPER_PARAMS_FILE_FORMAT))
 
         else:
-            HyperoptTools._params_pretty_print(
-                params, "buy", "Buy hyperspace params:", non_optimized
-            )
+            HyperoptTools._params_pretty_print(params, "buy", "Buy hyperspace params:", non_optimized)
             HyperoptTools._params_pretty_print(
                 params, "sell", "Sell hyperspace params:", non_optimized
             )
@@ -438,9 +436,7 @@ class HyperoptTools:
         trials["Max drawdown percent"] = trials["Max drawdown percent"].apply(
             lambda x: f"{x * perc_multi:,.2f}%" if not isna(x) else ""
         )
-        trials["Objective"] = trials["Objective"].apply(
-            lambda x: f"{x:,.5f}" if x != 100000 else ""
-        )
+        trials["Objective"] = trials["Objective"].apply(lambda x: f"{x:,.5f}" if x != 100000 else "")
 
         trials = trials.drop(columns=["is_initial_point", "is_best", "is_profit"])
         trials.to_csv(csv_file, index=False, header=True, mode="w", encoding="UTF-8")

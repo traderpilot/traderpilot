@@ -23,9 +23,7 @@ def get_strategy_run_id(strategy) -> str:
 
     # Explicitly allow NaN values (e.g. max_open_trades).
     # as it does not matter for getting the hash.
-    digest.update(
-        rapidjson.dumps(config, default=str, number_mode=rapidjson.NM_NAN).encode("utf-8")
-    )
+    digest.update(rapidjson.dumps(config, default=str, number_mode=rapidjson.NM_NAN).encode("utf-8"))
     # Include _tp_params_from_file - so changing parameter files cause cache eviction
     digest.update(
         rapidjson.dumps(

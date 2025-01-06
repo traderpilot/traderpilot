@@ -389,17 +389,13 @@ class Configuration:
         self._args_to_config(
             config, argname="new_pairs_days", logstring="Detected --new-pairs-days: {}"
         )
-        self._args_to_config(
-            config, argname="trading_mode", logstring="Detected --trading-mode: {}"
-        )
+        self._args_to_config(config, argname="trading_mode", logstring="Detected --trading-mode: {}")
         config["candle_type_def"] = CandleType.get_default(
             config.get("trading_mode", "spot") or "spot"
         )
         config["trading_mode"] = TradingMode(config.get("trading_mode", "spot") or "spot")
         config["margin_mode"] = MarginMode(config.get("margin_mode", "") or "")
-        self._args_to_config(
-            config, argname="candle_types", logstring="Detected --candle-types: {}"
-        )
+        self._args_to_config(config, argname="candle_types", logstring="Detected --candle-types: {}")
 
     def _process_analyze_options(self, config: Config) -> None:
         configurations = [

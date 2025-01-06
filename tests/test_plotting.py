@@ -478,9 +478,7 @@ def test_plot_profit(default_conf, mocker, testdatadir):
     mocker.patch.multiple(
         "traderpilot.plot.plotting", generate_profit_graph=profit_mock, store_plot_file=store_mock
     )
-    with pytest.raises(
-        OperationalException, match=r"No trades found, cannot generate Profit-plot.*"
-    ):
+    with pytest.raises(OperationalException, match=r"No trades found, cannot generate Profit-plot.*"):
         plot_profit(default_conf)
 
     default_conf["exportfilename"] = testdatadir / "backtest_results/backtest-result.json"

@@ -288,9 +288,7 @@ async def test_get_daily_ohlcv(mocker, testdatadir):
     last_date = dt_utc(2024, 10, 28, 23)
 
     async with aiohttp.ClientSession() as session:
-        spot_path = (
-            testdatadir / "binance/binance_public_data/spot-klines-BTCUSDT-1h-2024-10-28.zip"
-        )
+        spot_path = testdatadir / "binance/binance_public_data/spot-klines-BTCUSDT-1h-2024-10-28.zip"
         get = mocker.patch(
             "traderpilot.exchange.binance_public_data.aiohttp.ClientSession.get",
             return_value=MockResponse(spot_path.read_bytes(), 200),

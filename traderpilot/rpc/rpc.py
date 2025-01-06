@@ -147,9 +147,7 @@ class RPC:
             ),
             "minimal_roi": config["minimal_roi"].copy() if "minimal_roi" in config else {},
             "stoploss": config.get("stoploss"),
-            "stoploss_on_exchange": config.get("order_types", {}).get(
-                "stoploss_on_exchange", False
-            ),
+            "stoploss_on_exchange": config.get("order_types", {}).get("stoploss_on_exchange", False),
             "trailing_stop": config.get("trailing_stop"),
             "trailing_stop_positive": config.get("trailing_stop_positive"),
             "trailing_stop_positive_offset": config.get("trailing_stop_positive_offset"),
@@ -966,10 +964,7 @@ class RPC:
         if self._traderpilot.state != State.RUNNING:
             raise RPCException("trader is not running")
 
-        if (
-            order_side == SignalDirection.SHORT
-            and self._traderpilot.trading_mode == TradingMode.SPOT
-        ):
+        if order_side == SignalDirection.SHORT and self._traderpilot.trading_mode == TradingMode.SPOT:
             raise RPCException("Can't go short on Spot markets.")
 
         if pair not in self._traderpilot.exchange.get_markets(tradable_only=True):
@@ -1001,9 +996,7 @@ class RPC:
         # check if valid pair
 
         # check if pair already has an open pair
-        trade: Trade | None = Trade.get_trades(
-            [Trade.is_open.is_(True), Trade.pair == pair]
-        ).first()
+        trade: Trade | None = Trade.get_trades([Trade.is_open.is_(True), Trade.pair == pair]).first()
         is_short = order_side == SignalDirection.SHORT
         if trade:
             is_short = trade.is_short
@@ -1197,9 +1190,7 @@ class RPC:
         locks = PairLocks.get_pair_locks(None)
         return {"lock_count": len(locks), "locks": [lock.to_json() for lock in locks]}
 
-    def _rpc_delete_lock(
-        self, lockid: int | None = None, pair: str | None = None
-    ) -> dict[str, Any]:
+    def _rpc_delete_lock(self, lockid: int | None = None, pair: str | None = None) -> dict[str, Any]:
         """Delete specific lock(s)"""
         locks: Sequence[PairLock] = []
 
@@ -1253,9 +1244,7 @@ class RPC:
             for pair in add:
                 if pair not in self._traderpilot.pairlists.blacklist:
                     try:
-                        expand_pairlist(
-                            [pair], list(self._traderpilot.exchange.get_markets().keys())
-                        )
+                        expand_pairlist([pair], list(self._traderpilot.exchange.get_markets().keys()))
                         self._traderpilot.pairlists.blacklist.append(pair)
 
                     except ValueError:
@@ -1403,9 +1392,7 @@ class RPC:
         :param timeframe: The timeframe of data to get
         :param limit: The amount of candles in the dataframe
         """
-        _data, last_analyzed = self._traderpilot.dataprovider.get_analyzed_dataframe(
-            pair, timeframe
-        )
+        _data, last_analyzed = self._traderpilot.dataprovider.get_analyzed_dataframe(pair, timeframe)
         _data = _data.copy()
 
         if limit:
@@ -1467,9 +1454,7 @@ class RPC:
             startup_candles=startup_candles,
         )
         if pair not in _data:
-            raise RPCException(
-                f"No data for {pair}, {timeframe} in {config.get('timerange')} found."
-            )
+            raise RPCException(f"No data for {pair}, {timeframe} in {config.get('timerange')} found.")
 
         strategy.dp = DataProvider(config, exchange=exchange, pairlists=None)
         strategy.tp_bot_start()

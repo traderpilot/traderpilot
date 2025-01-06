@@ -208,9 +208,7 @@ class Okx(Exchange):
         return order
 
     @retrier(retries=API_RETRY_COUNT)
-    def fetch_stoploss_order(
-        self, order_id: str, pair: str, params: dict | None = None
-    ) -> CcxtOrder:
+    def fetch_stoploss_order(self, order_id: str, pair: str, params: dict | None = None) -> CcxtOrder:
         if self._config["dry_run"]:
             return self.fetch_dry_run_order(order_id)
 

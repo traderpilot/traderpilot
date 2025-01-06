@@ -310,9 +310,7 @@ class Telegram(RPCHandler):
             CallbackQueryHandler(self._profit, pattern="update_profit"),
             CallbackQueryHandler(self._balance, pattern="update_balance"),
             CallbackQueryHandler(self._performance, pattern="update_performance"),
-            CallbackQueryHandler(
-                self._enter_tag_performance, pattern="update_enter_tag_performance"
-            ),
+            CallbackQueryHandler(self._enter_tag_performance, pattern="update_enter_tag_performance"),
             CallbackQueryHandler(
                 self._exit_reason_performance, pattern="update_exit_reason_performance"
             ),
@@ -418,9 +416,7 @@ class Telegram(RPCHandler):
         message += "`\n"
         message += f"*Open Rate:* `{fmt_coin2(msg['open_rate'], msg['quote_currency'])}`\n"
         if msg["type"] == RPCMessageType.ENTRY and msg["current_rate"]:
-            message += (
-                f"*Current Rate:* `{fmt_coin2(msg['current_rate'], msg['quote_currency'])}`\n"
-            )
+            message += f"*Current Rate:* `{fmt_coin2(msg['current_rate'], msg['quote_currency'])}`\n"
 
         profit_fiat_extra = self.__format_profit_fiat(msg, "stake_amount")  # type: ignore
         total = fmt_coin(msg["stake_amount"], msg["quote_currency"])
@@ -430,9 +426,7 @@ class Telegram(RPCHandler):
         return message
 
     def _format_exit_msg(self, msg: RPCExitMsg) -> str:
-        duration = msg["close_date"].replace(microsecond=0) - msg["open_date"].replace(
-            microsecond=0
-        )
+        duration = msg["close_date"].replace(microsecond=0) - msg["open_date"].replace(microsecond=0)
         duration_min = duration.total_seconds() / 60
 
         leverage_text = (
@@ -487,9 +481,7 @@ class Telegram(RPCHandler):
             f"*Open Rate:* `{fmt_coin2(msg['open_rate'], msg['quote_currency'])}`\n"
         )
         if msg["type"] == RPCMessageType.EXIT and msg["current_rate"]:
-            message += (
-                f"*Current Rate:* `{fmt_coin2(msg['current_rate'], msg['quote_currency'])}`\n"
-            )
+            message += f"*Current Rate:* `{fmt_coin2(msg['current_rate'], msg['quote_currency'])}`\n"
             if msg["order_rate"]:
                 message += f"*Exit Rate:* `{fmt_coin2(msg['order_rate'], msg['quote_currency'])}`"
         elif msg["type"] == RPCMessageType.EXIT_FILL:
@@ -525,9 +517,7 @@ class Telegram(RPCHandler):
         elif msg["type"] == RPCMessageType.EXIT or msg["type"] == RPCMessageType.EXIT_FILL:
             message = self._format_exit_msg(msg)
 
-        elif (
-            msg["type"] == RPCMessageType.ENTRY_CANCEL or msg["type"] == RPCMessageType.EXIT_CANCEL
-        ):
+        elif msg["type"] == RPCMessageType.ENTRY_CANCEL or msg["type"] == RPCMessageType.EXIT_CANCEL:
             message_side = "enter" if msg["type"] == RPCMessageType.ENTRY_CANCEL else "exit"
             message = (
                 f"\N{WARNING SIGN} *{self._exchange_from_msg(msg)}:* "
@@ -683,9 +673,7 @@ class Telegram(RPCHandler):
         for r in results:
             lines = ["*Order List for Trade #*`{trade_id}`"]
 
-            lines_detail = self._prepare_order_details(
-                r["orders"], r["quote_currency"], r["is_open"]
-            )
+            lines_detail = self._prepare_order_details(r["orders"], r["quote_currency"], r["is_open"])
             lines.extend(lines_detail if lines_detail else "")
             await self.__send_order_msg(lines, r)
 
@@ -1406,9 +1394,7 @@ class Telegram(RPCHandler):
         else:
             whitelist = self._rpc._rpc_whitelist()["whitelist"]
             pair_buttons = [
-                InlineKeyboardButton(
-                    text=pair, callback_data=f"force_enter__{pair}_||_{order_side}"
-                )
+                InlineKeyboardButton(text=pair, callback_data=f"force_enter__{pair}_||_{order_side}")
                 for pair in sorted(whitelist)
             ]
             buttons_aligned = self._layout_inline_keyboard(pair_buttons)
@@ -1672,10 +1658,7 @@ class Telegram(RPCHandler):
 
         for locks in chunks(rpc_locks["locks"], 25):
             message = tabulate(
-                [
-                    [lock["id"], lock["pair"], lock["lock_end_time"], lock["reason"]]
-                    for lock in locks
-                ],
+                [[lock["id"], lock["pair"], lock["lock_end_time"], lock["reason"]] for lock in locks],
                 headers=["ID", "Pair", "Until", "Reason"],
                 tablefmt="simple",
             )
@@ -2022,9 +2005,7 @@ class Telegram(RPCHandler):
             return
 
         try:
-            await query.edit_message_text(
-                text=msg, parse_mode=parse_mode, reply_markup=reply_markup
-            )
+            await query.edit_message_text(text=msg, parse_mode=parse_mode, reply_markup=reply_markup)
         except BadRequest as e:
             if "not modified" in e.message.lower():
                 pass

@@ -5,14 +5,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from tests.conftest import (
-    EXMS,
-    create_mock_trades,
-    get_patched_exchange,
-    is_arm,
-    is_mac,
-    log_has_re,
-)
+from tests.conftest import EXMS, create_mock_trades, get_patched_exchange, is_arm, is_mac, log_has_re
 from tests.traderai.conftest import (
     get_patched_traderai_strategy,
     make_rl_config,
@@ -68,9 +61,7 @@ def test_extract_data_and_train_model_Standard(
     traderai_conf.update({"timerange": "20180110-20180130"})
     traderai_conf.update({"strategy": "traderai_test_strat"})
     traderai_conf["traderai"]["feature_parameters"].update({"principal_component_analysis": pca})
-    traderai_conf["traderai"]["feature_parameters"].update(
-        {"use_DBSCAN_to_remove_outliers": dbscan}
-    )
+    traderai_conf["traderai"]["feature_parameters"].update({"use_DBSCAN_to_remove_outliers": dbscan})
     traderai_conf.update({"reduce_df_footprint": float32})
     traderai_conf["traderai"]["feature_parameters"].update({"shuffle_after_split": shuffle})
     traderai_conf["traderai"]["feature_parameters"].update({"buffer_train_data_candles": buffer})
@@ -431,9 +422,7 @@ def test_backtesting_fit_live_predictions(mocker, traderai_conf, caplog):
     timerange = TimeRange.parse_timerange("20180128-20180130")
     traderai.dd.load_all_pair_histories(timerange, traderai.dk)
     sub_timerange = TimeRange.parse_timerange("20180129-20180130")
-    corr_df, base_df = traderai.dd.get_base_and_corr_dataframes(
-        sub_timerange, "LTC/BTC", traderai.dk
-    )
+    corr_df, base_df = traderai.dd.get_base_and_corr_dataframes(sub_timerange, "LTC/BTC", traderai.dk)
     df = traderai.dk.use_strategy_to_populate_indicators(strategy, corr_df, base_df, "LTC/BTC")
     df = strategy.set_traderai_targets(df.copy(), metadata={"pair": "LTC/BTC"})
     df = traderai.dk.remove_special_chars_from_feature_names(df)

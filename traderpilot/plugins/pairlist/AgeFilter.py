@@ -108,9 +108,7 @@ class AgeFilter(IPairList):
             # Remove pairs that have been removed before
             return [p for p in pairlist if p not in self._symbolsCheckFailed]
 
-        since_days = (
-            -(self._max_days_listed if self._max_days_listed else self._min_days_listed) - 1
-        )
+        since_days = -(self._max_days_listed if self._max_days_listed else self._min_days_listed) - 1
         since_ms = dt_ts(dt_floor_day(dt_now()) + timedelta(days=since_days))
         candles = self._exchange.refresh_latest_ohlcv(needed_pairs, since_ms=since_ms, cache=False)
         if self._enabled:

@@ -485,9 +485,7 @@ class IDataHandler(ABC):
                     f"data ends at {pairdata.iloc[-1]['date']:%Y-%m-%d %H:%M:%S}"
                 )
 
-    def rename_futures_data(
-        self, pair: str, new_pair: str, timeframe: str, candle_type: CandleType
-    ):
+    def rename_futures_data(self, pair: str, new_pair: str, timeframe: str, candle_type: CandleType):
         """
         Temporary method to migrate data from old naming to new naming (BTC/USDT -> BTC/USDT:USDT)
         Only used for binance to support the binance futures naming unification.
@@ -512,9 +510,7 @@ class IDataHandler(ABC):
         ]
 
         if funding_rate_combs:
-            logger.warning(
-                f"Migrating {len(funding_rate_combs)} funding fees to correct timeframe."
-            )
+            logger.warning(f"Migrating {len(funding_rate_combs)} funding fees to correct timeframe.")
 
         for pair, timeframe, candletype in funding_rate_combs:
             old_name = self._pair_data_filename(self._datadir, pair, timeframe, candletype)

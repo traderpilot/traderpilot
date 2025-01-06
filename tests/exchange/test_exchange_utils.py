@@ -2,15 +2,7 @@
 from datetime import datetime, timedelta, timezone
 
 import pytest
-from ccxt import (
-    DECIMAL_PLACES,
-    ROUND,
-    ROUND_DOWN,
-    ROUND_UP,
-    SIGNIFICANT_DIGITS,
-    TICK_SIZE,
-    TRUNCATE,
-)
+from ccxt import DECIMAL_PLACES, ROUND, ROUND_DOWN, ROUND_UP, SIGNIFICANT_DIGITS, TICK_SIZE, TRUNCATE
 
 from tests.conftest import log_has_re
 from traderpilot.enums import RunMode
@@ -78,9 +70,7 @@ def test_check_exchange(default_conf, caplog) -> None:
 
     # Test a 'bad' exchange, which known to have serious problems
     default_conf.get("exchange").update({"name": "bitmex"})
-    with pytest.raises(
-        OperationalException, match=r"Exchange .* will not work with Traderpilot\..*"
-    ):
+    with pytest.raises(OperationalException, match=r"Exchange .* will not work with Traderpilot\..*"):
         check_exchange(default_conf)
     caplog.clear()
 
@@ -112,9 +102,7 @@ def test_check_exchange(default_conf, caplog) -> None:
     # Test no exchange...
     default_conf.get("exchange").update({"name": ""})
     default_conf["runmode"] = RunMode.UTIL_EXCHANGE
-    with pytest.raises(
-        OperationalException, match=r"This command requires a configured exchange.*"
-    ):
+    with pytest.raises(OperationalException, match=r"This command requires a configured exchange.*"):
         check_exchange(default_conf)
 
 
@@ -363,8 +351,7 @@ def test_amount_to_precision(
 )
 def test_price_to_precision(price, precision_mode, precision, expected, rounding_mode):
     assert (
-        price_to_precision(price, precision, precision_mode, rounding_mode=rounding_mode)
-        == expected
+        price_to_precision(price, precision, precision_mode, rounding_mode=rounding_mode) == expected
     )
 
 

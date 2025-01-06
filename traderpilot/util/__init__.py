@@ -23,10 +23,7 @@ from traderpilot.util.progress_tracker import (  # noqa F401
 )
 from traderpilot.util.rich_progress import CustomProgress
 from traderpilot.util.rich_tables import print_df_rich_table, print_rich_table
-from traderpilot.util.template_renderer import (  # noqa
-    render_template,
-    render_template_with_fallback,
-)
+from traderpilot.util.template_renderer import render_template, render_template_with_fallback  # noqa
 
 
 __all__ = [

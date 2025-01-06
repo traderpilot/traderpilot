@@ -253,9 +253,7 @@ class PercentChangePairList(IPairList):
                 timeframe_to_prev_date(
                     self._lookback_timeframe,
                     dt_now()
-                    + timedelta(
-                        minutes=-(self._lookback_period * self._tf_in_min) - self._tf_in_min
-                    ),
+                    + timedelta(minutes=-(self._lookback_period * self._tf_in_min) - self._tf_in_min),
                 ).timestamp()
             )
             * 1000

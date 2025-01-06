@@ -25,9 +25,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.get(
-    "/pairlists/available", response_model=PairListsResponse, tags=["pairlists", "webserver"]
-)
+@router.get("/pairlists/available", response_model=PairListsResponse, tags=["pairlists", "webserver"])
 def list_pairlists(config=Depends(get_config)):
     from traderpilot.resolvers import PairListResolver
 

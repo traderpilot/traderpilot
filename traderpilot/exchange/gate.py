@@ -137,9 +137,7 @@ class Gate(Exchange):
     def get_order_id_conditional(self, order: CcxtOrder) -> str:
         return safe_value_fallback2(order, order, "id_stop", "id")
 
-    def fetch_stoploss_order(
-        self, order_id: str, pair: str, params: dict | None = None
-    ) -> CcxtOrder:
+    def fetch_stoploss_order(self, order_id: str, pair: str, params: dict | None = None) -> CcxtOrder:
         order = self.fetch_order(order_id=order_id, pair=pair, params={"stop": True})
         if order.get("status", "open") == "closed":
             # Places a real order - which we need to fetch explicitly.

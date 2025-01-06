@@ -162,9 +162,7 @@ def test_rpc_trade_status(default_conf, ticker, fee, mocker) -> None:
             "has_open_orders": True,
         }
     )
-    response_unfilled["orders"][0].update(
-        {"is_open": True, "filled": 0.0, "remaining": 91.07468123}
-    )
+    response_unfilled["orders"][0].update({"is_open": True, "filled": 0.0, "remaining": 91.07468123})
     assert results[0] == response_unfilled
 
     # Open order without remaining
@@ -313,9 +311,7 @@ def test_rpc_status_table(default_conf, ticker, fee, mocker) -> None:
     assert isnan(fiat_profit_sum)
 
 
-def test__rpc_timeunit_profit(
-    default_conf_usdt, ticker, fee, markets, mocker, time_machine
-) -> None:
+def test__rpc_timeunit_profit(default_conf_usdt, ticker, fee, markets, mocker, time_machine) -> None:
     time_machine.move_to("2023-09-05 10:00:00 +00:00", tick=False)
 
     mocker.patch("traderpilot.rpc.telegram.Telegram", MagicMock())
@@ -1218,9 +1214,7 @@ def test_rpc_force_entry(mocker, default_conf, ticker, fee, limit_buy_order_open
         rpc._rpc_force_entry("LTC/NOTHING", 0.0001)
 
     # Test buy pair not with stakes
-    with pytest.raises(
-        RPCException, match=r"Wrong pair selected. Only pairs with stake-currency.*"
-    ):
+    with pytest.raises(RPCException, match=r"Wrong pair selected. Only pairs with stake-currency.*"):
         rpc._rpc_force_entry("LTC/ETH", 0.0001)
 
     # Test with defined stake_amount

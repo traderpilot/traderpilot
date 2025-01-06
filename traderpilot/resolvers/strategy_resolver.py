@@ -13,12 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from traderpilot.configuration.config_validation import validate_migrated_strategy_settings
-from traderpilot.constants import (
-    REQUIRED_ORDERTIF,
-    REQUIRED_ORDERTYPES,
-    USERPATH_STRATEGIES,
-    Config,
-)
+from traderpilot.constants import REQUIRED_ORDERTIF, REQUIRED_ORDERTYPES, USERPATH_STRATEGIES, Config
 from traderpilot.enums import TradingMode
 from traderpilot.exceptions import OperationalException
 from traderpilot.resolvers import IResolver
@@ -108,9 +103,7 @@ class StrategyResolver(IResolver):
         - Strategy
         - default (if not None)
         """
-        if attribute in config and not isinstance(
-            getattr(type(strategy), attribute, None), property
-        ):
+        if attribute in config and not isinstance(getattr(type(strategy), attribute, None), property):
             # Ensure Properties are not overwritten
             setattr(strategy, attribute, config[attribute])
             logger.info(
@@ -223,9 +216,9 @@ class StrategyResolver(IResolver):
                 raise OperationalException(
                     "`populate_entry_trend` or `populate_buy_trend` must be implemented."
                 )
-            if not check_override(
-                strategy, IStrategy, "populate_sell_trend"
-            ) and not check_override(strategy, IStrategy, "populate_exit_trend"):
+            if not check_override(strategy, IStrategy, "populate_sell_trend") and not check_override(
+                strategy, IStrategy, "populate_exit_trend"
+            ):
                 raise OperationalException(
                     "`populate_exit_trend` or `populate_sell_trend` must be implemented."
                 )
@@ -250,9 +243,7 @@ class StrategyResolver(IResolver):
         return strategy
 
     @staticmethod
-    def _load_strategy(
-        strategy_name: str, config: Config, extra_dir: str | None = None
-    ) -> IStrategy:
+    def _load_strategy(strategy_name: str, config: Config, extra_dir: str | None = None) -> IStrategy:
         """
         Search and loads the specified strategy.
         :param strategy_name: name of the module to import

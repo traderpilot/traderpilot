@@ -80,9 +80,7 @@ class HyperOptimizer:
         self.custom_hyperopt.strategy = self.backtesting.strategy
 
         self.hyperopt_pickle_magic(self.backtesting.strategy.__class__.__bases__)
-        self.custom_hyperoptloss: IHyperOptLoss = HyperOptLossResolver.load_hyperoptloss(
-            self.config
-        )
+        self.custom_hyperoptloss: IHyperOptLoss = HyperOptLossResolver.load_hyperoptloss(self.config)
         self.calculate_loss = self.custom_hyperoptloss.hyperopt_loss_function
 
         self.data_pickle_file = (
@@ -125,9 +123,7 @@ class HyperOptimizer:
                 cloudpickle.register_pickle_by_value(sys.modules[modules.__module__])
                 self.hyperopt_pickle_magic(modules.__bases__)
 
-    def _get_params_dict(
-        self, dimensions: list[Dimension], raw_params: list[Any]
-    ) -> dict[str, Any]:
+    def _get_params_dict(self, dimensions: list[Dimension], raw_params: list[Any]) -> dict[str, Any]:
         # Ensure the number of dimensions match
         # the number of parameters in the list.
         if len(raw_params) != len(dimensions):

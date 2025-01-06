@@ -81,9 +81,7 @@ class TraderaiExampleStrategy(IStrategy):
         dataframe["%-sma-period"] = ta.SMA(dataframe, timeperiod=period)
         dataframe["%-ema-period"] = ta.EMA(dataframe, timeperiod=period)
 
-        bollinger = qtpylib.bollinger_bands(
-            qtpylib.typical_price(dataframe), window=period, stds=2.2
-        )
+        bollinger = qtpylib.bollinger_bands(qtpylib.typical_price(dataframe), window=period, stds=2.2)
         dataframe["bb_lowerband-period"] = bollinger["lower"]
         dataframe["bb_middleband-period"] = bollinger["mid"]
         dataframe["bb_upperband-period"] = bollinger["upper"]
@@ -241,9 +239,10 @@ class TraderaiExampleStrategy(IStrategy):
         ]
 
         if enter_long_conditions:
-            df.loc[
-                reduce(lambda x, y: x & y, enter_long_conditions), ["enter_long", "enter_tag"]
-            ] = (1, "long")
+            df.loc[reduce(lambda x, y: x & y, enter_long_conditions), ["enter_long", "enter_tag"]] = (
+                1,
+                "long",
+            )
 
         enter_short_conditions = [
             df["do_predict"] == 1,

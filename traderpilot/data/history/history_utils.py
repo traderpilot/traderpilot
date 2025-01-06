@@ -532,9 +532,7 @@ def refresh_backtest_trades_data(
             except ValueError as e:
                 pairs_not_available.append(f"{pair}: {str(e)}")
             except Exception:
-                logger.exception(
-                    f'Failed to download and store historic trades for pair: "{pair}". '
-                )
+                logger.exception(f'Failed to download and store historic trades for pair: "{pair}". ')
 
             progress.update(pair_task, advance=1)
 

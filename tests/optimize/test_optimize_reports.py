@@ -393,9 +393,7 @@ def test_generate_pair_metrics():
     assert isinstance(pair_results, list)
     assert len(pair_results) == 2
     assert pair_results[-1]["key"] == "TOTAL"
-    assert (
-        pytest.approx(pair_results[-1]["profit_mean_pct"]) == pair_results[-1]["profit_mean"] * 100
-    )
+    assert pytest.approx(pair_results[-1]["profit_mean_pct"]) == pair_results[-1]["profit_mean"] * 100
     assert pytest.approx(pair_results[-1]["profit_sum_pct"]) == pair_results[-1]["profit_sum"] * 100
 
 

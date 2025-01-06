@@ -346,8 +346,7 @@ class BaseReinforcementLearningModel(ITraderaiModel):
             )
         elif prices_train.empty:
             raise OperationalException(
-                "No prices found, please follow log warning "
-                "instructions to correct the strategy."
+                "No prices found, please follow log warning " "instructions to correct the strategy."
             )
 
         prices_train.rename(columns=rename_dict, inplace=True)

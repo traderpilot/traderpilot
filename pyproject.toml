@@ -158,7 +158,7 @@ namespaces = true
 version = {attr = "traderpilot.__version__"}
 
 [tool.black]
-line-length = 100
+line-length = 102
 exclude = '''
 (
   /(
@@ -179,7 +179,7 @@ exclude = '''
 '''
 
 [tool.isort]
-line_length = 100
+line_length = 102
 profile = "black"
 # multi_line_output=3
 lines_after_imports=2
@@ -245,7 +245,7 @@ reportTypedDictNotRequiredAccess = false  # 27
 
 
 [tool.ruff]
-line-length = 100
+line-length = 102
 extend-exclude = [".env", ".venv"]
 
 [tool.ruff.lint]
@@ -319,7 +319,7 @@ known-first-party = ["traderpilot_client"]
 # Default from https://flake8.pycqa.org/en/latest/user/options.html#cmdoption-flake8-ignore
 # minus E226
 ignore = ["E121","E123","E126","E24", "E203","E704","W503","W504"]
-max-line-length = 100
+max-line-length = 102
 max-complexity = 12
 exclude = [
     ".git",

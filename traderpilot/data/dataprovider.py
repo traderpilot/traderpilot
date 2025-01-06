@@ -53,9 +53,7 @@ class DataProvider:
         self.__slice_date: datetime | None = None
 
         self.__cached_pairs_backtesting: dict[PairWithTimeframe, DataFrame] = {}
-        self.__producer_pairs_df: dict[
-            str, dict[PairWithTimeframe, tuple[DataFrame, datetime]]
-        ] = {}
+        self.__producer_pairs_df: dict[str, dict[PairWithTimeframe, tuple[DataFrame, datetime]]] = {}
         self.__producer_pairs: dict[str, list[str]] = {}
         self._msg_queue: deque = deque()
 
@@ -307,9 +305,7 @@ class DataProvider:
         saved_pair: PairWithTimeframe = (pair, str(timeframe), _candle_type)
         if saved_pair not in self.__cached_pairs_backtesting:
             timerange = TimeRange.parse_timerange(
-                None
-                if self._config.get("timerange") is None
-                else str(self._config.get("timerange"))
+                None if self._config.get("timerange") is None else str(self._config.get("timerange"))
             )
 
             startup_candles = self.get_required_startup(str(timeframe))

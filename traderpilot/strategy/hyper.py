@@ -47,9 +47,7 @@ class HyperStrategyMixin:
         :return:
         """
         if category not in ("buy", "sell", "protection", None):
-            raise OperationalException(
-                'Category must be one of: "buy", "sell", "protection", None.'
-            )
+            raise OperationalException('Category must be one of: "buy", "sell", "protection", None.')
 
         if category is None:
             params = self.tp_buy_params + self.tp_sell_params + self.tp_protection_params
@@ -88,9 +86,7 @@ class HyperStrategyMixin:
                 "max_open_trades", getattr(self, "max_open_trades", -1)
             )
             trailing = params.get("trailing", {})
-            self.trailing_stop = trailing.get(
-                "trailing_stop", getattr(self, "trailing_stop", False)
-            )
+            self.trailing_stop = trailing.get("trailing_stop", getattr(self, "trailing_stop", False))
             self.trailing_stop_positive = trailing.get(
                 "trailing_stop_positive", getattr(self, "trailing_stop_positive", None)
             )

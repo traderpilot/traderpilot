@@ -62,9 +62,7 @@ class ReinforcementLearner_multiproc(ReinforcementLearner):
         self.eval_env = VecMonitor(
             SubprocVecEnv(
                 [
-                    make_env(
-                        self.MyRLEnv, eval_env_id, i, 1, test_df, prices_test, env_info=env_info
-                    )
+                    make_env(self.MyRLEnv, eval_env_id, i, 1, test_df, prices_test, env_info=env_info)
                     for i in range(self.max_threads)
                 ]
             )

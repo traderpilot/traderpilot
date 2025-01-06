@@ -44,9 +44,7 @@ class PyTorchMLPClassifier(BasePyTorchClassifier):
 
     @property
     def data_convertor(self) -> PyTorchDataConvertor:
-        return DefaultPyTorchDataConvertor(
-            target_tensor_type=torch.long, squeeze_target_tensor=True
-        )
+        return DefaultPyTorchDataConvertor(target_tensor_type=torch.long, squeeze_target_tensor=True)
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)

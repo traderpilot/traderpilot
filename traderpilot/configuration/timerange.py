@@ -173,8 +173,6 @@ class TimeRange:
                     else:
                         stop = int(stops)
                 if start > stop > 0:
-                    raise ConfigurationError(
-                        f'Start date is after stop date for timerange "{text}"'
-                    )
+                    raise ConfigurationError(f'Start date is after stop date for timerange "{text}"')
                 return cls(stype[0], stype[1], start, stop)
         raise ConfigurationError(f'Incorrect syntax for timerange "{text}"')

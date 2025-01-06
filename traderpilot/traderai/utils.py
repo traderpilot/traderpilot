@@ -84,9 +84,7 @@ def get_required_data_timerange(config: Config) -> TimeRange:
 
     additional_seconds = max_period * max_tf_seconds
 
-    startts = int(
-        time - config["traderai"].get("train_period_days", 0) * 86400 - additional_seconds
-    )
+    startts = int(time - config["traderai"].get("train_period_days", 0) * 86400 - additional_seconds)
     stopts = int(time)
     data_load_timerange = TimeRange("date", "date", startts, stopts)
 

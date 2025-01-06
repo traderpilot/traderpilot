@@ -588,9 +588,7 @@ def test_hyperopt_with_arguments(mocker, default_conf, caplog) -> None:
 
     assert "epochs" in config
     assert int(config["epochs"]) == 10
-    assert log_has(
-        "Parameter --epochs detected ... Will run Hyperopt with for 10 epochs ...", caplog
-    )
+    assert log_has("Parameter --epochs detected ... Will run Hyperopt with for 10 epochs ...", caplog)
 
     assert "spaces" in config
     assert config["spaces"] == ["all"]

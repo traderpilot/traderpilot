@@ -78,8 +78,7 @@ def test_load_strategy_base64(dataframe_1m, caplog, default_conf):
     assert "rsi" in strategy.advise_indicators(dataframe_1m, {"pair": "ETH/BTC"})
     # Make sure strategy was loaded from base64 (using temp directory)!!
     assert log_has_re(
-        r"Using resolved strategy SampleStrategy from '"
-        r".*(/|\\).*(/|\\)SampleStrategy\.py'\.\.\.",
+        r"Using resolved strategy SampleStrategy from '" r".*(/|\\).*(/|\\)SampleStrategy\.py'\.\.\.",
         caplog,
     )
 
@@ -89,9 +88,7 @@ def test_load_strategy_invalid_directory(caplog, default_conf, tmp_path):
 
     extra_dir = Path.cwd() / "some/path"
     with pytest.raises(OperationalException, match=r"Impossible to load Strategy.*"):
-        StrategyResolver._load_strategy(
-            "StrategyTestV333", config=default_conf, extra_dir=extra_dir
-        )
+        StrategyResolver._load_strategy("StrategyTestV333", config=default_conf, extra_dir=extra_dir)
 
     assert log_has_re(r"Path .*" + r"some.*path.*" + r".* does not exist", caplog)
 
@@ -226,9 +223,7 @@ def test_strategy_override_trailing_stop_positive(caplog, default_conf):
 def test_strategy_override_timeframe(caplog, default_conf):
     caplog.set_level(logging.INFO)
 
-    default_conf.update(
-        {"strategy": CURRENT_TEST_STRATEGY, "timeframe": 60, "stake_currency": "ETH"}
-    )
+    default_conf.update({"strategy": CURRENT_TEST_STRATEGY, "timeframe": 60, "stake_currency": "ETH"})
     strategy = StrategyResolver.load_strategy(default_conf)
 
     assert strategy.timeframe == 60
@@ -304,9 +299,7 @@ def test_strategy_override_order_tif(caplog, default_conf):
         caplog,
     )
 
-    default_conf.update(
-        {"strategy": CURRENT_TEST_STRATEGY, "order_time_in_force": {"entry": "FOK"}}
-    )
+    default_conf.update({"strategy": CURRENT_TEST_STRATEGY, "order_time_in_force": {"entry": "FOK"}})
     # Raise error for invalid configuration
     with pytest.raises(
         ImportError,
@@ -465,9 +458,7 @@ def test_call_deprecated_function(default_conf):
     default_location = Path(__file__).parent / "strats/broken_strats/"
     del default_conf["timeframe"]
     default_conf.update({"strategy": "TestStrategyLegacyV1", "strategy_path": default_location})
-    with pytest.raises(
-        OperationalException, match=r"Strategy Interface v1 is no longer supported.*"
-    ):
+    with pytest.raises(OperationalException, match=r"Strategy Interface v1 is no longer supported.*"):
         StrategyResolver.load_strategy(default_conf)
 
 

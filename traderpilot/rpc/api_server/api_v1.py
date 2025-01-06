@@ -458,9 +458,7 @@ def list_exchanges(config=Depends(get_config)):
     }
 
 
-@router.get(
-    "/hyperoptloss", response_model=HyperoptLossListResponse, tags=["hyperopt", "webserver"]
-)
+@router.get("/hyperoptloss", response_model=HyperoptLossListResponse, tags=["hyperopt", "webserver"])
 def list_hyperoptloss(
     config=Depends(get_config),
 ):

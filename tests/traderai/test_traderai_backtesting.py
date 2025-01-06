@@ -81,9 +81,7 @@ def test_traderai_backtest_load_data(
     mocker.patch("traderpilot.optimize.backtesting.history.load_data")
     mocker.patch("traderpilot.optimize.backtesting.history.get_timerange", return_value=(now, now))
     traderai_conf["timeframe"] = timeframe
-    traderai_conf.get("traderai", {}).get("feature_parameters", {}).update(
-        {"include_timeframes": []}
-    )
+    traderai_conf.get("traderai", {}).get("feature_parameters", {}).update({"include_timeframes": []})
     backtesting = Backtesting(deepcopy(traderai_conf))
     backtesting.load_bt_data()
 

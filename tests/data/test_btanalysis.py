@@ -85,9 +85,7 @@ def test_load_backtest_metadata(mocker, testdatadir):
 
     mocker.patch("traderpilot.data.btanalysis.get_backtest_metadata_filename")
     mocker.patch("traderpilot.data.btanalysis.json_load", side_effect=Exception())
-    with pytest.raises(
-        OperationalException, match=r"Unexpected error.*loading backtest metadata\."
-    ):
+    with pytest.raises(OperationalException, match=r"Unexpected error.*loading backtest metadata\."):
         load_backtest_metadata(testdatadir / "nonexistent.file.json")
 
 

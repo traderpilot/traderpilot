@@ -196,9 +196,7 @@ class Hyperliquid(Exchange):
 
         return order
 
-    def fetch_orders(
-        self, pair: str, since: datetime, params: dict | None = None
-    ) -> list[CcxtOrder]:
+    def fetch_orders(self, pair: str, since: datetime, params: dict | None = None) -> list[CcxtOrder]:
         orders = super().fetch_orders(pair, since, params)
         for idx, order in enumerate(deepcopy(orders)):
             order2 = self._adjust_hyperliquid_order(order)

@@ -79,9 +79,7 @@ def test_copy_sample_files(mocker, tmp_path) -> None:
     copy_sample_files(Path(f"{tmp_path}/bar"))
     assert copymock.call_count == 3
     assert copymock.call_args_list[0][0][1] == str(tmp_path / "bar/strategies/sample_strategy.py")
-    assert copymock.call_args_list[1][0][1] == str(
-        tmp_path / "bar/hyperopts/sample_hyperopt_loss.py"
-    )
+    assert copymock.call_args_list[1][0][1] == str(tmp_path / "bar/hyperopts/sample_hyperopt_loss.py")
     assert copymock.call_args_list[2][0][1] == str(
         tmp_path / "bar/notebooks/strategy_analysis_example.ipynb"
     )

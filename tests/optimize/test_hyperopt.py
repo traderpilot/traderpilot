@@ -606,9 +606,7 @@ def test_generate_optimizer(mocker, hyperopt_conf) -> None:
     hyperopt.hyperopter.min_date = dt_utc(2017, 12, 10)
     hyperopt.hyperopter.max_date = dt_utc(2017, 12, 13)
     hyperopt.hyperopter.init_spaces()
-    generate_optimizer_value = hyperopt.hyperopter.generate_optimizer(
-        list(optimizer_param.values())
-    )
+    generate_optimizer_value = hyperopt.hyperopter.generate_optimizer(list(optimizer_param.values()))
     assert generate_optimizer_value == response_expected
 
 
@@ -619,9 +617,7 @@ def test_clean_hyperopt(mocker, hyperopt_conf, caplog):
         "traderpilot.strategy.hyper.HyperStrategyMixin.load_params_from_file",
         MagicMock(return_value={}),
     )
-    mocker.patch(
-        "traderpilot.optimize.hyperopt.hyperopt.Path.is_file", MagicMock(return_value=True)
-    )
+    mocker.patch("traderpilot.optimize.hyperopt.hyperopt.Path.is_file", MagicMock(return_value=True))
     unlinkmock = mocker.patch("traderpilot.optimize.hyperopt.hyperopt.Path.unlink", MagicMock())
     h = Hyperopt(hyperopt_conf)
 
@@ -745,8 +741,7 @@ def test_print_json_spaces_default(mocker, hyperopt_conf, capsys) -> None:
 
     out, _err = capsys.readouterr()
     assert (
-        '{"params":{"mfi-value":null,"sell-mfi-value":null},"minimal_roi":{},"stoploss":null}'
-        in out
+        '{"params":{"mfi-value":null,"sell-mfi-value":null},"minimal_roi":{},"stoploss":null}' in out
     )  # noqa: E501
     # Should be called for historical candle data
     assert dumper.call_count == 1

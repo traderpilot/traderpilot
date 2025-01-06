@@ -690,9 +690,7 @@ def plot_profit(config: Config) -> None:
     # Filter trades to relevant pairs
     # Remove open pairs - we don't know the profit yet so can't calculate profit for these.
     # Also, If only one open pair is left, then the profit-generation would fail.
-    trades = trades[
-        (trades["pair"].isin(plot_elements["pairs"])) & (~trades["close_date"].isnull())
-    ]
+    trades = trades[(trades["pair"].isin(plot_elements["pairs"])) & (~trades["close_date"].isnull())]
     if len(trades) == 0:
         raise OperationalException(
             "No trades found, cannot generate Profit-plot without "

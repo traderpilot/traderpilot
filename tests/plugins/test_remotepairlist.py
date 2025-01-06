@@ -32,9 +32,7 @@ def test_gen_pairlist_with_local_file(mocker, rpl_config):
     mock_file_path.exists.return_value = True
 
     jsonparse = json.loads(mock_file.read.return_value)
-    mocker.patch(
-        "traderpilot.plugins.pairlist.RemotePairList.rapidjson.load", return_value=jsonparse
-    )
+    mocker.patch("traderpilot.plugins.pairlist.RemotePairList.rapidjson.load", return_value=jsonparse)
 
     rpl_config["pairlists"] = [
         {

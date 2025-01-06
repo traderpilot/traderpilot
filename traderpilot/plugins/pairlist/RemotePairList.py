@@ -63,8 +63,7 @@ class RemotePairList(IPairList):
 
         if self._processing_mode not in ["filter", "append"]:
             raise OperationalException(
-                "`processing_mode` not configured correctly. Supported Modes "
-                'are "filter","append"'
+                "`processing_mode` not configured correctly. Supported Modes " 'are "filter","append"'
             )
 
         if self._pairlist_pos == 0 and self._mode == "blacklist":

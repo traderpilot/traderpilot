@@ -132,16 +132,12 @@ def process_temporary_deprecated_settings(config: Config) -> None:
         process_deprecated_setting(
             config, "webhook", "webhookbuycancel", "webhook", "webhookentrycancel"
         )
-        process_deprecated_setting(
-            config, "webhook", "webhookbuyfill", "webhook", "webhookentryfill"
-        )
+        process_deprecated_setting(config, "webhook", "webhookbuyfill", "webhook", "webhookentryfill")
         process_deprecated_setting(config, "webhook", "webhooksell", "webhook", "webhookexit")
         process_deprecated_setting(
             config, "webhook", "webhooksellcancel", "webhook", "webhookexitcancel"
         )
-        process_deprecated_setting(
-            config, "webhook", "webhooksellfill", "webhook", "webhookexitfill"
-        )
+        process_deprecated_setting(config, "webhook", "webhooksellfill", "webhook", "webhookexitfill")
 
     # Legacy way - having them in experimental ...
 
@@ -153,15 +149,13 @@ def process_temporary_deprecated_settings(config: Config) -> None:
 
     process_removed_setting(config, "ask_strategy", "use_sell_signal", None, "use_exit_signal")
     process_removed_setting(config, "ask_strategy", "sell_profit_only", None, "exit_profit_only")
-    process_removed_setting(
-        config, "ask_strategy", "sell_profit_offset", None, "exit_profit_offset"
-    )
+    process_removed_setting(config, "ask_strategy", "sell_profit_offset", None, "exit_profit_offset")
     process_removed_setting(
         config, "ask_strategy", "ignore_roi_if_buy_signal", None, "ignore_roi_if_entry_signal"
     )
-    if config.get("edge", {}).get(
-        "enabled", False
-    ) and "capital_available_percentage" in config.get("edge", {}):
+    if config.get("edge", {}).get("enabled", False) and "capital_available_percentage" in config.get(
+        "edge", {}
+    ):
         raise ConfigurationError(
             "DEPRECATED: "
             "Using 'edge.capital_available_percentage' has been deprecated in favor of "

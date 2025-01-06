@@ -43,10 +43,7 @@ router = APIRouter()
 
 def __run_backtest_bg(btconfig: Config):
     from traderpilot.data.metrics import combined_dataframes_with_rel_mean
-    from traderpilot.optimize.optimize_reports import (
-        generate_backtest_stats,
-        store_backtest_results,
-    )
+    from traderpilot.optimize.optimize_reports import generate_backtest_stats, store_backtest_results
     from traderpilot.resolvers import StrategyResolver
 
     asyncio.set_event_loop(asyncio.new_event_loop())

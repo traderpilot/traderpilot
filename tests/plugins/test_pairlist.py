@@ -848,8 +848,7 @@ def test_VolumePairList_whitelist_gen(
                 )
             if pairlist["method"] == "PrecisionFilter" and whitelist_result:
                 assert log_has_re(
-                    r"^Removed .* from whitelist, because stop price .* "
-                    r"would be <= stop limit.*",
+                    r"^Removed .* from whitelist, because stop price .* " r"would be <= stop limit.*",
                     caplog,
                 )
             if pairlist["method"] == "PriceFilter" and whitelist_result:
@@ -1385,9 +1384,7 @@ def test_gen_pair_whitelist_not_supported(mocker, default_conf, tickers) -> None
         exchange_has=MagicMock(return_value=False),
     )
 
-    with pytest.raises(
-        OperationalException, match=r"Exchange does not support dynamic whitelist.*"
-    ):
+    with pytest.raises(OperationalException, match=r"Exchange does not support dynamic whitelist.*"):
         get_patched_traderpilotbot(mocker, default_conf)
 
 
@@ -1514,9 +1511,7 @@ def test_agefilter_min_days_listed_too_small(mocker, default_conf, markets, tick
         get_tickers=tickers,
     )
 
-    with pytest.raises(
-        OperationalException, match=r"AgeFilter requires min_days_listed to be >= 1"
-    ):
+    with pytest.raises(OperationalException, match=r"AgeFilter requires min_days_listed to be >= 1"):
         get_patched_traderpilotbot(mocker, default_conf)
 
 

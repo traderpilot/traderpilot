@@ -208,9 +208,7 @@ def text_table_add_metrics(strat_results: dict) -> None:
                 ("Total profit Short %", f"{strat_results['profit_total_short']:.2%}"),
                 (
                     "Absolute profit Long",
-                    fmt_coin(
-                        strat_results["profit_total_long_abs"], strat_results["stake_currency"]
-                    ),
+                    fmt_coin(strat_results["profit_total_long_abs"], strat_results["stake_currency"]),
                 ),
                 (
                     "Absolute profit Short",
@@ -462,9 +460,7 @@ def show_backtest_results(config: Config, backtest_stats: BacktestResultType):
     stake_currency = config["stake_currency"]
 
     for strategy, results in backtest_stats["strategy"].items():
-        show_backtest_result(
-            strategy, results, stake_currency, config.get("backtest_breakdown", [])
-        )
+        show_backtest_result(strategy, results, stake_currency, config.get("backtest_breakdown", []))
 
     if len(backtest_stats["strategy"]) > 0:
         # Print Strategy summary table
@@ -473,9 +469,7 @@ def show_backtest_results(config: Config, backtest_stats: BacktestResultType):
             f"Backtested {results['backtest_start']} -> {results['backtest_end']} |"
             f" Max open trades : {results['max_open_trades']}"
         )
-        text_table_strategy(
-            backtest_stats["strategy_comparison"], stake_currency, "STRATEGY SUMMARY"
-        )
+        text_table_strategy(backtest_stats["strategy_comparison"], stake_currency, "STRATEGY SUMMARY")
 
 
 def show_sorted_pairlist(config: Config, backtest_stats: BacktestResultType):

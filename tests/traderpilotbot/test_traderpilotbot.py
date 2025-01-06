@@ -868,9 +868,9 @@ def test_process_informative_pairs_added(default_conf_usdt, ticker_usdt, mocker)
     assert refresh_mock.call_count == 1
     assert ("BTC/ETH", "1m", CandleType.SPOT) in refresh_mock.call_args[0][0]
     assert ("ETH/USDT", "1h", CandleType.SPOT) in refresh_mock.call_args[0][0]
-    assert ("ETH/USDT", default_conf_usdt["timeframe"], CandleType.SPOT) in refresh_mock.call_args[
+    assert ("ETH/USDT", default_conf_usdt["timeframe"], CandleType.SPOT) in refresh_mock.call_args[0][
         0
-    ][0]
+    ]
 
 
 @pytest.mark.parametrize(
@@ -1295,9 +1295,7 @@ def test_exit_positions(mocker, default_conf_usdt, limit_order, is_short, caplog
     # Test amount not modified by fee-logic
     assert not log_has_re(r"Applying fee to amount for Trade .*", caplog)
 
-    gra = mocker.patch(
-        "traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", return_value=0.0
-    )
+    gra = mocker.patch("traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", return_value=0.0)
     # test amount modified by fee-logic
     n = traderpilot.exit_positions(trades)
     assert n == 0
@@ -1411,9 +1409,7 @@ def test_update_trade_state(mocker, default_conf_usdt, limit_order, is_short, ca
     limit_buy_order_usdt_new["status"] = "canceled"
 
     traderpilot.strategy.order_filled = MagicMock(return_value=None)
-    mocker.patch(
-        "traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", side_effect=ValueError
-    )
+    mocker.patch("traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", side_effect=ValueError)
     mocker.patch(f"{EXMS}.fetch_order", return_value=limit_buy_order_usdt_new)
     res = traderpilot.update_trade_state(trade, order_id)
     # Cancelled empty
@@ -1509,9 +1505,7 @@ def test_update_trade_state_orderexception(mocker, default_conf_usdt, caplog) ->
     open_order_id = "123"
 
     # Test raise of OperationalException exception
-    grm_mock = mocker.patch(
-        "traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", MagicMock()
-    )
+    grm_mock = mocker.patch("traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", MagicMock())
     traderpilot.update_trade_state(trade, open_order_id)
     assert grm_mock.call_count == 0
     assert log_has(f"Unable to fetch order {open_order_id}: ", caplog)
@@ -2521,8 +2515,7 @@ def test_manage_open_orders_partial_fee(
     # Verify that trade has been updated
     assert (
         trades[0].amount
-        == (limit_buy_order_old_partial["amount"] - limit_buy_order_old_partial["remaining"])
-        - 0.023
+        == (limit_buy_order_old_partial["amount"] - limit_buy_order_old_partial["remaining"]) - 0.023
     )
     assert not trades[0].has_open_orders
     assert trades[0].fee_updated(open_trade.entry_side)
@@ -2760,9 +2753,7 @@ def test_handle_cancel_enter_corder_empty(
 @pytest.mark.parametrize("is_short", [True, False])
 @pytest.mark.parametrize("leverage", [1, 5])
 @pytest.mark.parametrize("amount", [2, 50])
-def test_handle_cancel_exit_limit(
-    mocker, default_conf_usdt, fee, is_short, leverage, amount
-) -> None:
+def test_handle_cancel_exit_limit(mocker, default_conf_usdt, fee, is_short, leverage, amount) -> None:
     send_msg_mock = patch_RPCManager(mocker)
     patch_exchange(mocker)
     cancel_order_mock = MagicMock()
@@ -2851,15 +2842,13 @@ def test_handle_cancel_exit_limit(
     assert cancel_order_mock.call_count == 1
     assert send_msg_mock.call_count == 1
     assert (
-        send_msg_mock.call_args_list[0][0][0]["reason"]
-        == CANCEL_REASON["PARTIALLY_FILLED_KEEP_OPEN"]
+        send_msg_mock.call_args_list[0][0][0]["reason"] == CANCEL_REASON["PARTIALLY_FILLED_KEEP_OPEN"]
     )
 
     assert not traderpilot.handle_cancel_exit(trade, order, order_obj, reason)
 
     assert (
-        send_msg_mock.call_args_list[0][0][0]["reason"]
-        == CANCEL_REASON["PARTIALLY_FILLED_KEEP_OPEN"]
+        send_msg_mock.call_args_list[0][0][0]["reason"] == CANCEL_REASON["PARTIALLY_FILLED_KEEP_OPEN"]
     )
 
     # Message should not be iterated again
@@ -3432,9 +3421,7 @@ def test_sell_not_enough_balance(
     oobj = Order.parse_from_ccxt_object(limit_order["buy"], limit_order["buy"]["symbol"], "buy")
     trade.update_trade(oobj)
     patch_get_signal(traderpilot, enter_long=False, exit_long=True)
-    mocker.patch(
-        "traderpilot.wallets.Wallets.get_free", MagicMock(return_value=trade.amount * 0.985)
-    )
+    mocker.patch("traderpilot.wallets.Wallets.get_free", MagicMock(return_value=trade.amount * 0.985))
 
     assert traderpilot.handle_trade(trade) is True
     assert log_has_re(r".*Falling back to wallet-amount.", caplog)
@@ -3783,9 +3770,7 @@ def test_disable_ignore_roi_if_entry_signal(
     oobj = Order.parse_from_ccxt_object(limit_order[eside], limit_order[eside]["symbol"], eside)
     trade.update_trade(oobj)
     # Sell due to min_roi_reached
-    patch_get_signal(
-        traderpilot, enter_long=not is_short, enter_short=is_short, exit_short=is_short
-    )
+    patch_get_signal(traderpilot, enter_long=not is_short, enter_short=is_short, exit_short=is_short)
     assert traderpilot.handle_trade(trade) is True
 
     # Test if entry-signal is absent
@@ -4042,9 +4027,7 @@ def test_get_real_amount_invalid_order(
     assert traderpilot.get_real_amount(trade, limit_buy_order_usdt, order_obj) is None
 
 
-def test_get_real_amount_fees_order(
-    default_conf_usdt, market_buy_order_usdt_doublefee, fee, mocker
-):
+def test_get_real_amount_fees_order(default_conf_usdt, market_buy_order_usdt_doublefee, fee, mocker):
     tfo_mock = mocker.patch(f"{EXMS}.get_trades_for_order", return_value=[])
     mocker.patch(f"{EXMS}.get_valid_pair_combination", return_value=["BNB/USDT"])
     mocker.patch(f"{EXMS}.fetch_ticker", return_value={"last": 200})
@@ -4660,9 +4643,7 @@ def test_update_trades_without_assigned_fees(mocker, default_conf_usdt, fee, is_
     traderpilot = get_patched_traderpilotbot(mocker, default_conf_usdt)
 
     def patch_with_fee(order):
-        order.update(
-            {"fee": {"cost": 0.1, "rate": 0.01, "currency": order["symbol"].split("/")[0]}}
-        )
+        order.update({"fee": {"cost": 0.1, "rate": 0.01, "currency": order["symbol"].split("/")[0]}})
         return order
 
     mocker.patch(
@@ -4783,9 +4764,7 @@ def test_handle_insufficient_funds(mocker, default_conf_usdt, fee, is_short, cap
 
     traderpilot.handle_insufficient_funds(trade)
     order = trade.orders[0]
-    assert log_has_re(
-        r"Order Order(.*order_id=" + order.order_id + ".*) is no longer open.", caplog
-    )
+    assert log_has_re(r"Order Order(.*order_id=" + order.order_id + ".*) is no longer open.", caplog)
     assert mock_fo.call_count == 0
     assert mock_uts.call_count == 0
     # No change to orderid - as update_trade_state is mocked
@@ -5114,12 +5093,8 @@ def test_get_valid_price(mocker, default_conf_usdt) -> None:
     valid_price_from_int = traderpilot.get_valid_price(custom_price_int, proposed_price)
     valid_price_from_float = traderpilot.get_valid_price(custom_price_float, proposed_price)
 
-    valid_price_at_max_alwd = traderpilot.get_valid_price(
-        custom_price_over_max_alwd, proposed_price
-    )
-    valid_price_at_min_alwd = traderpilot.get_valid_price(
-        custom_price_under_min_alwd, proposed_price
-    )
+    valid_price_at_max_alwd = traderpilot.get_valid_price(custom_price_over_max_alwd, proposed_price)
+    valid_price_at_min_alwd = traderpilot.get_valid_price(custom_price_under_min_alwd, proposed_price)
 
     assert isinstance(valid_price_from_string, float)
     assert isinstance(valid_price_from_badstring, float)
@@ -5539,9 +5514,7 @@ def test_position_adjust(mocker, default_conf_usdt, fee) -> None:
 
     mocker.patch(f"{EXMS}.create_order", MagicMock(return_value=closed_dca_order_1))
     mocker.patch(f"{EXMS}.fetch_order", MagicMock(return_value=closed_dca_order_1))
-    mocker.patch(
-        f"{EXMS}.fetch_order_or_stoploss_order", MagicMock(return_value=closed_dca_order_1)
-    )
+    mocker.patch(f"{EXMS}.fetch_order_or_stoploss_order", MagicMock(return_value=closed_dca_order_1))
     traderpilot.manage_open_orders()
 
     # Assert trade is as expected (averaged dca)
@@ -5582,9 +5555,7 @@ def test_position_adjust(mocker, default_conf_usdt, fee) -> None:
     }
     mocker.patch(f"{EXMS}.create_order", MagicMock(return_value=closed_dca_order_2))
     mocker.patch(f"{EXMS}.fetch_order", MagicMock(return_value=closed_dca_order_2))
-    mocker.patch(
-        f"{EXMS}.fetch_order_or_stoploss_order", MagicMock(return_value=closed_dca_order_2)
-    )
+    mocker.patch(f"{EXMS}.fetch_order_or_stoploss_order", MagicMock(return_value=closed_dca_order_2))
     assert traderpilot.execute_entry(pair, stake_amount, trade=trade)
 
     # Assert trade is as expected (averaged dca)

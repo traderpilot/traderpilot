@@ -26,10 +26,7 @@ from traderpilot.exchange.common import (
     MAP_EXCHANGE_CHILDCLASS,
     SUPPORTED_EXCHANGES,
 )
-from traderpilot.exchange.exchange_utils_timeframe import (
-    timeframe_to_minutes,
-    timeframe_to_prev_date,
-)
+from traderpilot.exchange.exchange_utils_timeframe import timeframe_to_minutes, timeframe_to_prev_date
 from traderpilot.types import ValidExchangesType
 from traderpilot.util import FtPrecise
 
@@ -107,9 +104,9 @@ def _build_exchange_list_entry(
         "comment": comment,
         "dex": getattr(ex_mod, "dex", False),
         "is_alias": is_alias,
-        "alias_for": inspect.getmro(ex_mod.__class__)[1]().id
-        if getattr(ex_mod, "alias", False)
-        else None,
+        "alias_for": (
+            inspect.getmro(ex_mod.__class__)[1]().id if getattr(ex_mod, "alias", False) else None
+        ),
         "trade_modes": [{"trading_mode": "spot", "margin_mode": ""}],
     }
     if resolved := exchangeClasses.get(mapped_exchange_name):
@@ -315,9 +312,7 @@ def price_to_precision(
                 decimal_to_precision(
                     price,
                     rounding_mode=rounding_mode,
-                    precision=int(price_precision)
-                    if precisionMode != TICK_SIZE
-                    else price_precision,
+                    precision=int(price_precision) if precisionMode != TICK_SIZE else price_precision,
                     counting_mode=precisionMode,
                 )
             )

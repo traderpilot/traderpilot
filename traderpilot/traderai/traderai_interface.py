@@ -778,9 +778,7 @@ class ITraderaiModel(ABC):
 
         best_queue = deque()
 
-        pair_dict_sorted = sorted(
-            self.dd.pair_dict.items(), key=lambda k: k[1]["trained_timestamp"]
-        )
+        pair_dict_sorted = sorted(self.dd.pair_dict.items(), key=lambda k: k[1]["trained_timestamp"])
         for pair in pair_dict_sorted:
             if pair[0] in current_pairlist:
                 best_queue.append(pair[0])
@@ -898,9 +896,7 @@ class ITraderaiModel(ABC):
                         if dk.full_df[label].dtype == object:
                             continue
                         if "labels_mean" in self.dk.data:
-                            dk.full_df.at[index, f"{label}_mean"] = self.dk.data["labels_mean"][
-                                label
-                            ]
+                            dk.full_df.at[index, f"{label}_mean"] = self.dk.data["labels_mean"][label]
                         if "labels_std" in self.dk.data:
                             dk.full_df.at[index, f"{label}_std"] = self.dk.data["labels_std"][label]
 
@@ -941,9 +937,7 @@ class ITraderaiModel(ABC):
         pair = metadata["pair"]
         dk.return_dataframe = dataframe
         saved_dataframe = self.dd.historic_predictions[pair]
-        columns_to_drop = list(
-            set(saved_dataframe.columns).intersection(dk.return_dataframe.columns)
-        )
+        columns_to_drop = list(set(saved_dataframe.columns).intersection(dk.return_dataframe.columns))
         dk.return_dataframe = dk.return_dataframe.drop(columns=list(columns_to_drop))
         dk.return_dataframe = pd.merge(
             dk.return_dataframe, saved_dataframe, how="left", left_on="date", right_on="date_pred"
@@ -1009,10 +1003,8 @@ class ITraderaiModel(ABC):
             )
         )
 
-        (dd["test_features"], dd["test_labels"], dd["test_weights"]) = (
-            dk.feature_pipeline.transform(
-                dd["test_features"], dd["test_labels"], dd["test_weights"]
-            )
+        (dd["test_features"], dd["test_labels"], dd["test_weights"]) = dk.feature_pipeline.transform(
+            dd["test_features"], dd["test_labels"], dd["test_weights"]
         )
 
         dk.label_pipeline = self.define_label_pipeline(threads=dk.thread_count)

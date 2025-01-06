@@ -185,9 +185,7 @@ def populate_dataframe_with_trades(
 
                 dataframe.at[index, "bid"] = bid.sum()
                 dataframe.at[index, "ask"] = ask.sum()
-                dataframe.at[index, "delta"] = (
-                    dataframe.at[index, "ask"] - dataframe.at[index, "bid"]
-                )
+                dataframe.at[index, "delta"] = dataframe.at[index, "ask"] - dataframe.at[index, "bid"]
                 dataframe.at[index, "total_trades"] = len(trades_grouped_df)
 
         logger.debug(f"trades.groups_keys in {time.time() - start_time} seconds")

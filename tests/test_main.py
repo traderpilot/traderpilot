@@ -6,12 +6,7 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
-from tests.conftest import (
-    log_has,
-    log_has_re,
-    patch_exchange,
-    patched_configuration_load_config_file,
-)
+from tests.conftest import log_has, log_has_re, patch_exchange, patched_configuration_load_config_file
 from traderpilot.commands import Arguments
 from traderpilot.enums import State
 from traderpilot.exceptions import ConfigurationError, OperationalException, TraderpilotException

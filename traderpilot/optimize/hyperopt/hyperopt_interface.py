@@ -135,15 +135,9 @@ class IHyperOpt(ABC):
             Integer(roi_limits["roi_t1_min"], roi_limits["roi_t1_max"], name="roi_t1"),
             Integer(roi_limits["roi_t2_min"], roi_limits["roi_t2_max"], name="roi_t2"),
             Integer(roi_limits["roi_t3_min"], roi_limits["roi_t3_max"], name="roi_t3"),
-            SKDecimal(
-                roi_limits["roi_p1_min"], roi_limits["roi_p1_max"], decimals=3, name="roi_p1"
-            ),
-            SKDecimal(
-                roi_limits["roi_p2_min"], roi_limits["roi_p2_max"], decimals=3, name="roi_p2"
-            ),
-            SKDecimal(
-                roi_limits["roi_p3_min"], roi_limits["roi_p3_max"], decimals=3, name="roi_p3"
-            ),
+            SKDecimal(roi_limits["roi_p1_min"], roi_limits["roi_p1_max"], decimals=3, name="roi_p1"),
+            SKDecimal(roi_limits["roi_p2_min"], roi_limits["roi_p2_max"], decimals=3, name="roi_p2"),
+            SKDecimal(roi_limits["roi_p3_min"], roi_limits["roi_p3_max"], decimals=3, name="roi_p3"),
         ]
 
     def stoploss_space(self) -> list[Dimension]:

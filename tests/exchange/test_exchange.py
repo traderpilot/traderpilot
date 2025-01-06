@@ -268,9 +268,7 @@ def test_exchange_resolver(default_conf, mocker, caplog):
     exchange = ExchangeResolver.load_exchange(default_conf)
     assert isinstance(exchange, Exchange)
     assert isinstance(exchange, Bybit)
-    assert not log_has_re(
-        r"No .* specific subclass found. Using the generic class instead.", caplog
-    )
+    assert not log_has_re(r"No .* specific subclass found. Using the generic class instead.", caplog)
     caplog.clear()
 
     default_conf["exchange"]["name"] = "kraken"
@@ -278,9 +276,7 @@ def test_exchange_resolver(default_conf, mocker, caplog):
     assert isinstance(exchange, Exchange)
     assert isinstance(exchange, Kraken)
     assert not isinstance(exchange, Binance)
-    assert not log_has_re(
-        r"No .* specific subclass found. Using the generic class instead.", caplog
-    )
+    assert not log_has_re(r"No .* specific subclass found. Using the generic class instead.", caplog)
 
     default_conf["exchange"]["name"] = "binance"
     exchange = ExchangeResolver.load_exchange(default_conf)
@@ -288,9 +284,7 @@ def test_exchange_resolver(default_conf, mocker, caplog):
     assert isinstance(exchange, Binance)
     assert not isinstance(exchange, Kraken)
 
-    assert not log_has_re(
-        r"No .* specific subclass found. Using the generic class instead.", caplog
-    )
+    assert not log_has_re(r"No .* specific subclass found. Using the generic class instead.", caplog)
 
     # Test mapping
     default_conf["exchange"]["name"] = "binanceus"
@@ -780,9 +774,7 @@ def test_validate_timeframes_failed(default_conf, mocker):
     mocker.patch(f"{EXMS}.reload_markets")
     mocker.patch(f"{EXMS}.validate_stakecurrency")
     mocker.patch(f"{EXMS}.validate_pricing")
-    with pytest.raises(
-        ConfigurationError, match=r"Invalid timeframe '3m'. This exchange supports.*"
-    ):
+    with pytest.raises(ConfigurationError, match=r"Invalid timeframe '3m'. This exchange supports.*"):
         Exchange(default_conf)
     default_conf["timeframe"] = "15s"
 
@@ -2860,9 +2852,7 @@ def test_fetch_l2_order_book(default_conf, mocker, order_book_l2, exchange_name)
         order_book = exchange.fetch_l2_order_book(pair="ETH/BTC", limit=val)
         assert api_mock.fetch_l2_order_book.call_args_list[0][0][0] == "ETH/BTC"
         # Not all exchanges support all limits for orderbook
-        if not exchange.get_option("l2_limit_range") or val in exchange.get_option(
-            "l2_limit_range"
-        ):
+        if not exchange.get_option("l2_limit_range") or val in exchange.get_option("l2_limit_range"):
             assert api_mock.fetch_l2_order_book.call_args_list[0][0][1] == val
         else:
             next_limit = exchange.get_next_limit_in_list(val, exchange.get_option("l2_limit_range"))
@@ -3180,9 +3170,7 @@ async def test___async_get_candle_history_sort(default_conf, mocker, exchange_na
     ]
     exchange = get_patched_exchange(mocker, default_conf, exchange=exchange_name)
     exchange._api_async.fetch_ohlcv = get_mock_coro(ohlcv)
-    sort_mock = mocker.patch(
-        "traderpilot.exchange.exchange.sorted", MagicMock(side_effect=sort_data)
-    )
+    sort_mock = mocker.patch("traderpilot.exchange.exchange.sorted", MagicMock(side_effect=sort_data))
     # Test the OHLCV data sort
     res = await exchange._async_get_candle_history(
         "ETH/BTC", default_conf["timeframe"], CandleType.SPOT
@@ -3246,9 +3234,7 @@ async def test___async_get_candle_history_sort(default_conf, mocker, exchange_na
 
 
 @pytest.mark.parametrize("exchange_name", EXCHANGES)
-async def test__async_fetch_trades(
-    default_conf, mocker, caplog, exchange_name, fetch_trades_result
-):
+async def test__async_fetch_trades(default_conf, mocker, caplog, exchange_name, fetch_trades_result):
     caplog.set_level(logging.DEBUG)
     exchange = get_patched_exchange(mocker, default_conf, exchange=exchange_name)
     # Monkey-patch async function
@@ -3364,9 +3350,7 @@ async def test__async_fetch_trades_contract_size(
 
 
 @pytest.mark.parametrize("exchange_name", EXCHANGES)
-async def test__async_get_trade_history_id(
-    default_conf, mocker, exchange_name, fetch_trades_result
-):
+async def test__async_get_trade_history_id(default_conf, mocker, exchange_name, fetch_trades_result):
     exchange = get_patched_exchange(mocker, default_conf, exchange=exchange_name)
     if exchange._trades_pagination != "id":
         exchange.close()
@@ -3512,9 +3496,7 @@ def test_get_historic_trades(default_conf, mocker, caplog, exchange_name, trades
 
     exchange._async_get_trade_history_id = get_mock_coro((pair, trades_history))
     exchange._async_get_trade_history_time = get_mock_coro((pair, trades_history))
-    ret = exchange.get_historic_trades(
-        pair, since=trades_history[0][0], until=trades_history[-1][0]
-    )
+    ret = exchange.get_historic_trades(pair, since=trades_history[0][0], until=trades_history[-1][0])
 
     # Depending on the exchange, one or the other method should be called
     assert (
@@ -3825,9 +3807,7 @@ def test_fetch_order_emulated(default_conf, mocker, exchange_name, caplog):
     )
     exchange = get_patched_exchange(mocker, default_conf, api_mock, exchange=exchange_name)
     assert exchange.fetch_order("X", "TKN/BTC") == {"id": "123", "amount": 2, "symbol": "TKN/BTC"}
-    assert log_has(
-        ("API fetch_open_order: {'id': '123', 'amount': 2, 'symbol': 'TKN/BTC'}"), caplog
-    )
+    assert log_has(("API fetch_open_order: {'id': '123', 'amount': 2, 'symbol': 'TKN/BTC'}"), caplog)
     assert api_mock.fetch_open_order.call_count == 1
     assert api_mock.fetch_closed_order.call_count == 0
     caplog.clear()
@@ -4862,8 +4842,7 @@ def test_get_stake_amount_considering_leverage(
 ):
     exchange = get_patched_exchange(mocker, default_conf, exchange=exchange)
     assert (
-        exchange._get_stake_amount_considering_leverage(stake_amount, leverage)
-        == min_stake_with_lev
+        exchange._get_stake_amount_considering_leverage(stake_amount, leverage) == min_stake_with_lev
     )
 
 
@@ -5254,9 +5233,7 @@ def test__fetch_and_calculate_funding_fees_datetime_called(
 ):
     api_mock = MagicMock()
     api_mock.fetch_ohlcv = get_mock_coro(return_value=mark_ohlcv)
-    api_mock.fetch_funding_rate_history = get_mock_coro(
-        return_value=funding_rate_history_octohourly
-    )
+    api_mock.fetch_funding_rate_history = get_mock_coro(return_value=funding_rate_history_octohourly)
     type(api_mock).has = PropertyMock(return_value={"fetchOHLCV": True})
     type(api_mock).has = PropertyMock(return_value={"fetchFundingRateHistory": True})
     mocker.patch(f"{EXMS}.timeframes", PropertyMock(return_value=["4h", "8h"]))

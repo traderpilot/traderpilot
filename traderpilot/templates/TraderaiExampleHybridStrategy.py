@@ -129,9 +129,7 @@ class TraderaiExampleHybridStrategy(IStrategy):
         dataframe["%-sma-period"] = ta.SMA(dataframe, timeperiod=period)
         dataframe["%-ema-period"] = ta.EMA(dataframe, timeperiod=period)
 
-        bollinger = qtpylib.bollinger_bands(
-            qtpylib.typical_price(dataframe), window=period, stds=2.2
-        )
+        bollinger = qtpylib.bollinger_bands(qtpylib.typical_price(dataframe), window=period, stds=2.2)
         dataframe["bb_lowerband-period"] = bollinger["lower"]
         dataframe["bb_middleband-period"] = bollinger["mid"]
         dataframe["bb_upperband-period"] = bollinger["upper"]

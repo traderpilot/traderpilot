@@ -810,9 +810,7 @@ def test_handle_stoploss_on_exchange_trailing_error(
     assert log_has_re(r"Could not create trailing stoploss order for pair ETH/USDT\..*", caplog)
 
 
-def test_stoploss_on_exchange_price_rounding(
-    mocker, default_conf_usdt, fee, open_trade_usdt
-) -> None:
+def test_stoploss_on_exchange_price_rounding(mocker, default_conf_usdt, fee, open_trade_usdt) -> None:
     patch_RPCManager(mocker)
     mocker.patch.multiple(
         EXMS,

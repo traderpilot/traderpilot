@@ -664,8 +664,7 @@ AVAILABLE_CLI_OPTIONS = {
         "--ignore-missing-spaces",
         "--ignore-unparameterized-spaces",
         help=(
-            "Suppress errors for any requested Hyperopt spaces "
-            "that do not contain any parameters."
+            "Suppress errors for any requested Hyperopt spaces " "that do not contain any parameters."
         ),
         action="store_true",
     ),

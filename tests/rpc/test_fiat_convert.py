@@ -56,9 +56,7 @@ def test_fiat_convert_find_price(mocker):
 
 
 def test_fiat_convert_unsupported_crypto(mocker, caplog):
-    mocker.patch(
-        "traderpilot.rpc.fiat_convert.CryptoToFiatConverter._coinlistings", return_value=[]
-    )
+    mocker.patch("traderpilot.rpc.fiat_convert.CryptoToFiatConverter._coinlistings", return_value=[])
     fiat_convert = CryptoToFiatConverter({})
     assert fiat_convert._find_price(crypto_symbol="CRYPTO_123", fiat_symbol="EUR") == 0.0
     assert log_has("unsupported crypto-symbol CRYPTO_123 - returning 0.0", caplog)
@@ -150,9 +148,7 @@ def test_fiat_too_many_requests_response(mocker, caplog):
 
     assert len(fiat_convert._coinlistings) == 0
     assert fiat_convert._backoff > datetime.datetime.now().timestamp()
-    assert log_has(
-        "Too many requests for CoinGecko API, backing off and trying again later.", caplog
-    )
+    assert log_has("Too many requests for CoinGecko API, backing off and trying again later.", caplog)
 
 
 def test_fiat_multiple_coins(caplog):
@@ -185,15 +181,11 @@ def test_fiat_invalid_response(mocker, caplog):
     fiat_convert._load_cryptomap()
 
     assert len(fiat_convert._coinlistings) == 0
-    assert log_has_re(
-        "Could not load FIAT Cryptocurrency map for the following problem: .*", caplog
-    )
+    assert log_has_re("Could not load FIAT Cryptocurrency map for the following problem: .*", caplog)
 
 
 def test_convert_amount(mocker):
-    mocker.patch(
-        "traderpilot.rpc.fiat_convert.CryptoToFiatConverter.get_price", return_value=12345.0
-    )
+    mocker.patch("traderpilot.rpc.fiat_convert.CryptoToFiatConverter.get_price", return_value=12345.0)
 
     fiat_convert = CryptoToFiatConverter({})
     result = fiat_convert.convert_amount(crypto_amount=1.23, crypto_symbol="BTC", fiat_symbol="USD")
@@ -202,9 +194,7 @@ def test_convert_amount(mocker):
     result = fiat_convert.convert_amount(crypto_amount=1.23, crypto_symbol="BTC", fiat_symbol="BTC")
     assert result == 1.23
 
-    result = fiat_convert.convert_amount(
-        crypto_amount="1.23", crypto_symbol="BTC", fiat_symbol="BTC"
-    )
+    result = fiat_convert.convert_amount(crypto_amount="1.23", crypto_symbol="BTC", fiat_symbol="BTC")
     assert result == 1.23
 
 

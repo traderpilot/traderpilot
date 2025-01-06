@@ -214,9 +214,7 @@ class Hyperopt:
                 for x, rand in zip(asked, is_random, strict=False)
                 if x not in self.opt.Xi and x not in asked_non_tried
             ]
-            asked_non_tried += [
-                x for x in asked if x not in self.opt.Xi and x not in asked_non_tried
-            ]
+            asked_non_tried += [x for x in asked if x not in self.opt.Xi and x not in asked_non_tried]
             i += 1
 
         if asked_non_tried:

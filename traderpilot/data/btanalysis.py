@@ -73,9 +73,7 @@ def get_latest_optimize_filename(directory: Path | str, variant: str) -> str:
     filename = directory / LAST_BT_RESULT_FN
 
     if not filename.is_file():
-        raise ValueError(
-            f"Directory '{directory}' does not seem to contain backtest statistics yet."
-        )
+        raise ValueError(f"Directory '{directory}' does not seem to contain backtest statistics yet.")
 
     with filename.open() as file:
         data = json_load(file)
@@ -170,9 +168,7 @@ def load_backtest_stats(filename: Path | str) -> BacktestResultType:
 
     if filename.suffix == ".zip":
         data = json_load(
-            StringIO(
-                load_file_from_zip(filename, filename.with_suffix(".json").name).decode("utf-8")
-            )
+            StringIO(load_file_from_zip(filename, filename.with_suffix(".json").name).decode("utf-8"))
         )
     else:
         with filename.open() as file:
@@ -396,9 +392,7 @@ def load_backtest_data(filename: Path | str, strategy: str | None = None) -> pd.
 
     else:
         # old format - only with lists.
-        raise OperationalException(
-            "Backtest-results with only trades data are no longer supported."
-        )
+        raise OperationalException("Backtest-results with only trades data are no longer supported.")
     if not df.empty:
         df = df.sort_values("open_date").reset_index(drop=True)
     return df
@@ -612,7 +606,5 @@ def extract_trades_of_period(
     else:
         trades_start = dataframe.iloc[0]["date"]
         trades_stop = dataframe.iloc[-1]["date"]
-    trades = trades.loc[
-        (trades["open_date"] >= trades_start) & (trades["close_date"] <= trades_stop)
-    ]
+    trades = trades.loc[(trades["open_date"] >= trades_start) & (trades["close_date"] <= trades_stop)]
     return trades
