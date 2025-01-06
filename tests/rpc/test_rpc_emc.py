@@ -10,9 +10,9 @@ from unittest.mock import MagicMock
 import pytest
 import websockets
 
+from tests.conftest import log_has, log_has_re, log_has_when
 from traderpilot.data.dataprovider import DataProvider
 from traderpilot.rpc.external_message_consumer import ExternalMessageConsumer
-from tests.conftest import log_has, log_has_re, log_has_when
 
 
 _TEST_WS_TOKEN = "secret_Ws_t0ken"

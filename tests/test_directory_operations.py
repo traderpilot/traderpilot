@@ -5,6 +5,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from tests.conftest import log_has, log_has_re
 from traderpilot.configuration.directory_operations import (
     chown_user_directory,
     copy_sample_files,
@@ -12,7 +13,6 @@ from traderpilot.configuration.directory_operations import (
     create_userdata_dir,
 )
 from traderpilot.exceptions import OperationalException
-from tests.conftest import log_has, log_has_re
 
 
 def test_create_datadir(mocker, default_conf, caplog) -> None:

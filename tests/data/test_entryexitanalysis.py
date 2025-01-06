@@ -4,12 +4,12 @@ from unittest.mock import MagicMock, PropertyMock
 import pandas as pd
 import pytest
 
+from tests.conftest import get_args, patch_exchange, patched_configuration_load_config_file
 from traderpilot.commands.analyze_commands import start_analysis_entries_exits
 from traderpilot.commands.optimize_commands import start_backtesting
 from traderpilot.enums import ExitType
 from traderpilot.exceptions import OperationalException
 from traderpilot.optimize.backtesting import Backtesting
-from tests.conftest import get_args, patch_exchange, patched_configuration_load_config_file
 
 
 @pytest.fixture(autouse=True)

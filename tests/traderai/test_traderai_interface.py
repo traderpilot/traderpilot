@@ -5,14 +5,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from traderpilot.configuration import TimeRange
-from traderpilot.data.dataprovider import DataProvider
-from traderpilot.enums import RunMode
-from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
-from traderpilot.traderai.utils import download_all_data_for_training, get_required_data_timerange
-from traderpilot.optimize.backtesting import Backtesting
-from traderpilot.persistence import Trade
-from traderpilot.plugins.pairlistmanager import PairListManager
 from tests.conftest import (
     EXMS,
     create_mock_trades,
@@ -26,6 +18,14 @@ from tests.traderai.conftest import (
     make_rl_config,
     mock_pytorch_mlp_model_training_parameters,
 )
+from traderpilot.configuration import TimeRange
+from traderpilot.data.dataprovider import DataProvider
+from traderpilot.enums import RunMode
+from traderpilot.optimize.backtesting import Backtesting
+from traderpilot.persistence import Trade
+from traderpilot.plugins.pairlistmanager import PairListManager
+from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
+from traderpilot.traderai.utils import download_all_data_for_training, get_required_data_timerange
 
 
 def can_run_model(model: str) -> None:
@@ -68,7 +68,9 @@ def test_extract_data_and_train_model_Standard(
     traderai_conf.update({"timerange": "20180110-20180130"})
     traderai_conf.update({"strategy": "traderai_test_strat"})
     traderai_conf["traderai"]["feature_parameters"].update({"principal_component_analysis": pca})
-    traderai_conf["traderai"]["feature_parameters"].update({"use_DBSCAN_to_remove_outliers": dbscan})
+    traderai_conf["traderai"]["feature_parameters"].update(
+        {"use_DBSCAN_to_remove_outliers": dbscan}
+    )
     traderai_conf.update({"reduce_df_footprint": float32})
     traderai_conf["traderai"]["feature_parameters"].update({"shuffle_after_split": shuffle})
     traderai_conf["traderai"]["feature_parameters"].update({"buffer_train_data_candles": buffer})
@@ -83,7 +85,9 @@ def test_extract_data_and_train_model_Standard(
         traderai_conf["traderai"]["data_split_parameters"].update({"shuffle": True})
 
     if "test_3ac" in model or "test_4ac" in model:
-        traderai_conf["traderaimodel_path"] = str(Path(__file__).parents[1] / "traderai" / "test_models")
+        traderai_conf["traderaimodel_path"] = str(
+            Path(__file__).parents[1] / "traderai" / "test_models"
+        )
         traderai_conf["traderai"]["rl_config"]["drop_ohlc_from_features"] = True
 
     if "PyTorch" in model:
@@ -274,7 +278,9 @@ def test_start_backtesting(mocker, traderai_conf, model, num_files, strat, caplo
         traderai_conf = make_rl_config(traderai_conf)
 
     if "test_4ac" in model:
-        traderai_conf["traderaimodel_path"] = str(Path(__file__).parents[1] / "traderai" / "test_models")
+        traderai_conf["traderaimodel_path"] = str(
+            Path(__file__).parents[1] / "traderai" / "test_models"
+        )
 
     if "PyTorch" in model:
         pytorch_mlp_mtp = mock_pytorch_mlp_model_training_parameters()
@@ -425,7 +431,9 @@ def test_backtesting_fit_live_predictions(mocker, traderai_conf, caplog):
     timerange = TimeRange.parse_timerange("20180128-20180130")
     traderai.dd.load_all_pair_histories(timerange, traderai.dk)
     sub_timerange = TimeRange.parse_timerange("20180129-20180130")
-    corr_df, base_df = traderai.dd.get_base_and_corr_dataframes(sub_timerange, "LTC/BTC", traderai.dk)
+    corr_df, base_df = traderai.dd.get_base_and_corr_dataframes(
+        sub_timerange, "LTC/BTC", traderai.dk
+    )
     df = traderai.dk.use_strategy_to_populate_indicators(strategy, corr_df, base_df, "LTC/BTC")
     df = strategy.set_traderai_targets(df.copy(), metadata={"pair": "LTC/BTC"})
     df = traderai.dk.remove_special_chars_from_feature_names(df)

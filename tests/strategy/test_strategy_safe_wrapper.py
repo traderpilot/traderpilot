@@ -1,10 +1,10 @@
 import pytest
 
+from tests.conftest import create_mock_trades, log_has_re
 from traderpilot.exceptions import StrategyError
 from traderpilot.persistence import Trade
 from traderpilot.strategy.strategy_wrapper import strategy_safe_wrapper
 from traderpilot.util.datetime_helpers import dt_now
-from tests.conftest import create_mock_trades, log_has_re
 
 from .strats.strategy_test_v3 import StrategyTestV3
 

@@ -5,12 +5,12 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
+from tests.conftest import EXMS, get_args, log_has_re, patch_exchange
 from traderpilot.commands.optimize_commands import start_lookahead_analysis
 from traderpilot.data.history import get_timerange
 from traderpilot.exceptions import OperationalException
 from traderpilot.optimize.analysis.lookahead import Analysis, LookaheadAnalysis
 from traderpilot.optimize.analysis.lookahead_helpers import LookaheadAnalysisSubFunctions
-from tests.conftest import EXMS, get_args, log_has_re, patch_exchange
 
 
 IGNORE_BIASED_INDICATORS_CAPTION = (

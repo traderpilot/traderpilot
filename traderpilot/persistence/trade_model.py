@@ -219,9 +219,9 @@ class Order(ModelBase):
         elif not self.order_date:
             self.order_date = dt_now()
 
-        self. tp_is_open = True
+        self.tp_is_open = True
         if self.status in NON_OPEN_EXCHANGE_STATES:
-            self. tp_is_open = False
+            self.tp_is_open = False
             if (order.get("filled", 0.0) or 0.0) > 0 and not self.order_filled_date:
                 self.order_filled_date = dt_from_ts(
                     safe_value_fallback(order, "lastTradeTimestamp", default_value=dt_ts())
@@ -278,7 +278,7 @@ class Order(ModelBase):
                     "average": round(self.average, 8) if self.average else 0,
                     "cost": self.cost if self.cost else 0,
                     "filled": self.filled,
-                    "is_open": self. tp_is_open,
+                    "is_open": self.tp_is_open,
                     "order_date": (
                         self.order_date.strftime(DATETIME_PRINT_FORMAT) if self.order_date else None
                     ),
@@ -306,7 +306,7 @@ class Order(ModelBase):
         self.filled = self.amount
         self.remaining = 0
         self.status = "closed"
-        self. tp_is_open = False
+        self.tp_is_open = False
         # Assign funding fees to Order.
         # Assumes backtesting will use date_last_filled_utc to calculate future funding fees.
         self.funding_fee = trade.funding_fee_running
@@ -367,7 +367,7 @@ class Order(ModelBase):
         Retrieve open orders from the database
         :return: List of open orders
         """
-        return Order.session.scalars(select(Order).filter(Order. tp_is_open.is_(True))).all()
+        return Order.session.scalars(select(Order).filter(Order.tp_is_open.is_(True))).all()
 
     @staticmethod
     def order_by_id(order_id: str) -> Optional["Order"]:
@@ -587,7 +587,7 @@ class LocalTrade:
         """
         All open orders for this trade excluding stoploss orders
         """
-        return [o for o in self.orders if o. tp_is_open and o.tp_order_side != "stoploss"]
+        return [o for o in self.orders if o.tp_is_open and o.tp_order_side != "stoploss"]
 
     @property
     def has_open_orders(self) -> bool:
@@ -595,7 +595,7 @@ class LocalTrade:
         True if there are open orders for this trade excluding stoploss orders
         """
         open_orders_wo_sl = [
-            o for o in self.orders if o.tp_order_side not in ["stoploss"] and o. tp_is_open
+            o for o in self.orders if o.tp_order_side not in ["stoploss"] and o.tp_is_open
         ]
         return len(open_orders_wo_sl) > 0
 
@@ -604,7 +604,7 @@ class LocalTrade:
         """
         All open stoploss orders for this trade
         """
-        return [o for o in self.orders if o.tp_order_side in ["stoploss"] and o. tp_is_open]
+        return [o for o in self.orders if o.tp_order_side in ["stoploss"] and o.tp_is_open]
 
     @property
     def has_open_sl_orders(self) -> bool:
@@ -612,7 +612,7 @@ class LocalTrade:
         True if there are open stoploss orders for this trade
         """
         open_sl_orders = [
-            o for o in self.orders if o.tp_order_side in ["stoploss"] and o. tp_is_open
+            o for o in self.orders if o.tp_order_side in ["stoploss"] and o.tp_is_open
         ]
         return len(open_sl_orders) > 0
 
@@ -1202,7 +1202,7 @@ class LocalTrade:
         funding_fees = 0.0
         ordercount = len(self.orders) - 1
         for i, o in enumerate(self.orders):
-            if o. tp_is_open or not o.filled:
+            if o.tp_is_open or not o.filled:
                 continue
             funding_fees += o.funding_fee or 0.0
             tmp_amount = FtPrecise(o.safe_amount_after_fee)
@@ -1293,7 +1293,7 @@ class LocalTrade:
         if order_side:
             orders = [o for o in orders if o.tp_order_side == order_side]
         if is_open is not None:
-            orders = [o for o in orders if o. tp_is_open == is_open]
+            orders = [o for o in orders if o.tp_is_open == is_open]
         if is_open is False and only_filled:
             orders = [o for o in orders if o.filled and o.status in NON_OPEN_EXCHANGE_STATES]
         if len(orders) > 0:
@@ -1312,7 +1312,7 @@ class LocalTrade:
             o
             for o in self.orders
             if ((o.tp_order_side == order_side) or (order_side is None))
-            and o. tp_is_open is False
+            and o.tp_is_open is False
             and o.filled
             and o.status in NON_OPEN_EXCHANGE_STATES
         ]
@@ -1327,11 +1327,11 @@ class LocalTrade:
             o
             for o in self.orders
             if (
-                o. tp_is_open is False
+                o.tp_is_open is False
                 and (o.filled or 0) > 0
                 and o.status in NON_OPEN_EXCHANGE_STATES
             )
-            or (o. tp_is_open is True and o.status is not None)
+            or (o.tp_is_open is True and o.status is not None)
         ]
 
     def set_custom_data(self, key: str, value: Any) -> None:

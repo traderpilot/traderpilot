@@ -14,16 +14,19 @@ from traderpilot.util.datetime_helpers import (
 )
 from traderpilot.util.dry_run_wallet import get_dry_run_wallet
 from traderpilot.util.formatters import decimals_per_coin, fmt_coin, fmt_coin2, round_value
-from traderpilot.util.precise import FtPrecise
 from traderpilot.util.measure_time import MeasureTime
 from traderpilot.util.periodic_cache import PeriodicCache
+from traderpilot.util.precise import FtPrecise
 from traderpilot.util.progress_tracker import (  # noqa F401
     get_progress_tracker,
     retrieve_progress_tracker,
 )
 from traderpilot.util.rich_progress import CustomProgress
 from traderpilot.util.rich_tables import print_df_rich_table, print_rich_table
-from traderpilot.util.template_renderer import render_template, render_template_with_fallback  # noqa
+from traderpilot.util.template_renderer import (  # noqa
+    render_template,
+    render_template_with_fallback,
+)
 
 
 __all__ = [

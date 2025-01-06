@@ -8,6 +8,7 @@ import pytest
 from sqlalchemy import create_engine, select, text
 from sqlalchemy.schema import CreateTable
 
+from tests.conftest import log_has
 from traderpilot.constants import DEFAULT_DB_PROD_URL
 from traderpilot.enums import TradingMode
 from traderpilot.exceptions import OperationalException
@@ -16,7 +17,6 @@ from traderpilot.persistence.base import ModelBase
 from traderpilot.persistence.migrations import get_last_sequence_ids, set_sequence_ids
 from traderpilot.persistence.models import PairLock
 from traderpilot.persistence.trade_model import Order
-from tests.conftest import log_has
 
 
 spot, margin, futures = TradingMode.SPOT, TradingMode.MARGIN, TradingMode.FUTURES
@@ -293,21 +293,21 @@ def test_migrate(mocker, default_conf, fee, caplog):
     # All dry-run stoploss orders will be closed
     assert orders[-1].order_id == "dry_stop_order_id222"
     assert orders[-1].tp_order_side == "stoploss"
-    assert orders[-1]. tp_is_open is False
+    assert orders[-1].tp_is_open is False
 
     assert orders[1].order_id == "dry_buy_order22"
     assert orders[1].tp_order_side == "buy"
-    assert orders[1]. tp_is_open is True
+    assert orders[1].tp_is_open is True
 
     assert orders[2].order_id == "dry_stop_order_id11X"
     assert orders[2].tp_order_side == "stoploss"
-    assert orders[2]. tp_is_open is False
+    assert orders[2].tp_is_open is False
 
     orders1 = Order.session.scalars(select(Order)).all()
     assert len(orders1) == 5
     order = orders1[4]
     assert order.tp_trade_id == 2
-    assert order. tp_is_open is False
+    assert order.tp_is_open is False
 
 
 def test_migrate_too_old(mocker, default_conf, fee, caplog):

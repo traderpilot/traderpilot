@@ -5,12 +5,6 @@ from types import FunctionType
 import pytest
 from sqlalchemy import select
 
-from traderpilot.constants import CUSTOM_TAG_MAX_LENGTH, DATETIME_PRINT_FORMAT
-from traderpilot.enums import TradingMode
-from traderpilot.exceptions import DependencyException
-from traderpilot.exchange.exchange_utils import TICK_SIZE
-from traderpilot.persistence import LocalTrade, Order, Trade, init_db
-from traderpilot.util import dt_now
 from tests.conftest import (
     create_mock_trades,
     create_mock_trades_usdt,
@@ -18,6 +12,12 @@ from tests.conftest import (
     log_has,
     log_has_re,
 )
+from traderpilot.constants import CUSTOM_TAG_MAX_LENGTH, DATETIME_PRINT_FORMAT
+from traderpilot.enums import TradingMode
+from traderpilot.exceptions import DependencyException
+from traderpilot.exchange.exchange_utils import TICK_SIZE
+from traderpilot.persistence import LocalTrade, Order, Trade, init_db
+from traderpilot.util import dt_now
 
 
 spot, margin, futures = TradingMode.SPOT, TradingMode.MARGIN, TradingMode.FUTURES
@@ -2000,7 +2000,7 @@ def test_update_order_from_ccxt(caplog, time_machine):
     assert o.order_id == "1234"
     assert o.tp_price == 1234.6
     assert o.tp_amount == 20.01
-    assert o. tp_is_open
+    assert o.tp_is_open
     ccxt_order = {
         "id": "1234",
         "side": "buy",
@@ -2025,7 +2025,7 @@ def test_update_order_from_ccxt(caplog, time_machine):
     assert o.filled == 9
     assert o.remaining == 11
     assert o.order_date is not None
-    assert o. tp_is_open
+    assert o.tp_is_open
     assert o.order_filled_date is None
 
     # Order is unfilled, "filled" not set
@@ -2039,7 +2039,7 @@ def test_update_order_from_ccxt(caplog, time_machine):
 
     assert o.filled == 20.0
     assert o.remaining == 0.0
-    assert not o. tp_is_open
+    assert not o.tp_is_open
     assert o.order_filled_date == start
     # Move time
     time_machine.move_to(start + timedelta(hours=1), tick=False)

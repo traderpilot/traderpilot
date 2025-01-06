@@ -11,30 +11,6 @@ import pytest
 from pandas import DataFrame
 from sqlalchemy import select
 
-from traderpilot.constants import CANCEL_REASON, UNLIMITED_STAKE_AMOUNT
-from traderpilot.enums import (
-    CandleType,
-    ExitCheckTuple,
-    ExitType,
-    RPCMessageType,
-    RunMode,
-    SignalDirection,
-    State,
-)
-from traderpilot.exceptions import (
-    DependencyException,
-    ExchangeError,
-    InsufficientFundsError,
-    InvalidOrderException,
-    OperationalException,
-    PricingError,
-    TemporaryError,
-)
-from traderpilot.traderpilotbot import TraderpilotBot
-from traderpilot.persistence import Order, PairLocks, Trade
-from traderpilot.plugins.protections.iprotection import ProtectionReturn
-from traderpilot.util.datetime_helpers import dt_now, dt_utc
-from traderpilot.worker import Worker
 from tests.conftest import (
     EXMS,
     create_mock_trades,
@@ -62,6 +38,30 @@ from tests.conftest_trades import (
     mock_order_6_sell,
 )
 from tests.conftest_trades_usdt import mock_trade_usdt_4
+from traderpilot.constants import CANCEL_REASON, UNLIMITED_STAKE_AMOUNT
+from traderpilot.enums import (
+    CandleType,
+    ExitCheckTuple,
+    ExitType,
+    RPCMessageType,
+    RunMode,
+    SignalDirection,
+    State,
+)
+from traderpilot.exceptions import (
+    DependencyException,
+    ExchangeError,
+    InsufficientFundsError,
+    InvalidOrderException,
+    OperationalException,
+    PricingError,
+    TemporaryError,
+)
+from traderpilot.persistence import Order, PairLocks, Trade
+from traderpilot.plugins.protections.iprotection import ProtectionReturn
+from traderpilot.traderpilotbot import TraderpilotBot
+from traderpilot.util.datetime_helpers import dt_now, dt_utc
+from traderpilot.worker import Worker
 
 
 def patch_RPCManager(mocker) -> MagicMock:
@@ -1257,7 +1257,9 @@ def test_enter_positions(
 def test_exit_positions(mocker, default_conf_usdt, limit_order, is_short, caplog) -> None:
     traderpilot = get_patched_traderpilotbot(mocker, default_conf_usdt)
 
-    mocker.patch("traderpilot.traderpilotbot.TraderpilotBot.handle_trade", MagicMock(return_value=True))
+    mocker.patch(
+        "traderpilot.traderpilotbot.TraderpilotBot.handle_trade", MagicMock(return_value=True)
+    )
     mocker.patch(f"{EXMS}.fetch_order", return_value=limit_order[entry_side(is_short)])
     mocker.patch(f"{EXMS}.get_trades_for_order", return_value=[])
 
@@ -1293,7 +1295,9 @@ def test_exit_positions(mocker, default_conf_usdt, limit_order, is_short, caplog
     # Test amount not modified by fee-logic
     assert not log_has_re(r"Applying fee to amount for Trade .*", caplog)
 
-    gra = mocker.patch("traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", return_value=0.0)
+    gra = mocker.patch(
+        "traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", return_value=0.0
+    )
     # test amount modified by fee-logic
     n = traderpilot.exit_positions(trades)
     assert n == 0
@@ -1351,7 +1355,9 @@ def test_update_trade_state(mocker, default_conf_usdt, limit_order, is_short, ca
     traderpilot = get_patched_traderpilotbot(mocker, default_conf_usdt)
     order = limit_order[entry_side(is_short)]
 
-    mocker.patch("traderpilot.traderpilotbot.TraderpilotBot.handle_trade", MagicMock(return_value=True))
+    mocker.patch(
+        "traderpilot.traderpilotbot.TraderpilotBot.handle_trade", MagicMock(return_value=True)
+    )
     mocker.patch("traderpilot.traderpilotbot.TraderpilotBot._notify_enter")
     mocker.patch(f"{EXMS}.fetch_order", return_value=order)
     mocker.patch(f"{EXMS}.get_trades_for_order", return_value=[])
@@ -1405,7 +1411,9 @@ def test_update_trade_state(mocker, default_conf_usdt, limit_order, is_short, ca
     limit_buy_order_usdt_new["status"] = "canceled"
 
     traderpilot.strategy.order_filled = MagicMock(return_value=None)
-    mocker.patch("traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", side_effect=ValueError)
+    mocker.patch(
+        "traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", side_effect=ValueError
+    )
     mocker.patch(f"{EXMS}.fetch_order", return_value=limit_buy_order_usdt_new)
     res = traderpilot.update_trade_state(trade, order_id)
     # Cancelled empty
@@ -1485,7 +1493,8 @@ def test_update_trade_state_exception(
 
     # Test raise of OperationalException exception
     mocker.patch(
-        "traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", side_effect=DependencyException()
+        "traderpilot.traderpilotbot.TraderpilotBot.get_real_amount",
+        side_effect=DependencyException(),
     )
     traderpilot.update_trade_state(trade, open_order_id)
     assert log_has("Could not update trade amount: ", caplog)
@@ -1500,7 +1509,9 @@ def test_update_trade_state_orderexception(mocker, default_conf_usdt, caplog) ->
     open_order_id = "123"
 
     # Test raise of OperationalException exception
-    grm_mock = mocker.patch("traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", MagicMock())
+    grm_mock = mocker.patch(
+        "traderpilot.traderpilotbot.TraderpilotBot.get_real_amount", MagicMock()
+    )
     traderpilot.update_trade_state(trade, open_order_id)
     assert grm_mock.call_count == 0
     assert log_has(f"Unable to fetch order {open_order_id}: ", caplog)
@@ -1601,7 +1612,7 @@ def test_handle_trade(
     assert trade.open_orders_ids[-1] == exit_order["id"]
 
     # Simulate fulfilled LIMIT_SELL order for trade
-    trade.orders[-1]. tp_is_open = False
+    trade.orders[-1].tp_is_open = False
     trade.orders[-1].status = "closed"
     trade.orders[-1].filled = trade.orders[-1].remaining
     trade.orders[-1].remaining = 0.0
@@ -1873,7 +1884,7 @@ def test_manage_open_orders_entry_usercustom(
     assert cancel_order_mock.call_count == 0
     trades = Trade.session.scalars(
         select(Trade)
-        .where(Order. tp_is_open.is_(True))
+        .where(Order.tp_is_open.is_(True))
         .where(Order.tp_order_side != "stoploss")
         .where(Order.tp_trade_id == Trade.id)
     ).all()
@@ -1886,7 +1897,7 @@ def test_manage_open_orders_entry_usercustom(
     assert cancel_order_mock.call_count == 0
     trades = Trade.session.scalars(
         select(Trade)
-        .where(Order. tp_is_open.is_(True))
+        .where(Order.tp_is_open.is_(True))
         .where(Order.tp_order_side != "stoploss")
         .where(Order.tp_trade_id == Trade.id)
     ).all()
@@ -1901,7 +1912,7 @@ def test_manage_open_orders_entry_usercustom(
     assert rpc_mock.call_count == 2
     trades = Trade.session.scalars(
         select(Trade)
-        .where(Order. tp_is_open.is_(True))
+        .where(Order.tp_is_open.is_(True))
         .where(Order.tp_order_side != "stoploss")
         .where(Order.tp_trade_id == Trade.id)
     ).all()
@@ -1951,7 +1962,7 @@ def test_manage_open_orders_entry(
     assert rpc_mock.call_count == 2
     trades = Trade.session.scalars(
         select(Trade)
-        .where(Order. tp_is_open.is_(True))
+        .where(Order.tp_is_open.is_(True))
         .where(Order.tp_order_side != "stoploss")
         .where(Order.tp_trade_id == Trade.id)
     ).all()
@@ -2146,7 +2157,7 @@ def test_adjust_entry_maintain_replace(
     traderpilot.strategy.adjust_entry_price = MagicMock(return_value=old_order["price"])
     traderpilot.manage_open_orders()
     trades = Trade.session.scalars(
-        select(Trade).where(Order. tp_is_open.is_(True)).where(Order.tp_trade_id == Trade.id)
+        select(Trade).where(Order.tp_is_open.is_(True)).where(Order.tp_trade_id == Trade.id)
     ).all()
     assert len(trades) == 1
     assert len(Order.get_open_orders()) == 1
@@ -2162,7 +2173,7 @@ def test_adjust_entry_maintain_replace(
     assert traderpilot.strategy.adjust_entry_price.call_count == 1
 
     trades = Trade.session.scalars(
-        select(Trade).where(Order. tp_is_open.is_(True)).where(Order.tp_trade_id == Trade.id)
+        select(Trade).where(Order.tp_is_open.is_(True)).where(Order.tp_trade_id == Trade.id)
     ).all()
     assert len(trades) == 1
     nb_all_orders = len(Order.session.scalars(select(Order)).all())
@@ -2212,7 +2223,7 @@ def test_check_handle_cancelled_buy(
     assert cancel_order_mock.call_count == 0
     assert rpc_mock.call_count == 2
     trades = Trade.session.scalars(
-        select(Trade).where(Order. tp_is_open.is_(True)).where(Order.tp_trade_id == Trade.id)
+        select(Trade).where(Order.tp_is_open.is_(True)).where(Order.tp_trade_id == Trade.id)
     ).all()
     assert len(trades) == 0
     exit_name = "Buy" if is_short else "Sell"
@@ -2317,7 +2328,8 @@ def test_manage_open_orders_exit_usercustom(
 
     mocker.patch("traderpilot.persistence.Trade.get_canceled_exit_order_count", return_value=1)
     mocker.patch(
-        "traderpilot.traderpilotbot.TraderpilotBot.execute_trade_exit", side_effect=DependencyException
+        "traderpilot.traderpilotbot.TraderpilotBot.execute_trade_exit",
+        side_effect=DependencyException,
     )
     traderpilot.manage_open_orders()
     assert log_has_re("Unable to emergency exit .*", caplog)
@@ -3420,7 +3432,9 @@ def test_sell_not_enough_balance(
     oobj = Order.parse_from_ccxt_object(limit_order["buy"], limit_order["buy"]["symbol"], "buy")
     trade.update_trade(oobj)
     patch_get_signal(traderpilot, enter_long=False, exit_long=True)
-    mocker.patch("traderpilot.wallets.Wallets.get_free", MagicMock(return_value=trade.amount * 0.985))
+    mocker.patch(
+        "traderpilot.wallets.Wallets.get_free", MagicMock(return_value=trade.amount * 0.985)
+    )
 
     assert traderpilot.handle_trade(trade) is True
     assert log_has_re(r".*Falling back to wallet-amount.", caplog)
@@ -3769,7 +3783,9 @@ def test_disable_ignore_roi_if_entry_signal(
     oobj = Order.parse_from_ccxt_object(limit_order[eside], limit_order[eside]["symbol"], eside)
     trade.update_trade(oobj)
     # Sell due to min_roi_reached
-    patch_get_signal(traderpilot, enter_long=not is_short, enter_short=is_short, exit_short=is_short)
+    patch_get_signal(
+        traderpilot, enter_long=not is_short, enter_short=is_short, exit_short=is_short
+    )
     assert traderpilot.handle_trade(trade) is True
 
     # Test if entry-signal is absent
@@ -5098,8 +5114,12 @@ def test_get_valid_price(mocker, default_conf_usdt) -> None:
     valid_price_from_int = traderpilot.get_valid_price(custom_price_int, proposed_price)
     valid_price_from_float = traderpilot.get_valid_price(custom_price_float, proposed_price)
 
-    valid_price_at_max_alwd = traderpilot.get_valid_price(custom_price_over_max_alwd, proposed_price)
-    valid_price_at_min_alwd = traderpilot.get_valid_price(custom_price_under_min_alwd, proposed_price)
+    valid_price_at_max_alwd = traderpilot.get_valid_price(
+        custom_price_over_max_alwd, proposed_price
+    )
+    valid_price_at_min_alwd = traderpilot.get_valid_price(
+        custom_price_under_min_alwd, proposed_price
+    )
 
     assert isinstance(valid_price_from_string, float)
     assert isinstance(valid_price_from_badstring, float)

@@ -4,9 +4,9 @@ from datetime import timedelta
 from time import sleep
 from unittest.mock import AsyncMock, MagicMock
 
+from client.test_client.test_rest_client import log_has_re
 from traderpilot.enums import CandleType
 from traderpilot.exchange.exchange_ws import ExchangeWS
-from client.test_client.test_rest_client import log_has_re
 
 
 def test_exchangews_init(mocker):

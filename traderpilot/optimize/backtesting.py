@@ -37,7 +37,6 @@ from traderpilot.exchange import (
     timeframe_to_seconds,
 )
 from traderpilot.exchange.exchange import Exchange
-from traderpilot.types import BacktestResultType, get_BacktestResultType_default
 from traderpilot.leverage.liquidation_price import update_liquidation_prices
 from traderpilot.mixins import LoggingMixin
 from traderpilot.optimize.backtest_caching import get_strategy_run_id
@@ -63,6 +62,7 @@ from traderpilot.plugins.protectionmanager import ProtectionManager
 from traderpilot.resolvers import ExchangeResolver, StrategyResolver
 from traderpilot.strategy.interface import IStrategy
 from traderpilot.strategy.strategy_wrapper import strategy_safe_wrapper
+from traderpilot.types import BacktestResultType, get_BacktestResultType_default
 from traderpilot.util import FtPrecise
 from traderpilot.util.migrations import migrate_data
 from traderpilot.wallets import Wallets
@@ -1203,7 +1203,7 @@ class Backtesting:
         Check if any open order needs to be cancelled or replaced.
         Returns True if the trade should be deleted.
         """
-        for order in [o for o in trade.orders if o. tp_is_open]:
+        for order in [o for o in trade.orders if o.tp_is_open]:
             oc = self.check_order_cancel(trade, order, current_time)
             if oc:
                 # delete trade due to order timeout

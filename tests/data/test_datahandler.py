@@ -9,6 +9,7 @@ import pytest
 from pandas import DataFrame, Timestamp
 from pandas.testing import assert_frame_equal
 
+from tests.conftest import log_has, log_has_re
 from traderpilot.configuration import TimeRange
 from traderpilot.constants import AVAILABLE_DATAHANDLERS
 from traderpilot.data.history.datahandlers.featherdatahandler import FeatherDataHandler
@@ -21,7 +22,6 @@ from traderpilot.data.history.datahandlers.idatahandler import (
 from traderpilot.data.history.datahandlers.jsondatahandler import JsonDataHandler, JsonGzDataHandler
 from traderpilot.data.history.datahandlers.parquetdatahandler import ParquetDataHandler
 from traderpilot.enums import CandleType, TradingMode
-from tests.conftest import log_has, log_has_re
 
 
 def test_datahandler_ohlcv_get_pairs(testdatadir):

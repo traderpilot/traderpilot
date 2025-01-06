@@ -21,12 +21,12 @@ from stable_baselines3.common.utils import set_random_seed
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecMonitor
 
 from traderpilot.exceptions import OperationalException
+from traderpilot.persistence import Trade
 from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
-from traderpilot.traderai.traderai_interface import ITraderaiModel
 from traderpilot.traderai.RL.Base5ActionRLEnv import Actions, Base5ActionRLEnv
 from traderpilot.traderai.RL.BaseEnvironment import BaseActions, BaseEnvironment, Positions
 from traderpilot.traderai.tensorboard.TensorboardCallback import TensorboardCallback
-from traderpilot.persistence import Trade
+from traderpilot.traderai.traderai_interface import ITraderaiModel
 
 
 logger = logging.getLogger(__name__)

@@ -9,6 +9,16 @@ import pytest
 from filelock import Timeout
 from skopt.space import Integer
 
+from tests.conftest import (
+    CURRENT_TEST_STRATEGY,
+    EXMS,
+    get_args,
+    get_markets,
+    log_has,
+    log_has_re,
+    patch_exchange,
+    patched_configuration_load_config_file,
+)
 from traderpilot.commands.optimize_commands import setup_optimize_configuration, start_hyperopt
 from traderpilot.data.history import load_data
 from traderpilot.enums import ExitType, RunMode
@@ -20,16 +30,6 @@ from traderpilot.optimize.optimize_reports import generate_strategy_stats
 from traderpilot.optimize.space import SKDecimal
 from traderpilot.strategy import IntParameter
 from traderpilot.util import dt_utc
-from tests.conftest import (
-    CURRENT_TEST_STRATEGY,
-    EXMS,
-    get_args,
-    get_markets,
-    log_has,
-    log_has_re,
-    patch_exchange,
-    patched_configuration_load_config_file,
-)
 
 
 def generate_result_metrics():
@@ -619,7 +619,9 @@ def test_clean_hyperopt(mocker, hyperopt_conf, caplog):
         "traderpilot.strategy.hyper.HyperStrategyMixin.load_params_from_file",
         MagicMock(return_value={}),
     )
-    mocker.patch("traderpilot.optimize.hyperopt.hyperopt.Path.is_file", MagicMock(return_value=True))
+    mocker.patch(
+        "traderpilot.optimize.hyperopt.hyperopt.Path.is_file", MagicMock(return_value=True)
+    )
     unlinkmock = mocker.patch("traderpilot.optimize.hyperopt.hyperopt.Path.unlink", MagicMock())
     h = Hyperopt(hyperopt_conf)
 

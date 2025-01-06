@@ -21,7 +21,10 @@ def start_create_userdir(args: dict[str, Any]) -> None:
     :param args: Cli args from Arguments()
     :return: None
     """
-    from traderpilot.configuration.directory_operations import copy_sample_files, create_userdata_dir
+    from traderpilot.configuration.directory_operations import (
+        copy_sample_files,
+        create_userdata_dir,
+    )
 
     if "user_data_dir" in args and args["user_data_dir"]:
         userdir = create_userdata_dir(args["user_data_dir"], create_dir=True)

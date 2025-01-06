@@ -4,7 +4,9 @@ from unittest.mock import MagicMock
 import pytest
 
 from traderpilot.exceptions import OperationalException
-from traderpilot.optimize.hyperopt_loss.hyperopt_loss_short_trade_dur import ShortTradeDurHyperOptLoss
+from traderpilot.optimize.hyperopt_loss.hyperopt_loss_short_trade_dur import (
+    ShortTradeDurHyperOptLoss,
+)
 from traderpilot.resolvers.hyperopt_resolver import HyperOptLossResolver
 
 

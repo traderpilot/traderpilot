@@ -5,8 +5,8 @@ from pydantic import AwareDatetime, BaseModel, RootModel, SerializeAsAny, model_
 
 from traderpilot.constants import DL_DATA_TIMEFRAMES, IntOrInf
 from traderpilot.enums import MarginMode, OrderTypeValues, SignalDirection, TradingMode
-from traderpilot.types import ValidExchangesType
 from traderpilot.rpc.api_server.webserver_bgwork import ProgressTask
+from traderpilot.types import ValidExchangesType
 
 
 class ExchangeModePayloadMixin(BaseModel):

@@ -13,7 +13,12 @@ from pathlib import Path
 from typing import Any
 
 from traderpilot.configuration.config_validation import validate_migrated_strategy_settings
-from traderpilot.constants import REQUIRED_ORDERTIF, REQUIRED_ORDERTYPES, USERPATH_STRATEGIES, Config
+from traderpilot.constants import (
+    REQUIRED_ORDERTIF,
+    REQUIRED_ORDERTYPES,
+    USERPATH_STRATEGIES,
+    Config,
+)
 from traderpilot.enums import TradingMode
 from traderpilot.exceptions import OperationalException
 from traderpilot.resolvers import IResolver

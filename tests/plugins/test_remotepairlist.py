@@ -4,10 +4,10 @@ from unittest.mock import MagicMock, PropertyMock
 import pytest
 import requests
 
+from tests.conftest import EXMS, get_patched_exchange, get_patched_traderpilotbot, log_has
 from traderpilot.exceptions import OperationalException
 from traderpilot.plugins.pairlist.RemotePairList import RemotePairList
 from traderpilot.plugins.pairlistmanager import PairListManager
-from tests.conftest import EXMS, get_patched_exchange, get_patched_traderpilotbot, log_has
 
 
 @pytest.fixture(scope="function")
@@ -32,7 +32,9 @@ def test_gen_pairlist_with_local_file(mocker, rpl_config):
     mock_file_path.exists.return_value = True
 
     jsonparse = json.loads(mock_file.read.return_value)
-    mocker.patch("traderpilot.plugins.pairlist.RemotePairList.rapidjson.load", return_value=jsonparse)
+    mocker.patch(
+        "traderpilot.plugins.pairlist.RemotePairList.rapidjson.load", return_value=jsonparse
+    )
 
     rpl_config["pairlists"] = [
         {

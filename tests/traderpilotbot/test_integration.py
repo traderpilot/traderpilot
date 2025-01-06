@@ -4,11 +4,11 @@ from unittest.mock import MagicMock
 import pytest
 from sqlalchemy import select
 
+from tests.conftest import EXMS, get_patched_traderpilotbot, log_has_re, patch_get_signal
 from traderpilot.enums import ExitCheckTuple, ExitType, TradingMode
 from traderpilot.persistence import Trade
 from traderpilot.persistence.models import Order
 from traderpilot.rpc.rpc import RPC
-from tests.conftest import EXMS, get_patched_traderpilotbot, log_has_re, patch_get_signal
 
 
 def test_may_execute_exit_stoploss_on_exchange_multi(default_conf, ticker, fee, mocker) -> None:
@@ -93,7 +93,7 @@ def test_may_execute_exit_stoploss_on_exchange_multi(default_conf, ticker, fee, 
         stop_order = stop_orders[idx]
         stop_order["id"] = f"stop{idx}"
         oobj = Order.parse_from_ccxt_object(stop_order, trade.pair, "stoploss")
-        oobj. tp_is_open = True
+        oobj.tp_is_open = True
 
         trade.orders.append(oobj)
         assert len(trade.open_sl_orders) == 1
@@ -514,7 +514,7 @@ def test_dca_order_adjust_entry_replace_fails(
 
     trades = Trade.session.scalars(
         select(Trade)
-        .where(Order. tp_is_open.is_(True))
+        .where(Order.tp_is_open.is_(True))
         .where(Order.tp_order_side != "stoploss")
         .where(Order.tp_trade_id == Trade.id)
     ).all()
@@ -535,7 +535,7 @@ def test_dca_order_adjust_entry_replace_fails(
     assert traderpilot.strategy.adjust_trade_position.call_count == 1
     trades = Trade.session.scalars(
         select(Trade)
-        .where(Order. tp_is_open.is_(True))
+        .where(Order.tp_is_open.is_(True))
         .where(Order.tp_order_side != "stoploss")
         .where(Order.tp_trade_id == Trade.id)
     ).all()
@@ -546,7 +546,7 @@ def test_dca_order_adjust_entry_replace_fails(
     traderpilot.manage_open_orders()
     trades = Trade.session.scalars(
         select(Trade)
-        .where(Order. tp_is_open.is_(True))
+        .where(Order.tp_is_open.is_(True))
         .where(Order.tp_order_side != "stoploss")
         .where(Order.tp_trade_id == Trade.id)
     ).all()
@@ -651,7 +651,9 @@ def test_dca_exiting(default_conf_usdt, ticker_usdt, fee, mocker, caplog, levera
     assert len(trade.orders) == 2
 
     # Amount too low...
-    traderpilot.strategy.adjust_trade_position = MagicMock(return_value=-(trade.stake_amount * 0.99))
+    traderpilot.strategy.adjust_trade_position = MagicMock(
+        return_value=-(trade.stake_amount * 0.99)
+    )
     traderpilot.process()
 
     trade = Trade.get_trades().first()

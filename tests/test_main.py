@@ -6,18 +6,18 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
-from traderpilot.commands import Arguments
-from traderpilot.enums import State
-from traderpilot.exceptions import ConfigurationError, TraderpilotException, OperationalException
-from traderpilot.traderpilotbot import TraderpilotBot
-from traderpilot.main import main
-from traderpilot.worker import Worker
 from tests.conftest import (
     log_has,
     log_has_re,
     patch_exchange,
     patched_configuration_load_config_file,
 )
+from traderpilot.commands import Arguments
+from traderpilot.enums import State
+from traderpilot.exceptions import ConfigurationError, OperationalException, TraderpilotException
+from traderpilot.main import main
+from traderpilot.traderpilotbot import TraderpilotBot
+from traderpilot.worker import Worker
 
 
 def test_parse_args_None(caplog) -> None:

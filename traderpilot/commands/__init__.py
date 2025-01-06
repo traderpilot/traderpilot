@@ -26,11 +26,11 @@ from traderpilot.commands.deploy_commands import (
 from traderpilot.commands.hyperopt_commands import start_hyperopt_list, start_hyperopt_show
 from traderpilot.commands.list_commands import (
     start_list_exchanges,
-    start_list_traderAI_models,
     start_list_hyperopt_loss_functions,
     start_list_markets,
     start_list_strategies,
     start_list_timeframes,
+    start_list_traderAI_models,
     start_show_trades,
 )
 from traderpilot.commands.optimize_commands import (

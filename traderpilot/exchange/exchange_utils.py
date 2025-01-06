@@ -26,7 +26,10 @@ from traderpilot.exchange.common import (
     MAP_EXCHANGE_CHILDCLASS,
     SUPPORTED_EXCHANGES,
 )
-from traderpilot.exchange.exchange_utils_timeframe import timeframe_to_minutes, timeframe_to_prev_date
+from traderpilot.exchange.exchange_utils_timeframe import (
+    timeframe_to_minutes,
+    timeframe_to_prev_date,
+)
 from traderpilot.types import ValidExchangesType
 from traderpilot.util import FtPrecise
 

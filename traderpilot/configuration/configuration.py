@@ -306,7 +306,10 @@ class Configuration:
             ("backtest_breakdown", "Parameter --breakdown detected ..."),
             ("backtest_cache", "Parameter --cache={} detected ..."),
             ("disableparamexport", "Parameter --disableparamexport detected: {} ..."),
-            ("traderai_backtest_live_models", "Parameter --traderai-backtest-live-models detected ..."),
+            (
+                "traderai_backtest_live_models",
+                "Parameter --traderai-backtest-live-models detected ...",
+            ),
         ]
         self._args_to_config_loop(config, configurations)
 

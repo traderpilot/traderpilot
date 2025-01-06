@@ -43,7 +43,9 @@ def test_interest(exchange, interest_rate, hours, expected):
 
 
 def test_interest_exception():
-    with pytest.raises(OperationalException, match=r"Leverage not available on .* with traderpilot"):
+    with pytest.raises(
+        OperationalException, match=r"Leverage not available on .* with traderpilot"
+    ):
         interest(
             exchange_name="bitmex", borrowed=FtPrecise(60.0), rate=FtPrecise(0.0005), hours=ten_mins
         )

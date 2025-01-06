@@ -22,8 +22,8 @@ from traderpilot.constants import Config
 from traderpilot.data.history import load_pair_history
 from traderpilot.enums import CandleType
 from traderpilot.exceptions import OperationalException
-from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 from traderpilot.strategy.interface import IStrategy
+from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 
 
 logger = logging.getLogger(__name__)
@@ -188,7 +188,9 @@ class TraderaiDataDrawer:
                 )
                 with self.historic_predictions_bkp_path.open("rb") as fp:
                     self.historic_predictions = cloudpickle.load(fp)
-                logger.warning("TraderAI successfully loaded the backup historical predictions file.")
+                logger.warning(
+                    "TraderAI successfully loaded the backup historical predictions file."
+                )
 
         else:
             logger.info("Could not find existing historic_predictions, starting from scratch")

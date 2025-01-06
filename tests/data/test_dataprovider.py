@@ -4,11 +4,11 @@ from unittest.mock import MagicMock
 import pytest
 from pandas import DataFrame, Timestamp
 
+from tests.conftest import EXMS, generate_test_data, get_patched_exchange
 from traderpilot.data.dataprovider import DataProvider
 from traderpilot.enums import CandleType, RunMode
 from traderpilot.exceptions import ExchangeError, OperationalException
 from traderpilot.plugins.pairlistmanager import PairListManager
-from tests.conftest import EXMS, generate_test_data, get_patched_exchange
 
 
 @pytest.mark.parametrize(

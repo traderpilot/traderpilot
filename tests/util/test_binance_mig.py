@@ -2,10 +2,10 @@ import shutil
 
 import pytest
 
+from tests.conftest import create_mock_trades_usdt, log_has
 from traderpilot.persistence import Trade
 from traderpilot.util.migrations import migrate_binance_futures_data, migrate_data
 from traderpilot.util.migrations.binance_mig import migrate_binance_futures_names
-from tests.conftest import create_mock_trades_usdt, log_has
 
 
 def test_binance_mig_data_conversion(default_conf_usdt, tmp_path, testdatadir):

@@ -5,10 +5,10 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
+from tests.conftest import patch_exchange
 from traderpilot.enums import ExitType, RunMode
 from traderpilot.optimize.backtesting import Backtesting
 from traderpilot.optimize.hyperopt import Hyperopt
-from tests.conftest import patch_exchange
 
 
 @pytest.fixture(scope="function")

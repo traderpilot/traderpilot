@@ -15,10 +15,10 @@ import pandas as pd
 
 from traderpilot.constants import LAST_BT_RESULT_FN, IntOrInf
 from traderpilot.exceptions import ConfigurationError, OperationalException
-from traderpilot.types import BacktestHistoryEntryType, BacktestResultType
 from traderpilot.misc import file_dump_json, json_load
 from traderpilot.optimize.backtest_caching import get_backtest_metadata_filename
 from traderpilot.persistence import LocalTrade, Trade, init_db
+from traderpilot.types import BacktestHistoryEntryType, BacktestResultType
 
 
 logger = logging.getLogger(__name__)

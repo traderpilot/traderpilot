@@ -8,6 +8,7 @@ from unittest.mock import MagicMock
 import pytest
 from pandas import DataFrame
 
+from tests.conftest import CURRENT_TEST_STRATEGY, TRADE_SIDES, log_has, log_has_re
 from traderpilot.configuration import TimeRange
 from traderpilot.constants import CUSTOM_TAG_MAX_LENGTH
 from traderpilot.data.dataprovider import DataProvider
@@ -28,7 +29,6 @@ from traderpilot.strategy.parameters import (
     RealParameter,
 )
 from traderpilot.util import dt_now
-from tests.conftest import CURRENT_TEST_STRATEGY, TRADE_SIDES, log_has, log_has_re
 
 from .strats.strategy_test_v3 import StrategyTestV3
 
@@ -1030,7 +1030,9 @@ def test_auto_hyperopt_interface_loadparams(default_conf, mocker, caplog):
             "roi": {"0": 0.2, "1200": 0.01},
         },
     }
-    mocker.patch("traderpilot.strategy.hyper.HyperoptTools.load_params", return_value=expected_result)
+    mocker.patch(
+        "traderpilot.strategy.hyper.HyperoptTools.load_params", return_value=expected_result
+    )
     PairLocks.timeframe = default_conf["timeframe"]
     strategy = StrategyResolver.load_strategy(default_conf)
     assert strategy.stoploss == -0.05
@@ -1046,7 +1048,9 @@ def test_auto_hyperopt_interface_loadparams(default_conf, mocker, caplog):
         },
     }
 
-    mocker.patch("traderpilot.strategy.hyper.HyperoptTools.load_params", return_value=expected_result)
+    mocker.patch(
+        "traderpilot.strategy.hyper.HyperoptTools.load_params", return_value=expected_result
+    )
     with pytest.raises(OperationalException, match="Invalid parameter file provided."):
         StrategyResolver.load_strategy(default_conf)
 

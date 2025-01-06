@@ -19,26 +19,6 @@ from sqlalchemy import select
 from telegram import Chat, Message, ReplyKeyboardMarkup, Update
 from telegram.error import BadRequest, NetworkError, TelegramError
 
-from traderpilot import __version__
-from traderpilot.constants import CANCEL_REASON
-from traderpilot.edge import PairInfo
-from traderpilot.enums import (
-    ExitType,
-    MarketDirection,
-    RPCMessageType,
-    RunMode,
-    SignalDirection,
-    State,
-)
-from traderpilot.exceptions import OperationalException
-from traderpilot.traderpilotbot import TraderpilotBot
-from traderpilot.loggers import setup_logging
-from traderpilot.persistence import PairLocks, Trade
-from traderpilot.persistence.models import Order
-from traderpilot.rpc import RPC
-from traderpilot.rpc.rpc import RPCException
-from traderpilot.rpc.telegram import Telegram, authorized_only
-from traderpilot.util.datetime_helpers import dt_now
 from tests.conftest import (
     CURRENT_TEST_STRATEGY,
     EXMS,
@@ -51,6 +31,26 @@ from tests.conftest import (
     patch_get_signal,
     patch_whitelist,
 )
+from traderpilot import __version__
+from traderpilot.constants import CANCEL_REASON
+from traderpilot.edge import PairInfo
+from traderpilot.enums import (
+    ExitType,
+    MarketDirection,
+    RPCMessageType,
+    RunMode,
+    SignalDirection,
+    State,
+)
+from traderpilot.exceptions import OperationalException
+from traderpilot.loggers import setup_logging
+from traderpilot.persistence import PairLocks, Trade
+from traderpilot.persistence.models import Order
+from traderpilot.rpc import RPC
+from traderpilot.rpc.rpc import RPCException
+from traderpilot.rpc.telegram import Telegram, authorized_only
+from traderpilot.traderpilotbot import TraderpilotBot
+from traderpilot.util.datetime_helpers import dt_now
 
 
 @pytest.fixture(autouse=True)

@@ -5,12 +5,12 @@ from unittest.mock import patch
 import pandas as pd
 import pytest
 
+from tests.conftest import get_patched_exchange
+from tests.traderai.conftest import get_patched_traderai_strategy
 from traderpilot.configuration import TimeRange
 from traderpilot.data.dataprovider import DataProvider
 from traderpilot.exceptions import OperationalException
 from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
-from tests.conftest import get_patched_exchange
-from tests.traderai.conftest import get_patched_traderai_strategy
 
 
 def test_update_historic_data(mocker, traderai_conf):
@@ -68,7 +68,9 @@ def test_get_base_and_corr_dataframes(mocker, traderai_conf):
     timerange = TimeRange.parse_timerange("20180110-20180114")
     traderai.dd.load_all_pair_histories(timerange, traderai.dk)
     sub_timerange = TimeRange.parse_timerange("20180111-20180114")
-    corr_df, base_df = traderai.dd.get_base_and_corr_dataframes(sub_timerange, "LTC/BTC", traderai.dk)
+    corr_df, base_df = traderai.dd.get_base_and_corr_dataframes(
+        sub_timerange, "LTC/BTC", traderai.dk
+    )
 
     num_tfs = len(
         traderai_conf.get("traderai", {}).get("feature_parameters", {}).get("include_timeframes")
@@ -96,7 +98,9 @@ def test_use_strategy_to_populate_indicators(mocker, traderai_conf):
     timerange = TimeRange.parse_timerange("20180110-20180114")
     traderai.dd.load_all_pair_histories(timerange, traderai.dk)
     sub_timerange = TimeRange.parse_timerange("20180111-20180114")
-    corr_df, base_df = traderai.dd.get_base_and_corr_dataframes(sub_timerange, "LTC/BTC", traderai.dk)
+    corr_df, base_df = traderai.dd.get_base_and_corr_dataframes(
+        sub_timerange, "LTC/BTC", traderai.dk
+    )
 
     df = traderai.dk.use_strategy_to_populate_indicators(strategy, corr_df, base_df, "LTC/BTC")
 

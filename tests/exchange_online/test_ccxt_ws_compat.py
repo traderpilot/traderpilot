@@ -10,12 +10,12 @@ from time import sleep
 
 import pytest
 
+from tests.conftest import log_has_re
+from tests.exchange_online.conftest import EXCHANGE_WS_FIXTURE_TYPE
 from traderpilot.enums import CandleType
 from traderpilot.exchange.exchange_utils import timeframe_to_prev_date
 from traderpilot.loggers.set_log_levels import set_loggers
 from traderpilot.util.datetime_helpers import dt_now
-from tests.conftest import log_has_re
-from tests.exchange_online.conftest import EXCHANGE_WS_FIXTURE_TYPE
 
 
 @pytest.mark.longrun

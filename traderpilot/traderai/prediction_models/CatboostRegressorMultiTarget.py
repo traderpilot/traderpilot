@@ -5,7 +5,9 @@ from typing import Any
 from catboost import CatBoostRegressor, Pool
 
 from traderpilot.traderai.base_models.BaseRegressionModel import BaseRegressionModel
-from traderpilot.traderai.base_models.TraderaiMultiOutputRegressor import TraderaiMultiOutputRegressor
+from traderpilot.traderai.base_models.TraderaiMultiOutputRegressor import (
+    TraderaiMultiOutputRegressor,
+)
 from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 
 

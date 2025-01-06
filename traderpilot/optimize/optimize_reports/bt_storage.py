@@ -8,9 +8,9 @@ from pandas import DataFrame
 
 from traderpilot.constants import LAST_BT_RESULT_FN
 from traderpilot.enums.runmode import RunMode
-from traderpilot.types import BacktestResultType
 from traderpilot.misc import dump_json_to_file, file_dump_json
 from traderpilot.optimize.backtest_caching import get_backtest_metadata_filename
+from traderpilot.types import BacktestResultType
 
 
 logger = logging.getLogger(__name__)

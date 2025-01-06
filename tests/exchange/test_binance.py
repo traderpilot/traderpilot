@@ -6,13 +6,13 @@ import ccxt
 import pandas as pd
 import pytest
 
+from tests.conftest import EXMS, get_patched_exchange
+from tests.exchange.test_exchange import ccxt_exceptionhandlers
 from traderpilot.enums import CandleType, MarginMode, TradingMode
 from traderpilot.exceptions import DependencyException, InvalidOrderException, OperationalException
 from traderpilot.exchange.exchange_utils_timeframe import timeframe_to_seconds
 from traderpilot.persistence import Trade
 from traderpilot.util.datetime_helpers import dt_from_ts, dt_ts, dt_utc
-from tests.conftest import EXMS, get_patched_exchange
-from tests.exchange.test_exchange import ccxt_exceptionhandlers
 
 
 @pytest.mark.parametrize(

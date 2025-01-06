@@ -3,10 +3,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from traderpilot.data.history.history_utils import get_timerange
-from traderpilot.optimize.backtesting import Backtesting
-from traderpilot.persistence import Trade, disable_database_use, enable_database_use
-from traderpilot.persistence.custom_data import CustomDataWrapper
 from tests.conftest import (
     EXMS,
     create_mock_trades_usdt,
@@ -14,6 +10,10 @@ from tests.conftest import (
     get_patched_traderpilotbot,
     patch_exchange,
 )
+from traderpilot.data.history.history_utils import get_timerange
+from traderpilot.optimize.backtesting import Backtesting
+from traderpilot.persistence import Trade, disable_database_use, enable_database_use
+from traderpilot.persistence.custom_data import CustomDataWrapper
 
 
 @pytest.mark.usefixtures("init_persistence")

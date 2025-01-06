@@ -11,6 +11,16 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from tests.conftest import (
+    CURRENT_TEST_STRATEGY,
+    EXMS,
+    generate_test_data,
+    get_args,
+    log_has,
+    log_has_re,
+    patch_exchange,
+    patched_configuration_load_config_file,
+)
 from traderpilot import constants
 from traderpilot.commands.optimize_commands import setup_optimize_configuration, start_backtesting
 from traderpilot.configuration import TimeRange
@@ -22,21 +32,14 @@ from traderpilot.data.history import get_timerange
 from traderpilot.enums import CandleType, ExitType, RunMode
 from traderpilot.exceptions import DependencyException, OperationalException
 from traderpilot.exchange import timeframe_to_next_date, timeframe_to_prev_date
-from traderpilot.optimize.backtest_caching import get_backtest_metadata_filename, get_strategy_run_id
+from traderpilot.optimize.backtest_caching import (
+    get_backtest_metadata_filename,
+    get_strategy_run_id,
+)
 from traderpilot.optimize.backtesting import Backtesting
 from traderpilot.persistence import LocalTrade, Trade
 from traderpilot.resolvers import StrategyResolver
 from traderpilot.util.datetime_helpers import dt_utc
-from tests.conftest import (
-    CURRENT_TEST_STRATEGY,
-    EXMS,
-    generate_test_data,
-    get_args,
-    log_has,
-    log_has_re,
-    patch_exchange,
-    patched_configuration_load_config_file,
-)
 
 
 ORDER_TYPES = [
@@ -434,7 +437,8 @@ def test_backtesting_no_pair_left(default_conf, mocker) -> None:
     patch_exchange(mocker)
     mocker.patch("traderpilot.optimize.backtesting.Backtesting.backtest")
     mocker.patch(
-        "traderpilot.plugins.pairlistmanager.PairListManager.whitelist", PropertyMock(return_value=[])
+        "traderpilot.plugins.pairlistmanager.PairListManager.whitelist",
+        PropertyMock(return_value=[]),
     )
 
     default_conf["timeframe"] = "1m"
@@ -2567,7 +2571,9 @@ def test_backtest_start_multi_strat_caching(
         load_backtest_metadata=load_backtest_metadata,
         load_backtest_stats=load_backtest_stats,
     )
-    mocker.patch("traderpilot.optimize.backtesting.get_strategy_run_id", side_effect=["1", "2", "2"])
+    mocker.patch(
+        "traderpilot.optimize.backtesting.get_strategy_run_id", side_effect=["1", "2", "2"]
+    )
 
     patched_configuration_load_config_file(mocker, default_conf)
 

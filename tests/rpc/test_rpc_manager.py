@@ -4,10 +4,10 @@ import time
 from collections import deque
 from unittest.mock import MagicMock
 
+from tests.conftest import get_patched_traderpilotbot, log_has
 from traderpilot.enums import RPCMessageType
 from traderpilot.rpc import RPCManager
 from traderpilot.rpc.api_server.webserver import ApiServer
-from tests.conftest import get_patched_traderpilotbot, log_has
 
 
 def test__init__(mocker, default_conf) -> None:

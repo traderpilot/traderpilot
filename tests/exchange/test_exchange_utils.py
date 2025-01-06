@@ -12,6 +12,7 @@ from ccxt import (
     TRUNCATE,
 )
 
+from tests.conftest import log_has_re
 from traderpilot.enums import RunMode
 from traderpilot.exceptions import OperationalException
 from traderpilot.exchange import (
@@ -27,7 +28,6 @@ from traderpilot.exchange import (
     timeframe_to_seconds,
 )
 from traderpilot.exchange.check_exchange import check_exchange
-from tests.conftest import log_has_re
 
 
 def test_check_exchange(default_conf, caplog) -> None:
@@ -44,7 +44,8 @@ def test_check_exchange(default_conf, caplog) -> None:
     default_conf.get("exchange").update({"name": "binance"})
     assert check_exchange(default_conf)
     assert log_has_re(
-        r"Exchange \"binance\" is officially supported by the Traderpilot development team\.", caplog
+        r"Exchange \"binance\" is officially supported by the Traderpilot development team\.",
+        caplog,
     )
     caplog.clear()
 
@@ -77,7 +78,9 @@ def test_check_exchange(default_conf, caplog) -> None:
 
     # Test a 'bad' exchange, which known to have serious problems
     default_conf.get("exchange").update({"name": "bitmex"})
-    with pytest.raises(OperationalException, match=r"Exchange .* will not work with Traderpilot\..*"):
+    with pytest.raises(
+        OperationalException, match=r"Exchange .* will not work with Traderpilot\..*"
+    ):
         check_exchange(default_conf)
     caplog.clear()
 

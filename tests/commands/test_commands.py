@@ -9,6 +9,18 @@ from zipfile import ZipFile
 
 import pytest
 
+from tests.conftest import (
+    CURRENT_TEST_STRATEGY,
+    EXMS,
+    create_mock_trades,
+    get_args,
+    log_has,
+    log_has_re,
+    patch_exchange,
+    patched_configuration_load_config_file,
+)
+from tests.conftest_hyperopt import hyperopt_test_result
+from tests.conftest_trades import MOCK_TRADE_COUNT
 from traderpilot.commands import (
     start_backtesting_show,
     start_convert_data,
@@ -21,11 +33,11 @@ from traderpilot.commands import (
     start_install_ui,
     start_list_data,
     start_list_exchanges,
-    start_list_traderAI_models,
     start_list_hyperopt_loss_functions,
     start_list_markets,
     start_list_strategies,
     start_list_timeframes,
+    start_list_traderAI_models,
     start_new_strategy,
     start_show_config,
     start_show_trades,
@@ -46,18 +58,6 @@ from traderpilot.exceptions import OperationalException
 from traderpilot.persistence.models import init_db
 from traderpilot.persistence.pairlock_middleware import PairLocks
 from traderpilot.util import dt_utc
-from tests.conftest import (
-    CURRENT_TEST_STRATEGY,
-    EXMS,
-    create_mock_trades,
-    get_args,
-    log_has,
-    log_has_re,
-    patch_exchange,
-    patched_configuration_load_config_file,
-)
-from tests.conftest_hyperopt import hyperopt_test_result
-from tests.conftest_trades import MOCK_TRADE_COUNT
 
 
 def test_setup_utils_configuration():

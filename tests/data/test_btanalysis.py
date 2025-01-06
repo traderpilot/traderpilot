@@ -6,6 +6,8 @@ from zipfile import ZipFile
 import pytest
 from pandas import DataFrame, DateOffset, Timestamp, to_datetime
 
+from tests.conftest import CURRENT_TEST_STRATEGY, create_mock_trades
+from tests.conftest_trades import MOCK_TRADE_COUNT
 from traderpilot.configuration import TimeRange
 from traderpilot.constants import LAST_BT_RESULT_FN
 from traderpilot.data.btanalysis import (
@@ -37,8 +39,6 @@ from traderpilot.data.metrics import (
 )
 from traderpilot.exceptions import OperationalException
 from traderpilot.util import dt_utc
-from tests.conftest import CURRENT_TEST_STRATEGY, create_mock_trades
-from tests.conftest_trades import MOCK_TRADE_COUNT
 
 
 def test_get_latest_backtest_filename(testdatadir, mocker):

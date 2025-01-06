@@ -10,15 +10,6 @@ import pandas as pd
 import pytest
 import time_machine
 
-from traderpilot.constants import AVAILABLE_PAIRLISTS
-from traderpilot.data.dataprovider import DataProvider
-from traderpilot.enums import CandleType, RunMode
-from traderpilot.exceptions import OperationalException
-from traderpilot.persistence import LocalTrade, Trade
-from traderpilot.plugins.pairlist.pairlist_helpers import dynamic_expand_pairlist, expand_pairlist
-from traderpilot.plugins.pairlistmanager import PairListManager
-from traderpilot.resolvers import PairListResolver
-from traderpilot.util.datetime_helpers import dt_now
 from tests.conftest import (
     EXMS,
     create_mock_trades_usdt,
@@ -29,6 +20,15 @@ from tests.conftest import (
     log_has_re,
     num_log_has,
 )
+from traderpilot.constants import AVAILABLE_PAIRLISTS
+from traderpilot.data.dataprovider import DataProvider
+from traderpilot.enums import CandleType, RunMode
+from traderpilot.exceptions import OperationalException
+from traderpilot.persistence import LocalTrade, Trade
+from traderpilot.plugins.pairlist.pairlist_helpers import dynamic_expand_pairlist, expand_pairlist
+from traderpilot.plugins.pairlistmanager import PairListManager
+from traderpilot.resolvers import PairListResolver
+from traderpilot.util.datetime_helpers import dt_now
 
 
 # Exclude RemotePairList from tests.

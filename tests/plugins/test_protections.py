@@ -3,12 +3,12 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
+from tests.conftest import get_patched_traderpilotbot, log_has_re
 from traderpilot.enums import ExitType
 from traderpilot.exceptions import OperationalException
 from traderpilot.persistence import PairLocks, Trade
 from traderpilot.persistence.trade_model import Order
 from traderpilot.plugins.protectionmanager import ProtectionManager
-from tests.conftest import get_patched_traderpilotbot, log_has_re
 
 
 AVAILABLE_PROTECTIONS = ["CooldownPeriod", "LowProfitPairs", "MaxDrawdown", "StoplossGuard"]

@@ -24,7 +24,6 @@ from traderpilot.rpc.api_server.api_schemas import (
     ForceEnterPayload,
     ForceEnterResponse,
     ForceExitPayload,
-    TraderAIModelListResponse,
     Health,
     HyperoptLossListResponse,
     Locks,
@@ -46,6 +45,7 @@ from traderpilot.rpc.api_server.api_schemas import (
     StrategyListResponse,
     StrategyResponse,
     SysInfo,
+    TraderAIModelListResponse,
     Version,
     WhitelistResponse,
 )

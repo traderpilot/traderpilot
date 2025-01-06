@@ -6,11 +6,11 @@ from unittest.mock import MagicMock
 
 from requests import RequestException
 
+from tests.conftest import get_patched_traderpilotbot, log_has
 from traderpilot.enums import ExitType, RPCMessageType
 from traderpilot.rpc import RPC
 from traderpilot.rpc.discord import Discord
 from traderpilot.rpc.webhook import Webhook
-from tests.conftest import get_patched_traderpilotbot, log_has
 
 
 def get_webhook_dict() -> dict:

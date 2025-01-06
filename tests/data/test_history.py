@@ -12,6 +12,14 @@ import pytest
 from pandas import DataFrame
 from pandas.testing import assert_frame_equal
 
+from tests.conftest import (
+    CURRENT_TEST_STRATEGY,
+    EXMS,
+    get_patched_exchange,
+    log_has,
+    log_has_re,
+    patch_exchange,
+)
 from traderpilot.configuration import TimeRange
 from traderpilot.constants import DATETIME_PRINT_FORMAT
 from traderpilot.data.converter import ohlcv_to_dataframe
@@ -34,14 +42,6 @@ from traderpilot.exchange import timeframe_to_minutes
 from traderpilot.misc import file_dump_json
 from traderpilot.resolvers import StrategyResolver
 from traderpilot.util import dt_ts, dt_utc
-from tests.conftest import (
-    CURRENT_TEST_STRATEGY,
-    EXMS,
-    get_patched_exchange,
-    log_has,
-    log_has_re,
-    patch_exchange,
-)
 
 
 def _clean_test_file(file: Path) -> None:
@@ -205,7 +205,9 @@ def test_json_pair_trades_filename(pair, trading_mode, expected_result):
     assert isinstance(fn, Path)
     assert fn == Path(expected_result)
 
-    fn = JsonGzDataHandler._pair_trades_filename(Path("traderpilot/hello/world"), pair, trading_mode)
+    fn = JsonGzDataHandler._pair_trades_filename(
+        Path("traderpilot/hello/world"), pair, trading_mode
+    )
     assert isinstance(fn, Path)
     assert fn == Path(expected_result + ".gz")
 

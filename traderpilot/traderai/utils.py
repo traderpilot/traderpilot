@@ -13,9 +13,9 @@ from traderpilot.data.dataprovider import DataProvider
 from traderpilot.data.history.history_utils import refresh_backtest_ohlcv_data
 from traderpilot.exceptions import OperationalException
 from traderpilot.exchange import timeframe_to_seconds
+from traderpilot.plugins.pairlist.pairlist_helpers import dynamic_expand_pairlist
 from traderpilot.traderai.data_drawer import TraderaiDataDrawer
 from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
-from traderpilot.plugins.pairlist.pairlist_helpers import dynamic_expand_pairlist
 
 
 logger = logging.getLogger(__name__)
@@ -84,7 +84,9 @@ def get_required_data_timerange(config: Config) -> TimeRange:
 
     additional_seconds = max_period * max_tf_seconds
 
-    startts = int(time - config["traderai"].get("train_period_days", 0) * 86400 - additional_seconds)
+    startts = int(
+        time - config["traderai"].get("train_period_days", 0) * 86400 - additional_seconds
+    )
     stopts = int(time)
     data_load_timerange = TimeRange("date", "date", startts, stopts)
 

@@ -9,11 +9,11 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
+from tests.exchange_online.conftest import EXCHANGE_FIXTURE_TYPE, EXCHANGES
 from traderpilot.enums import CandleType
 from traderpilot.exchange import timeframe_to_minutes, timeframe_to_prev_date
 from traderpilot.exchange.exchange import timeframe_to_msecs
 from traderpilot.util import dt_floor_day, dt_now, dt_ts
-from tests.exchange_online.conftest import EXCHANGE_FIXTURE_TYPE, EXCHANGES
 
 
 @pytest.mark.longrun

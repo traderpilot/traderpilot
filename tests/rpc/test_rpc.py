@@ -6,13 +6,6 @@ import pytest
 from numpy import isnan
 from sqlalchemy import select
 
-from traderpilot.edge import PairInfo
-from traderpilot.enums import SignalDirection, State, TradingMode
-from traderpilot.exceptions import ExchangeError, InvalidOrderException, TemporaryError
-from traderpilot.persistence import Order, Trade
-from traderpilot.persistence.key_value_store import set_startup_time
-from traderpilot.rpc import RPC, RPCException
-from traderpilot.rpc.fiat_convert import CryptoToFiatConverter
 from tests.conftest import (
     EXMS,
     create_mock_trades,
@@ -20,6 +13,13 @@ from tests.conftest import (
     get_patched_traderpilotbot,
     patch_get_signal,
 )
+from traderpilot.edge import PairInfo
+from traderpilot.enums import SignalDirection, State, TradingMode
+from traderpilot.exceptions import ExchangeError, InvalidOrderException, TemporaryError
+from traderpilot.persistence import Order, Trade
+from traderpilot.persistence.key_value_store import set_startup_time
+from traderpilot.rpc import RPC, RPCException
+from traderpilot.rpc.fiat_convert import CryptoToFiatConverter
 
 
 def test_rpc_trade_status(default_conf, ticker, fee, mocker) -> None:

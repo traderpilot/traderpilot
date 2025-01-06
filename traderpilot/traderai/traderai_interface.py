@@ -23,10 +23,10 @@ from traderpilot.data.dataprovider import DataProvider
 from traderpilot.enums import RunMode
 from traderpilot.exceptions import OperationalException
 from traderpilot.exchange import timeframe_to_seconds
+from traderpilot.strategy.interface import IStrategy
 from traderpilot.traderai.data_drawer import TraderaiDataDrawer
 from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 from traderpilot.traderai.utils import get_tb_logger, plot_feature_importance, record_params
-from traderpilot.strategy.interface import IStrategy
 
 
 pd.options.mode.chained_assignment = None

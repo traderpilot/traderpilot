@@ -5,12 +5,12 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
+from tests.conftest import EXMS, get_args, log_has_re, patch_exchange
 from traderpilot.commands.optimize_commands import start_recursive_analysis
 from traderpilot.data.history import get_timerange
 from traderpilot.exceptions import OperationalException
 from traderpilot.optimize.analysis.recursive import RecursiveAnalysis
 from traderpilot.optimize.analysis.recursive_helpers import RecursiveAnalysisSubFunctions
-from tests.conftest import EXMS, get_args, log_has_re, patch_exchange
 
 
 @pytest.fixture

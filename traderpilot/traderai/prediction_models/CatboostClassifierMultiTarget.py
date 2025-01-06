@@ -5,7 +5,9 @@ from typing import Any
 from catboost import CatBoostClassifier, Pool
 
 from traderpilot.traderai.base_models.BaseClassifierModel import BaseClassifierModel
-from traderpilot.traderai.base_models.TraderaiMultiOutputClassifier import TraderaiMultiOutputClassifier
+from traderpilot.traderai.base_models.TraderaiMultiOutputClassifier import (
+    TraderaiMultiOutputClassifier,
+)
 from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 
 

@@ -5,10 +5,10 @@ from pathlib import Path
 from traderpilot.configuration.detect_environment import running_in_docker
 from traderpilot.constants import (
     USER_DATA_FILES,
-    USERPATH_TRADERAIMODELS,
     USERPATH_HYPEROPTS,
     USERPATH_NOTEBOOKS,
     USERPATH_STRATEGIES,
+    USERPATH_TRADERAIMODELS,
     Config,
 )
 from traderpilot.exceptions import OperationalException

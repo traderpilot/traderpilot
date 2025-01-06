@@ -10,6 +10,15 @@ import pytest
 from numpy import nan
 from pandas import DataFrame, to_datetime
 
+from tests.conftest import (
+    EXMS,
+    generate_test_data_raw,
+    get_mock_coro,
+    get_patched_exchange,
+    log_has,
+    log_has_re,
+    num_log_has_re,
+)
 from traderpilot.constants import DEFAULT_DATAFRAME_COLUMNS
 from traderpilot.enums import CandleType, MarginMode, RunMode, TradingMode
 from traderpilot.exceptions import (
@@ -39,15 +48,6 @@ from traderpilot.exchange.common import (
 )
 from traderpilot.resolvers.exchange_resolver import ExchangeResolver
 from traderpilot.util import dt_now, dt_ts
-from tests.conftest import (
-    EXMS,
-    generate_test_data_raw,
-    get_mock_coro,
-    get_patched_exchange,
-    log_has,
-    log_has_re,
-    num_log_has_re,
-)
 
 
 # Make sure to always keep one exchange here which is NOT subclassed!!
@@ -3180,7 +3180,9 @@ async def test___async_get_candle_history_sort(default_conf, mocker, exchange_na
     ]
     exchange = get_patched_exchange(mocker, default_conf, exchange=exchange_name)
     exchange._api_async.fetch_ohlcv = get_mock_coro(ohlcv)
-    sort_mock = mocker.patch("traderpilot.exchange.exchange.sorted", MagicMock(side_effect=sort_data))
+    sort_mock = mocker.patch(
+        "traderpilot.exchange.exchange.sorted", MagicMock(side_effect=sort_data)
+    )
     # Test the OHLCV data sort
     res = await exchange._async_get_candle_history(
         "ETH/BTC", default_conf["timeframe"], CandleType.SPOT

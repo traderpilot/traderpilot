@@ -2,8 +2,8 @@ import logging
 from typing import Any, Literal
 
 from traderpilot.constants import UNLIMITED_STAKE_AMOUNT, Config
-from traderpilot.types import BacktestResultType
 from traderpilot.optimize.optimize_reports.optimize_reports import generate_periodic_breakdown_stats
+from traderpilot.types import BacktestResultType
 from traderpilot.util import decimals_per_coin, fmt_coin, print_rich_table
 
 

@@ -9,8 +9,8 @@ from pathlib import Path
 
 from traderpilot.constants import USERPATH_TRADERAIMODELS, Config
 from traderpilot.exceptions import OperationalException
-from traderpilot.traderai.traderai_interface import ITraderaiModel
 from traderpilot.resolvers import IResolver
+from traderpilot.traderai.traderai_interface import ITraderaiModel
 
 
 logger = logging.getLogger(__name__)

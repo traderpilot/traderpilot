@@ -9,6 +9,8 @@ import joblib
 import pandas as pd
 import pytest
 
+from tests.conftest import CURRENT_TEST_STRATEGY
+from tests.data.test_history import _clean_test_file
 from traderpilot.configuration import TimeRange
 from traderpilot.constants import BACKTEST_BREAKDOWNS, DATETIME_PRINT_FORMAT, LAST_BT_RESULT_FN
 from traderpilot.data import history
@@ -41,8 +43,6 @@ from traderpilot.optimize.optimize_reports.optimize_reports import (
 from traderpilot.resolvers.strategy_resolver import StrategyResolver
 from traderpilot.util import dt_ts
 from traderpilot.util.datetime_helpers import dt_from_ts, dt_utc
-from tests.conftest import CURRENT_TEST_STRATEGY
-from tests.data.test_history import _clean_test_file
 
 
 def _backup_file(file: Path, copy_file: bool = False) -> None:

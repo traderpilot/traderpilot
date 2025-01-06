@@ -6,16 +6,16 @@ from unittest.mock import MagicMock
 import pandas as pd
 import pytest
 
-from traderpilot.configuration import TimeRange
-from traderpilot.data.dataprovider import DataProvider
-from traderpilot.exceptions import OperationalException
-from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 from tests.conftest import get_patched_exchange, is_mac
 from tests.traderai.conftest import (
     get_patched_data_kitchen,
     get_patched_traderai_strategy,
     make_unfiltered_dataframe,
 )
+from traderpilot.configuration import TimeRange
+from traderpilot.data.dataprovider import DataProvider
+from traderpilot.exceptions import OperationalException
+from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 
 
 @pytest.mark.parametrize(

@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from traderpilot.enums import MarginMode, TradingMode
 from tests.conftest import EXMS, get_patched_exchange
+from traderpilot.enums import MarginMode, TradingMode
 
 
 @pytest.mark.usefixtures("init_persistence")

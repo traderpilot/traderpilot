@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 import rapidjson
 
+from tests.conftest import get_args, log_has_re
 from traderpilot.commands.build_config_commands import start_new_config
 from traderpilot.configuration.deploy_config import (
     ask_user_config,
@@ -12,7 +13,6 @@ from traderpilot.configuration.deploy_config import (
     validate_is_int,
 )
 from traderpilot.exceptions import OperationalException
-from tests.conftest import get_args, log_has_re
 
 
 def test_validate_is_float():

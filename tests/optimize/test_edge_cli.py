@@ -3,9 +3,6 @@
 
 from unittest.mock import MagicMock
 
-from traderpilot.commands.optimize_commands import setup_optimize_configuration, start_edge
-from traderpilot.enums import RunMode
-from traderpilot.optimize.edge_cli import EdgeCli
 from tests.conftest import (
     CURRENT_TEST_STRATEGY,
     EXMS,
@@ -14,6 +11,9 @@ from tests.conftest import (
     patch_exchange,
     patched_configuration_load_config_file,
 )
+from traderpilot.commands.optimize_commands import setup_optimize_configuration, start_edge
+from traderpilot.enums import RunMode
+from traderpilot.optimize.edge_cli import EdgeCli
 
 
 def test_setup_optimize_configuration_without_arguments(mocker, default_conf, caplog) -> None:

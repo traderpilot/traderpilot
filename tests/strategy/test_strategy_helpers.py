@@ -2,11 +2,11 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from tests.conftest import generate_test_data, get_patched_exchange
 from traderpilot.data.dataprovider import DataProvider
 from traderpilot.enums import CandleType
 from traderpilot.resolvers.strategy_resolver import StrategyResolver
 from traderpilot.strategy import merge_informative_pair, stoploss_from_absolute, stoploss_from_open
-from tests.conftest import generate_test_data, get_patched_exchange
 
 
 def test_merge_informative_pair():

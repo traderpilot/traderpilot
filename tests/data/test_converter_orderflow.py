@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from tests.strategy.strats.strategy_test_v3 import StrategyTestV3
 from traderpilot.constants import DEFAULT_TRADES_COLUMNS
 from traderpilot.data.converter import populate_dataframe_with_trades
 from traderpilot.data.converter.orderflow import (
@@ -11,7 +12,6 @@ from traderpilot.data.converter.orderflow import (
 )
 from traderpilot.data.converter.trade_converter import trades_list_to_df
 from traderpilot.data.dataprovider import DataProvider
-from tests.strategy.strats.strategy_test_v3 import StrategyTestV3
 
 
 BIN_SIZE_SCALE = 0.5

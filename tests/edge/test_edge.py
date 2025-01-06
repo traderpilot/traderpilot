@@ -10,11 +10,6 @@ import numpy as np
 import pytest
 from pandas import DataFrame
 
-from traderpilot.data.converter import ohlcv_to_dataframe
-from traderpilot.edge import Edge, PairInfo
-from traderpilot.enums import ExitType
-from traderpilot.exceptions import OperationalException
-from traderpilot.util.datetime_helpers import dt_ts, dt_utc
 from tests.conftest import EXMS, get_patched_traderpilotbot, log_has
 from tests.optimize import (
     BTContainer,
@@ -22,6 +17,11 @@ from tests.optimize import (
     _build_backtest_dataframe,
     _get_frame_time_from_offset,
 )
+from traderpilot.data.converter import ohlcv_to_dataframe
+from traderpilot.edge import Edge, PairInfo
+from traderpilot.enums import ExitType
+from traderpilot.exceptions import OperationalException
+from traderpilot.util.datetime_helpers import dt_ts, dt_utc
 
 
 # Cases to be tested:

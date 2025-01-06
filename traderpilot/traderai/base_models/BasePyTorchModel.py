@@ -3,8 +3,8 @@ from abc import ABC, abstractmethod
 
 import torch
 
-from traderpilot.traderai.traderai_interface import ITraderaiModel
 from traderpilot.traderai.torch.PyTorchDataConvertor import PyTorchDataConvertor
+from traderpilot.traderai.traderai_interface import ITraderaiModel
 
 
 logger = logging.getLogger(__name__)

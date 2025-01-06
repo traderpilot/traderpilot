@@ -4,9 +4,9 @@ import re
 import shutil
 from pathlib import Path
 
+from tests.conftest import get_args
 from traderpilot.commands.strategy_utils_commands import start_strategy_update
 from traderpilot.strategy.strategyupdater import StrategyUpdater
-from tests.conftest import get_args
 
 
 def test_strategy_updater_start(user_dir, capsys) -> None:

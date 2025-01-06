@@ -13,17 +13,6 @@ import pandas as pd
 import pytest
 from xdist.scheduler.loadscope import LoadScopeScheduling
 
-from traderpilot import constants
-from traderpilot.commands import Arguments
-from traderpilot.data.converter import ohlcv_to_dataframe, trades_list_to_df
-from traderpilot.edge import PairInfo
-from traderpilot.enums import CandleType, MarginMode, RunMode, SignalDirection, TradingMode
-from traderpilot.exchange import Exchange, timeframe_to_minutes, timeframe_to_seconds
-from traderpilot.traderpilotbot import TraderpilotBot
-from traderpilot.persistence import LocalTrade, Order, Trade, init_db
-from traderpilot.resolvers import ExchangeResolver
-from traderpilot.util import dt_now, dt_ts
-from traderpilot.worker import Worker
 from tests.conftest_trades import (
     leverage_trade,
     mock_trade_1,
@@ -43,6 +32,17 @@ from tests.conftest_trades_usdt import (
     mock_trade_usdt_6,
     mock_trade_usdt_7,
 )
+from traderpilot import constants
+from traderpilot.commands import Arguments
+from traderpilot.data.converter import ohlcv_to_dataframe, trades_list_to_df
+from traderpilot.edge import PairInfo
+from traderpilot.enums import CandleType, MarginMode, RunMode, SignalDirection, TradingMode
+from traderpilot.exchange import Exchange, timeframe_to_minutes, timeframe_to_seconds
+from traderpilot.persistence import LocalTrade, Order, Trade, init_db
+from traderpilot.resolvers import ExchangeResolver
+from traderpilot.traderpilotbot import TraderpilotBot
+from traderpilot.util import dt_now, dt_ts
+from traderpilot.worker import Worker
 
 
 logging.getLogger("").setLevel(logging.INFO)
@@ -545,7 +545,9 @@ def patch_torch_initlogs(mocker) -> None:
 @pytest.fixture(autouse=True)
 def user_dir(mocker, tmp_path) -> Path:
     user_dir = tmp_path / "user_data"
-    mocker.patch("traderpilot.configuration.configuration.create_userdata_dir", return_value=user_dir)
+    mocker.patch(
+        "traderpilot.configuration.configuration.create_userdata_dir", return_value=user_dir
+    )
     return user_dir
 
 

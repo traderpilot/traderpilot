@@ -5,12 +5,6 @@ from unittest.mock import ANY, MagicMock
 import pytest
 from sqlalchemy import select
 
-from traderpilot.enums import ExitCheckTuple, ExitType, RPCMessageType
-from traderpilot.exceptions import ExchangeError, InsufficientFundsError, InvalidOrderException
-from traderpilot.traderpilotbot import TraderpilotBot
-from traderpilot.persistence import Order, Trade
-from traderpilot.persistence.models import PairLock
-from traderpilot.util.datetime_helpers import dt_now
 from tests.conftest import (
     EXMS,
     get_patched_traderpilotbot,
@@ -23,6 +17,12 @@ from tests.conftest import (
 )
 from tests.conftest_trades import entry_side, exit_side
 from tests.traderpilotbot.test_traderpilotbot import patch_RPCManager
+from traderpilot.enums import ExitCheckTuple, ExitType, RPCMessageType
+from traderpilot.exceptions import ExchangeError, InsufficientFundsError, InvalidOrderException
+from traderpilot.persistence import Order, Trade
+from traderpilot.persistence.models import PairLock
+from traderpilot.traderpilotbot import TraderpilotBot
+from traderpilot.util.datetime_helpers import dt_now
 
 
 @pytest.mark.parametrize("is_short", [False, True])
@@ -36,7 +36,9 @@ def test_add_stoploss_on_exchange(mocker, default_conf_usdt, limit_order, is_sho
         get_fee=fee,
     )
     order = limit_order[entry_side(is_short)]
-    mocker.patch("traderpilot.traderpilotbot.TraderpilotBot.handle_trade", MagicMock(return_value=True))
+    mocker.patch(
+        "traderpilot.traderpilotbot.TraderpilotBot.handle_trade", MagicMock(return_value=True)
+    )
     mocker.patch(f"{EXMS}.fetch_order", return_value=order)
     mocker.patch(f"{EXMS}.get_trades_for_order", return_value=[])
 
@@ -178,7 +180,7 @@ def test_handle_stoploss_on_exchange(
     # Sixth case: Closed Trade
     # Should not create new order
     trade.is_open = False
-    trade.open_sl_orders[-1]. tp_is_open = False
+    trade.open_sl_orders[-1].tp_is_open = False
     stoploss.reset_mock()
     mocker.patch(f"{EXMS}.fetch_order")
     mocker.patch(f"{EXMS}.create_stoploss", stoploss)

@@ -98,7 +98,9 @@ class TraderaiDataKitchen:
                     config["traderai"]["backtest_period_days"],
                 )
 
-        self.data["extra_returns_per_train"] = self.traderai_config.get("extra_returns_per_train", {})
+        self.data["extra_returns_per_train"] = self.traderai_config.get(
+            "extra_returns_per_train", {}
+        )
         if not self.traderai_config.get("data_kitchen_thread_count", 0):
             self.thread_count = max(int(psutil.cpu_count() * 2 - 2), 1)
         else:
@@ -757,7 +759,9 @@ class TraderaiDataKitchen:
             informative_df = self.merge_features(informative_df, generic_df, tf, tf, suffix)
 
             indicators = [col for col in informative_df if col.startswith("%")]
-            for n in range(self.traderai_config["feature_parameters"]["include_shifted_candles"] + 1):
+            for n in range(
+                self.traderai_config["feature_parameters"]["include_shifted_candles"] + 1
+            ):
                 if n == 0:
                     continue
                 df_shift = informative_df[indicators].shift(n)
@@ -811,7 +815,9 @@ class TraderaiDataKitchen:
             )
 
         tfs: list[str] = self.traderai_config["feature_parameters"].get("include_timeframes")
-        pairs: list[str] = self.traderai_config["feature_parameters"].get("include_corr_pairlist", [])
+        pairs: list[str] = self.traderai_config["feature_parameters"].get(
+            "include_corr_pairlist", []
+        )
 
         for tf in tfs:
             if tf not in base_dataframes:

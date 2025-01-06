@@ -269,7 +269,8 @@ async def test_download_archive_ohlcv_exception(mocker):
 
     markets = {"BTC/USDT": {"id": "BTCUSDT"}, "BTC/USDT:USDT": {"id": "BTCUSDT"}}
     mocker.patch(
-        "traderpilot.exchange.binance_public_data.aiohttp.ClientSession.get", side_effect=RuntimeError
+        "traderpilot.exchange.binance_public_data.aiohttp.ClientSession.get",
+        side_effect=RuntimeError,
     )
 
     df = await download_archive_ohlcv(

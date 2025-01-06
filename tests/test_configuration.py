@@ -8,6 +8,12 @@ from unittest.mock import MagicMock
 import pytest
 from jsonschema import ValidationError
 
+from tests.conftest import (
+    CURRENT_TEST_STRATEGY,
+    log_has,
+    log_has_re,
+    patched_configuration_load_config_file,
+)
 from traderpilot.commands import Arguments
 from traderpilot.configuration import Configuration, validate_config_consistency
 from traderpilot.configuration.config_secrets import sanitize_config
@@ -28,12 +34,6 @@ from traderpilot.configuration.load_config import (
 from traderpilot.constants import DEFAULT_DB_DRYRUN_URL, DEFAULT_DB_PROD_URL, ENV_VAR_PREFIX
 from traderpilot.enums import RunMode
 from traderpilot.exceptions import ConfigurationError, OperationalException
-from tests.conftest import (
-    CURRENT_TEST_STRATEGY,
-    log_has,
-    log_has_re,
-    patched_configuration_load_config_file,
-)
 
 
 @pytest.fixture(scope="function")

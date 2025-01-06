@@ -6,11 +6,11 @@ from pathlib import Path
 import pytest
 from pandas import DataFrame
 
+from tests.conftest import CURRENT_TEST_STRATEGY, log_has, log_has_re
 from traderpilot.configuration import Configuration
 from traderpilot.exceptions import OperationalException
 from traderpilot.resolvers import StrategyResolver
 from traderpilot.strategy.interface import IStrategy
-from tests.conftest import CURRENT_TEST_STRATEGY, log_has, log_has_re
 
 
 def test_search_strategy():

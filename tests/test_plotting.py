@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import pytest
 from plotly.subplots import make_subplots
 
+from tests.conftest import get_args, log_has, log_has_re, patch_exchange
 from traderpilot.commands import start_plot_dataframe, start_plot_profit
 from traderpilot.configuration import TimeRange
 from traderpilot.data import history
@@ -27,7 +28,6 @@ from traderpilot.plot.plotting import (
     store_plot_file,
 )
 from traderpilot.resolvers import StrategyResolver
-from tests.conftest import get_args, log_has, log_has_re, patch_exchange
 
 
 def fig_generating_mock(fig, *args, **kwargs):

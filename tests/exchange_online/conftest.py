@@ -3,10 +3,10 @@ from pathlib import Path
 
 import pytest
 
+from tests.conftest import EXMS, get_default_conf_usdt
 from traderpilot.constants import Config
 from traderpilot.exchange.exchange import Exchange
 from traderpilot.resolvers.exchange_resolver import ExchangeResolver
-from tests.conftest import EXMS, get_default_conf_usdt
 
 
 EXCHANGE_FIXTURE_TYPE = tuple[Exchange, str]

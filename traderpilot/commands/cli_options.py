@@ -745,7 +745,9 @@ AVAILABLE_CLI_OPTIONS = {
         metavar="PATH",
     ),
     "traderai_backtest_live_models": Arg(
-        "--traderai-backtest-live-models", help="Run backtest with ready models.", action="store_true"
+        "--traderai-backtest-live-models",
+        help="Run backtest with ready models.",
+        action="store_true",
     ),
     "minimum_trade_amount": Arg(
         "--minimum-trade-amount",

@@ -16,7 +16,7 @@ if sys.version_info < (3, 10):  # pragma: no cover  # noqa: UP036
 from traderpilot import __version__
 from traderpilot.commands import Arguments
 from traderpilot.constants import DOCS_LINK
-from traderpilot.exceptions import ConfigurationError, TraderpilotException, OperationalException
+from traderpilot.exceptions import ConfigurationError, OperationalException, TraderpilotException
 from traderpilot.loggers import setup_logging_pre
 from traderpilot.system import asyncio_setup, gc_set_threshold
 

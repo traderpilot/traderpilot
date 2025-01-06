@@ -172,8 +172,8 @@ class IStrategy(ABC, HyperStrategyMixin):
     def load_traderAI_model(self) -> None:
         if self.config.get("traderai", {}).get("enabled", False):
             # Import here to avoid importing this if traderAI is disabled
-            from traderpilot.traderai.utils import download_all_data_for_training
             from traderpilot.resolvers.traderaimodel_resolver import TraderaiModelResolver
+            from traderpilot.traderai.utils import download_all_data_for_training
 
             self.traderai = TraderaiModelResolver.load_traderaimodel(self.config)
             self.traderai_info = self.config["traderai"]

@@ -8,7 +8,12 @@ import ccxt
 
 from traderpilot.constants import BuySell
 from traderpilot.enums import MarginMode, PriceType, TradingMode
-from traderpilot.exceptions import DDosProtection, ExchangeError, OperationalException, TemporaryError
+from traderpilot.exceptions import (
+    DDosProtection,
+    ExchangeError,
+    OperationalException,
+    TemporaryError,
+)
 from traderpilot.exchange import Exchange
 from traderpilot.exchange.common import retrier
 from traderpilot.exchange.exchange_types import CcxtOrder, FtHas

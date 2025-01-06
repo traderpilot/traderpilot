@@ -21,7 +21,6 @@ from traderpilot.data.btanalysis import (
 from traderpilot.enums import BacktestState
 from traderpilot.exceptions import ConfigurationError, DependencyException, OperationalException
 from traderpilot.exchange.common import remove_exchange_credentials
-from traderpilot.types import get_BacktestResultType_default
 from traderpilot.misc import deep_merge_dicts, is_file_in_dir
 from traderpilot.rpc.api_server.api_schemas import (
     BacktestHistoryEntry,
@@ -33,6 +32,7 @@ from traderpilot.rpc.api_server.api_schemas import (
 from traderpilot.rpc.api_server.deps import get_config
 from traderpilot.rpc.api_server.webserver_bgwork import ApiBG
 from traderpilot.rpc.rpc import RPCException
+from traderpilot.types import get_BacktestResultType_default
 
 
 logger = logging.getLogger(__name__)
@@ -43,7 +43,10 @@ router = APIRouter()
 
 def __run_backtest_bg(btconfig: Config):
     from traderpilot.data.metrics import combined_dataframes_with_rel_mean
-    from traderpilot.optimize.optimize_reports import generate_backtest_stats, store_backtest_results
+    from traderpilot.optimize.optimize_reports import (
+        generate_backtest_stats,
+        store_backtest_results,
+    )
     from traderpilot.resolvers import StrategyResolver
 
     asyncio.set_event_loop(asyncio.new_event_loop())

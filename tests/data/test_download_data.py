@@ -2,11 +2,11 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
+from tests.conftest import EXMS, log_has_re, patch_exchange
 from traderpilot.configuration.config_setup import setup_utils_configuration
 from traderpilot.data.history.history_utils import download_data_main
 from traderpilot.enums import RunMode
 from traderpilot.exceptions import OperationalException
-from tests.conftest import EXMS, log_has_re, patch_exchange
 
 
 def test_download_data_main_no_markets(mocker, caplog):

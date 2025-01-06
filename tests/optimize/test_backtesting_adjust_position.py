@@ -6,13 +6,13 @@ from unittest.mock import MagicMock
 import pandas as pd
 import pytest
 
+from tests.conftest import EXMS, patch_exchange
 from traderpilot.configuration import TimeRange
 from traderpilot.data import history
 from traderpilot.data.history import get_timerange
 from traderpilot.enums import ExitType
 from traderpilot.optimize.backtesting import Backtesting
 from traderpilot.util.datetime_helpers import dt_utc
-from tests.conftest import EXMS, patch_exchange
 
 
 def test_backtest_position_adjustment(default_conf, fee, mocker, testdatadir) -> None:

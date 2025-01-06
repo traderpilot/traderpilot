@@ -4,10 +4,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from traderpilot.data.history import get_timerange
-from traderpilot.enums import ExitType, TradingMode
-from traderpilot.optimize.backtesting import Backtesting
-from traderpilot.persistence.trade_model import LocalTrade
 from tests.conftest import EXMS, patch_exchange
 from tests.optimize import (
     BTContainer,
@@ -16,6 +12,10 @@ from tests.optimize import (
     _get_frame_time_from_offset,
     tests_timeframe,
 )
+from traderpilot.data.history import get_timerange
+from traderpilot.enums import ExitType, TradingMode
+from traderpilot.optimize.backtesting import Backtesting
+from traderpilot.persistence.trade_model import LocalTrade
 
 
 # Test 0: Sell with signal sell in candle 3

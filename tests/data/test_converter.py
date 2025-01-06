@@ -7,6 +7,8 @@ import pandas as pd
 import pytest
 from pandas.testing import assert_frame_equal
 
+from tests.conftest import generate_test_data, generate_trades_history, log_has, log_has_re
+from tests.data.test_history import _clean_test_file
 from traderpilot.configuration.timerange import TimeRange
 from traderpilot.data.converter import (
     convert_ohlcv_format,
@@ -29,8 +31,6 @@ from traderpilot.data.history import (
 from traderpilot.data.history.datahandlers import IDataHandler
 from traderpilot.enums import CandleType
 from traderpilot.exchange import timeframe_to_minutes, timeframe_to_seconds
-from tests.conftest import generate_test_data, generate_trades_history, log_has, log_has_re
-from tests.data.test_history import _clean_test_file
 
 
 def test_dataframe_correct_columns(dataframe_1m):

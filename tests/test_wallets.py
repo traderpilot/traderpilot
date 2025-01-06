@@ -5,9 +5,6 @@ from unittest.mock import MagicMock
 import pytest
 from sqlalchemy import select
 
-from traderpilot.constants import UNLIMITED_STAKE_AMOUNT
-from traderpilot.exceptions import DependencyException
-from traderpilot.persistence import Trade
 from tests.conftest import (
     EXMS,
     create_mock_trades,
@@ -15,6 +12,9 @@ from tests.conftest import (
     get_patched_traderpilotbot,
     patch_wallet,
 )
+from traderpilot.constants import UNLIMITED_STAKE_AMOUNT
+from traderpilot.exceptions import DependencyException
+from traderpilot.persistence import Trade
 
 
 def test_sync_wallet_at_boot(mocker, default_conf):
@@ -244,7 +244,9 @@ def test_get_starting_balance(
 
     traderpilot = get_patched_traderpilotbot(mocker, default_conf)
 
-    assert traderpilot.wallets.get_starting_balance() == expected * (1 if available_capital else 0.99)
+    assert traderpilot.wallets.get_starting_balance() == expected * (
+        1 if available_capital else 0.99
+    )
 
 
 def test_sync_wallet_futures_live(mocker, default_conf):

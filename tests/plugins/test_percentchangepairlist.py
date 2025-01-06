@@ -4,17 +4,17 @@ from unittest.mock import MagicMock
 import pandas as pd
 import pytest
 
-from traderpilot.data.converter import ohlcv_to_dataframe
-from traderpilot.enums import CandleType
-from traderpilot.exceptions import OperationalException
-from traderpilot.plugins.pairlist.PercentChangePairList import PercentChangePairList
-from traderpilot.plugins.pairlistmanager import PairListManager
 from tests.conftest import (
     EXMS,
     generate_test_data_raw,
     get_patched_exchange,
     get_patched_traderpilotbot,
 )
+from traderpilot.data.converter import ohlcv_to_dataframe
+from traderpilot.enums import CandleType
+from traderpilot.exceptions import OperationalException
+from traderpilot.plugins.pairlist.PercentChangePairList import PercentChangePairList
+from traderpilot.plugins.pairlistmanager import PairListManager
 
 
 @pytest.fixture(scope="function")

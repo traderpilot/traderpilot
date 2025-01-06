@@ -494,7 +494,7 @@ class TraderpilotBot(LoggingMixin):
         for order in trade.orders:
             logger.info(f"Trying to refind {order}")
             fo = None
-            if not order. tp_is_open:
+            if not order.tp_is_open:
                 logger.debug(f"Order {order} is no longer open.")
                 continue
             try:
@@ -1807,7 +1807,7 @@ class TraderpilotBot(LoggingMixin):
             was_trade_fully_canceled = True
             # if trade is not partially completed and it's the only order, just delete the trade
             open_order_count = len(
-                [order for order in trade.orders if order. tp_is_open and order.order_id != order_id]
+                [order for order in trade.orders if order.tp_is_open and order.order_id != order_id]
             )
             if open_order_count < 1 and trade.nr_of_successful_entries == 0 and not replacing:
                 logger.info(f"{side} order fully cancelled. Removing {trade} from database.")

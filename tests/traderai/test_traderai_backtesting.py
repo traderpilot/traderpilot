@@ -5,15 +5,6 @@ from unittest.mock import PropertyMock
 
 import pytest
 
-from traderpilot.commands.optimize_commands import setup_optimize_configuration
-from traderpilot.configuration.timerange import TimeRange
-from traderpilot.data import history
-from traderpilot.data.dataprovider import DataProvider
-from traderpilot.enums import RunMode
-from traderpilot.enums.candletype import CandleType
-from traderpilot.exceptions import OperationalException
-from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
-from traderpilot.optimize.backtesting import Backtesting
 from tests.conftest import (
     CURRENT_TEST_STRATEGY,
     get_args,
@@ -23,6 +14,15 @@ from tests.conftest import (
     patched_configuration_load_config_file,
 )
 from tests.traderai.conftest import get_patched_traderai_strategy
+from traderpilot.commands.optimize_commands import setup_optimize_configuration
+from traderpilot.configuration.timerange import TimeRange
+from traderpilot.data import history
+from traderpilot.data.dataprovider import DataProvider
+from traderpilot.enums import RunMode
+from traderpilot.enums.candletype import CandleType
+from traderpilot.exceptions import OperationalException
+from traderpilot.optimize.backtesting import Backtesting
+from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 
 
 def test_traderai_backtest_start_backtest_list(traderai_conf, mocker, testdatadir, caplog):
@@ -81,7 +81,9 @@ def test_traderai_backtest_load_data(
     mocker.patch("traderpilot.optimize.backtesting.history.load_data")
     mocker.patch("traderpilot.optimize.backtesting.history.get_timerange", return_value=(now, now))
     traderai_conf["timeframe"] = timeframe
-    traderai_conf.get("traderai", {}).get("feature_parameters", {}).update({"include_timeframes": []})
+    traderai_conf.get("traderai", {}).get("feature_parameters", {}).update(
+        {"include_timeframes": []}
+    )
     backtesting = Backtesting(deepcopy(traderai_conf))
     backtesting.load_bt_data()
 

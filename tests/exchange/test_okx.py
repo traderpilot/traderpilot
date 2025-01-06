@@ -4,12 +4,12 @@ from unittest.mock import AsyncMock, MagicMock, PropertyMock
 import ccxt
 import pytest
 
+from tests.conftest import EXMS, get_patched_exchange, log_has
+from tests.exchange.test_exchange import ccxt_exceptionhandlers
 from traderpilot.enums import CandleType, MarginMode, TradingMode
 from traderpilot.exceptions import RetryableOrderError, TemporaryError
 from traderpilot.exchange.common import API_RETRY_COUNT
 from traderpilot.exchange.exchange import timeframe_to_minutes
-from tests.conftest import EXMS, get_patched_exchange, log_has
-from tests.exchange.test_exchange import ccxt_exceptionhandlers
 
 
 def test_okx_ohlcv_candle_limit(default_conf, mocker):

@@ -307,11 +307,11 @@ def fix_old_dry_orders(engine):
         stmt = (
             update(Order)
             .where(
-                Order. tp_is_open.is_(True),
+                Order.tp_is_open.is_(True),
                 Order.tp_order_side == "stoploss",
                 Order.order_id.like("dry%"),
             )
-            .values( tp_is_open=False)
+            .values(tp_is_open=False)
         )
         connection.execute(stmt)
 
@@ -319,12 +319,12 @@ def fix_old_dry_orders(engine):
         stmt = (
             update(Order)
             .where(
-                Order. tp_is_open.is_(True),
+                Order.tp_is_open.is_(True),
                 Order.tp_trade_id.not_in(select(Trade.id).where(Trade.is_open.is_(True))),
                 Order.tp_order_side != "stoploss",
                 Order.order_id.like("dry%"),
             )
-            .values( tp_is_open=False)
+            .values(tp_is_open=False)
         )
         connection.execute(stmt)
 

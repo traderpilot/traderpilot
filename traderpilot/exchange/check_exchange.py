@@ -54,11 +54,14 @@ def check_exchange(config: Config, check_for_bad: bool = True) -> bool:
                 f'Exchange "{exchange}"  will not work with Traderpilot. ' f"Reason: {reason}"
             )
         else:
-            logger.warning(f'Exchange "{exchange}"  will not work with Traderpilot. Reason: {reason}')
+            logger.warning(
+                f'Exchange "{exchange}"  will not work with Traderpilot. Reason: {reason}'
+            )
 
     if MAP_EXCHANGE_CHILDCLASS.get(exchange, exchange) in SUPPORTED_EXCHANGES:
         logger.info(
-            f'Exchange "{exchange}" is officially supported ' f"by the Traderpilot development team."
+            f'Exchange "{exchange}" is officially supported '
+            f"by the Traderpilot development team."
         )
     else:
         logger.warning(

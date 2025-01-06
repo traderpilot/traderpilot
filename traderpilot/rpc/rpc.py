@@ -966,7 +966,10 @@ class RPC:
         if self._traderpilot.state != State.RUNNING:
             raise RPCException("trader is not running")
 
-        if order_side == SignalDirection.SHORT and self._traderpilot.trading_mode == TradingMode.SPOT:
+        if (
+            order_side == SignalDirection.SHORT
+            and self._traderpilot.trading_mode == TradingMode.SPOT
+        ):
             raise RPCException("Can't go short on Spot markets.")
 
         if pair not in self._traderpilot.exchange.get_markets(tradable_only=True):
@@ -1250,7 +1253,9 @@ class RPC:
             for pair in add:
                 if pair not in self._traderpilot.pairlists.blacklist:
                     try:
-                        expand_pairlist([pair], list(self._traderpilot.exchange.get_markets().keys()))
+                        expand_pairlist(
+                            [pair], list(self._traderpilot.exchange.get_markets().keys())
+                        )
                         self._traderpilot.pairlists.blacklist.append(pair)
 
                     except ValueError:
@@ -1380,7 +1385,12 @@ class RPC:
 
         _data, last_analyzed = self.__rpc_analysed_dataframe_raw(pair, timeframe, limit)
         return RPC._convert_dataframe_to_dict(
-            self._traderpilot.config["strategy"], pair, timeframe, _data, last_analyzed, selected_cols
+            self._traderpilot.config["strategy"],
+            pair,
+            timeframe,
+            _data,
+            last_analyzed,
+            selected_cols,
         )
 
     def __rpc_analysed_dataframe_raw(
@@ -1393,7 +1403,9 @@ class RPC:
         :param timeframe: The timeframe of data to get
         :param limit: The amount of candles in the dataframe
         """
-        _data, last_analyzed = self._traderpilot.dataprovider.get_analyzed_dataframe(pair, timeframe)
+        _data, last_analyzed = self._traderpilot.dataprovider.get_analyzed_dataframe(
+            pair, timeframe
+        )
         _data = _data.copy()
 
         if limit:

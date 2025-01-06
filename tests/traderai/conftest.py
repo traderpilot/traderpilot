@@ -6,13 +6,13 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from tests.conftest import get_patched_exchange
 from traderpilot.configuration import TimeRange
 from traderpilot.data.dataprovider import DataProvider
-from traderpilot.traderai.data_drawer import TraderaiDataDrawer
-from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 from traderpilot.resolvers import StrategyResolver
 from traderpilot.resolvers.traderaimodel_resolver import TraderaiModelResolver
-from tests.conftest import get_patched_exchange
+from traderpilot.traderai.data_drawer import TraderaiDataDrawer
+from traderpilot.traderai.data_kitchen import TraderaiDataKitchen
 
 
 def is_py12() -> bool:
@@ -63,7 +63,9 @@ def traderai_conf(default_conf, tmp_path):
             "config_files": [Path("config_examples", "config_traderai.example.json")],
         }
     )
-    traderaiconf["exchange"].update({"pair_whitelist": ["ADA/BTC", "DASH/BTC", "ETH/BTC", "LTC/BTC"]})
+    traderaiconf["exchange"].update(
+        {"pair_whitelist": ["ADA/BTC", "DASH/BTC", "ETH/BTC", "LTC/BTC"]}
+    )
     return traderaiconf
 
 
