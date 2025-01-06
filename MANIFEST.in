@@ -1,0 +1,9 @@
+include LICENSE
+include README.md
+recursive-include traderpilot *.py
+recursive-include traderpilot/templates/ *.j2 *.ipynb
+include traderpilot/exchange/binance_leverage_tiers.json
+include traderpilot/rpc/api_server/ui/fallback_file.html
+include traderpilot/rpc/api_server/ui/favicon.ico
+
+prune tests

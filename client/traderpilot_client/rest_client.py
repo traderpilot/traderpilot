@@ -440,13 +440,13 @@ class TpRestClient:
 
         return self._get("pair_candles", params=params)
 
-    def pair_history(self, pair, timeframe, strategy, timerange=None, freqaimodel=None):
+    def pair_history(self, pair, timeframe, strategy, timerange=None, traderaimodel=None):
         """Return historic, analyzed dataframe
 
         :param pair: Pair to get data for
         :param timeframe: Only pairs with this timeframe available.
         :param strategy: Strategy to analyze and get values for
-        :param freqaimodel: FreqAI model to use for analysis
+        :param traderaimodel: TraderAI model to use for analysis
         :param timerange: Timerange to get data for (same format than --timerange endpoints)
         :return: json object
         """
@@ -456,7 +456,7 @@ class TpRestClient:
                 "pair": pair,
                 "timeframe": timeframe,
                 "strategy": strategy,
-                "freqaimodel": freqaimodel,
+                "traderaimodel": traderaimodel,
                 "timerange": timerange if timerange else "",
             },
         )

@@ -1,0 +1,8 @@
+ARG sourceimage=traderpilotorg/traderpilot
+ARG sourcetag=develop_traderai
+FROM ${sourceimage}:${sourcetag}
+
+# Install dependencies
+COPY requirements-traderai.txt requirements-traderai-rl.txt /traderpilot/
+
+RUN pip install -r requirements-traderai-rl.txt --user --no-cache-dir
